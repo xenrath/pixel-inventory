@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Pengeluaran')
+@section('title', 'Perbarui Pemasukan')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -8,11 +8,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Pengeluaran</h1>
+                    <h1 class="m-0">Perbarui Pemasukan</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('admin/pengeluaran') }}">Pengeluaran</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('admin/pemasukan') }}">Perbarui Pemasukan</a></li>
                         <li class="breadcrumb-item active">Tambah</li>
                     </ol>
                 </div>
@@ -32,14 +32,14 @@
                     @endforeach
                 </div>
             @endif
-            @if (session('error_barangs') || session('error_pesanans'))
+            @if (session('error_pelanggans') || session('error_pesanans'))
                 <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <h5>
                         <i class="icon fas fa-ban"></i> Gagal!
                     </h5>
-                    @if (session('error_barangs'))
-                        @foreach (session('error_barangs') as $error)
+                    @if (session('error_pelanggans'))
+                        @foreach (session('error_pelanggans') as $error)
                             - {{ $error }} <br>
                         @endforeach
                     @endif
@@ -50,8 +50,10 @@
                     @endif
                 </div>
             @endif
-            <form action="{{ url('admin/pengeluaran') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+            <form action="{{ url('admin/pemasukan/' . $pemasukan->id) }}" method="POST" enctype="multipart/form-data"
+                autocomplete="off">
                 @csrf
+                @method('put')
                 <div class="card">
                 </div>
                 <div>
@@ -66,13 +68,14 @@
                                         <div class="form-group" hidden>
                                             <label for="supplier_id">Supplier Id</label>
                                             <input type="text" class="form-control" id="supplier_id" readonly
-                                                name="supplier_id" placeholder="" value="{{ old('supplier_id') }}">
+                                                name="supplier_id" placeholder=""
+                                                value="{{ old('supplier_id', $pemasukan->supplier_id) }}">
                                         </div>
                                         <label style="font-size:14px" class="form-label" for="nama_supp">Nama</label>
                                         <div class="form-group d-flex">
                                             <input class="form-control" id="nama_supp" name="nama_supp" type="text"
-                                                placeholder="" value="{{ old('nama_supp') }}" readonly
-                                                style="margin-right: 10px; font-size:14px" />
+                                                placeholder="" value="{{ old('nama_supp', $pemasukan->nama_supp) }}"
+                                                readonly style="margin-right: 10px; font-size:14px" />
                                             <button class="btn btn-primary" type="button"
                                                 onclick="showSupplier(this.value)">
                                                 <i class="fas fa-search"></i>
@@ -81,12 +84,14 @@
                                         <div class="form-group">
                                             <label style="font-size:14px" for="telp">No. Telp</label>
                                             <input style="font-size:14px" type="text" class="form-control" id="telp"
-                                                readonly name="telp" placeholder="" value="{{ old('telp') }}">
+                                                readonly name="telp" placeholder=""
+                                                value="{{ old('telp', $pemasukan->telp) }}">
                                         </div>
                                         <div class="form-group">
                                             <label style="font-size:14px" for="alamat">Alamat</label>
                                             <input style="font-size:14px" type="text" class="form-control" id="alamat"
-                                                readonly name="alamat" placeholder="" value="{{ old('alamat') }}">
+                                                readonly name="alamat" placeholder=""
+                                                value="{{ old('alamat', $pemasukan->alamat) }}">
                                         </div>
                                     </div>
                                 </div>
@@ -100,12 +105,14 @@
                                         <div class="form-group" hidden>
                                             <label for="user_id">User Id</label>
                                             <input type="text" class="form-control" id="user_id" readonly
-                                                name="user_id" placeholder="" value="{{ old('user_id') }}">
+                                                name="user_id" placeholder=""
+                                                value="{{ old('user_id', $pemasukan->user_id) }}">
                                         </div>
-                                        <label style="font-size:14px" class="form-label" for="nama_driver">Nama Sales</label>
+                                        <label style="font-size:14px" class="form-label" for="nama_driver">Nama
+                                            Sales</label>
                                         <div class="form-group d-flex">
                                             <input class="form-control" id="nama" name="nama" type="text"
-                                                placeholder="" value="{{ old('nama') }}" readonly
+                                                placeholder="" value="{{ old('nama', $pemasukan->nama) }}" readonly
                                                 style="margin-right: 10px;font-size:14px" />
                                             <button class="btn btn-primary" type="button"
                                                 onclick="showSales(this.value)">
@@ -116,13 +123,13 @@
                                             <label style="font-size:14px" for="telp_sales">No. Telp</label>
                                             <input style="font-size:14px" type="tex" class="form-control"
                                                 id="telp_sales" readonly name="telp_sales" placeholder=""
-                                                value="{{ old('telp_sales') }}">
+                                                value="{{ old('telp_sales', $pemasukan->telp_sales) }}">
                                         </div>
                                         <div class="form-group">
                                             <label style="font-size:14px" for="alamat_sales">Alamat</label>
                                             <input style="font-size:14px" type="text" class="form-control"
                                                 id="alamat_sales" readonly name="alamat_sales" placeholder=""
-                                                value="{{ old('alamat_sales') }}">
+                                                value="{{ old('alamat_sales', $pemasukan->alamat_sales) }}">
                                         </div>
                                     </div>
                                 </div>
@@ -153,43 +160,53 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tabel-barang">
-                                        <tr id="barang-0">
-                                            <td style="width: 70px; font-size:14px" class="text-center"
-                                                id="urutanbarang">1
-                                            </td>
-                                            <td>
-                                                <div class="form-group"hidden>
-                                                    <input style="font-size:14px" type="text" class="form-control"
-                                                        id="barang_id-0" name="barang_id[]">
+                                        @foreach ($details as $detail)
+                                            <tr id="barang-{{ $loop->index }}">
+                                                <td style="width: 70px; font-size:14px" class="text-center"
+                                                    id="urutanbarang">{{ $loop->index + 1 }}
+                                                </td>
+                                                <div class="form-group" hidden>
+                                                    <input type="text" class="form-control" name="detail_ids[]"
+                                                        value="{{ $detail['id'] }}">
                                                 </div>
-                                                <div class="form-group">
-                                                    <input style="font-size:14px" readonly type="text"
-                                                        class="form-control" id="kode_barang-0" name="kode_barang[]">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <input style="font-size:14px" readonly type="text"
-                                                        class="form-control" id="nama_barang-0" name="nama_barang[]">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <input style="font-size:14px" type="number" class="form-control"
-                                                        id="jumlah-0" name="jumlah[]">
-                                                </div>
-                                            </td>
-                                            <td style="width: 100px">
-                                                <button type="button" class="btn btn-primary btn-sm"
-                                                    onclick="barang(0)">
-                                                    <i class="fas fa-plus"></i>
-                                                </button>
-                                                <button style="margin-left:5px" type="button"
-                                                    class="btn btn-danger btn-sm" onclick="removeBarang(0)">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                                <td>
+                                                    <div class="form-group"hidden>
+                                                        <input style="font-size:14px" type="text" class="form-control"
+                                                            id="barang_id-0" name="barang_id[]"
+                                                            value="{{ $detail['barang_id'] }}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input style="font-size:14px" readonly type="text"
+                                                            class="form-control" id="kode_barang-0" name="kode_barang[]"
+                                                            value="{{ $detail['kode_barang'] }}">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input style="font-size:14px" readonly type="text"
+                                                            class="form-control" id="nama_barang-0" name="nama_barang[]"
+                                                            value="{{ $detail['nama_barang'] }}">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input style="font-size:14px" type="number" class="form-control"
+                                                            id="jumlah-0" name="jumlah[]"
+                                                            value="{{ $detail['jumlah'] }}">
+                                                    </div>
+                                                </td>
+                                                <td style="width: 100px">
+                                                    <button type="button" class="btn btn-primary btn-sm"
+                                                        onclick="barang(0)">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                    <button style="margin-left:5px" type="button"
+                                                        class="btn btn-danger btn-sm" onclick="removeBarang(0)">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -309,10 +326,8 @@
                             </thead>
                             <tbody>
                                 @foreach ($barangs as $barang)
-                                    <tr data-id="{{ $barang->id }}"
-                                        data-kode_barang="{{ $barang->kode_barang }}"
-                                        data-nama_barang="{{ $barang->nama_barang }}"
-                                        data-param="{{ $loop->index }}">
+                                    <tr data-id="{{ $barang->id }}" data-kode_barang="{{ $barang->kode_barang }}"
+                                        data-nama_barang="{{ $barang->nama_barang }}" data-param="{{ $loop->index }}">
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $barang->kode_barang }}</td>
                                         <td>{{ $barang->nama_barang }}</td>

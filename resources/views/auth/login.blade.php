@@ -37,10 +37,14 @@
                             </div>
                         </div>
                         <div class="input-group mb-3">
-                            <input type="password" class="form-control" name="password" placeholder="Password">
+                            <input type="password" class="form-control" name="password" placeholder="Masukan password"
+                                value="{{ old('password') }}">
                             <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-lock"></span>
+                                {{-- <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div> --}}
+                                <div class="input-group-text" style="cursor: pointer;" id="password-toggle">
+                                    <span id="password-icon" class="fas fa-eye"></span>
                                 </div>
                             </div>
                         </div>
@@ -53,6 +57,23 @@
     <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('adminlte/dist/js/adminlte.min.js?v=3.2.0') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#password-toggle').click(function() {
+                var passwordInput = $('input[name="password"]');
+                var passwordIcon = $('#password-icon');
+
+                if (passwordInput.attr('type') === 'password') {
+                    passwordInput.attr('type', 'text');
+                    passwordIcon.removeClass('fa-eye').addClass('fa-eye-slash');
+                } else {
+                    passwordInput.attr('type', 'password');
+                    passwordIcon.removeClass('fa-eye-slash').addClass('fa-eye');
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

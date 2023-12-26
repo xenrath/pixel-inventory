@@ -51,7 +51,7 @@
     <div class="wrapper">
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="{{ asset('storage/uploads/logo.png') }}" alt="Pengaduan Desa"
+            <img class="animation__shake" src="{{ asset('storage/uploads/logo.png') }}" alt="Riva Jaya"
                 height="80" width="80">
         </div>
 
@@ -72,8 +72,8 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="{{ url('/') }}" class="brand-link">
-                <img src="{{ asset('storage/uploads/logo.png') }}" alt="Sistem Inventory" class="brand-image">
-                <span class="brand-text font-wight-bold">Sistem Inventory</span>
+                <img src="{{ asset('adminlte/dist/img/user.png') }}" alt="Sistem Riva Jaya" class="brand-image">
+                <span class="brand-text font-wight-bold">Sistem Riva Jaya</span>
             </a>
 
             <!-- Sidebar -->
@@ -118,7 +118,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>Yakin keluar sistem <strong>Sistem Inventory</strong>?</p>
+                        <p>Yakin keluar sistem <strong>Sistem Riva Jaya</strong>?</p>
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
@@ -132,7 +132,7 @@
         </div>
 
         <footer class="main-footer">
-            <strong class="text-primary">Sistem Inventory Barang.</strong>
+            <strong class="text-primary">Sistem Riva Jaya.</strong>
             Designed by
             <strong class="text-primary">kiwari.com</strong>
             <div class="float-right d-none d-sm-inline-block">
@@ -214,6 +214,30 @@
                 theme: 'bootstrap4'
             })
         });
+    </script>
+
+     <script>
+        $(document).ready(function() {
+            $('#datatables66').DataTable({
+                "lengthMenu": [
+                    [-1],
+                    ["All"]
+                ] // Use -1 to display all rows, and "All" as the label
+            });
+        });
+
+        $(document).ready(function() {
+            $('#datatables').DataTable();
+        });
+        $(document).ready(function() {
+            $('#datatables1').DataTable();
+        });
+    </script>
+
+    <script>
+        $(function() {
+            $('#compose-textarea').summernote()
+        })
     </script>
 </body>
 

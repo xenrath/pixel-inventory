@@ -9,10 +9,26 @@
 </li>
 <li class="nav-header">Menu</li>
 <li class="nav-item">
+    <a href="{{ url('admin/user') }}" class="nav-link {{ request()->is('admin/user*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-user"></i>
+        <p>
+            Data User
+        </p>
+    </a>
+</li>
+<li class="nav-item">
     <a href="{{ url('admin/barang') }}" class="nav-link {{ request()->is('admin/barang*') ? 'active' : '' }}">
         <i class="nav-icon fas fa-boxes"></i>
         <p>
             Data Barang
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ url('admin/supplier') }}" class="nav-link {{ request()->is('admin/supplier*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-shipping-fast"></i>
+        <p>
+            Data Supplier
         </p>
     </a>
 </li>

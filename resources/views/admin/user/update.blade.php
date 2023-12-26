@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Perbarui Barang')
+@section('title', 'Tambah User')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -8,11 +8,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Perbarui Barang</h1>
+                    <h1 class="m-0">User</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('admin/barang') }}">Perbarui Barang</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('admin/user') }}">User</a></li>
                         <li class="breadcrumb-item active">Perbarui</li>
                     </ol>
                 </div><!-- /.col -->
@@ -36,27 +36,46 @@
             @endif
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Tambah Barang</h3>
+                    <h3 class="card-title">Perbarui User</h3>
                 </div>
                 <!-- /.card-header -->
-                <form action="{{ url('admin/barang/' . $barang->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+                <form action="{{ url('admin/user/' . $user->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     @method('put')
                     <div class="card-body">
-                        <div class="form-nama_barang">
-                            <label for="nama_barang">Nama Barang</label>
-                            <input type="text" class="form-control" id="nama_barang" name="nama_barang"
-                                placeholder="Masukan nama barang" value="{{ old('nama_barang', $barang->nama_barang) }}">
+                        <div class="form-group">
+                            <label class="form-label" for="role">Jabatan</label>
+                            <select class="form-control" id="role" name="role">
+                                <option value="">- Pilih Jabatan -</option>
+                                <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : null }}>
+                                    Admin</option>
+                                <option value="sales" {{ old('role', $user->role) == 'sales' ? 'selected' : null }}>
+                                    Sales</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="jumlah">Jumlah</label>
-                            <input type="number" class="form-control" id="jumlah" name="jumlah"
-                                placeholder="Masukan jumlah" value="{{ old('jumlah', $barang->jumlah) }}">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" name="username"
+                                placeholder="Masukan username" value="{{ old('username', $user->username) }}">
                         </div>
                         <div class="form-group">
-                            <label for="satuan">Satuan</label>
-                            <input type="text" class="form-control" id="satuan" name="satuan"
-                                placeholder="Masukan satuan" value="{{ old('satuan', $barang->satuan) }}">
+                            <label for="nama">Nama Lengkap</label>
+                            <input type="text" class="form-control" id="nama" name="nama"
+                                placeholder="Masukan nama lengkap" value="{{ old('nama', $user->nama) }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="telp">No. Telepon</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">+62</span>
+                                </div>
+                                <input type="text" id="telp" name="telp" class="form-control"
+                                    placeholder="Masukan nomor telepon" value="{{ old('telp', $user->telp) }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat">Alamat</label>
+                            <textarea type="text" class="form-control" id="alamat" name="alamat" placeholder="Masukan alamat">{{ old('alamat', $user->alamat) }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="gambar">Gambar <small>(Kosongkan saja jika tidak
@@ -66,11 +85,6 @@
                                     accept="image/*">
                                 <label class="custom-file-label" for="gambar">Masukkan gambar</label>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="deskripsi">Keterangan</label>
-                            <textarea type="text" class="form-control" id="deskripsi" name="deskripsi" placeholder="Masukan keterangan"
-                                >{{ old('deskripsi', $barang->deskripsi) }}</textarea>
                         </div>
                     </div>
                     <div class="card-footer text-right">

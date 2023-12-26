@@ -34,8 +34,9 @@
                 </div>
             @endif
 
-            <form action="{{ url('admin/laporan') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+            <form action="{{ url('admin/laporan/' . $laporan->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                 @csrf
+                @method('put')
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Tambah Laporan</h3>
@@ -53,7 +54,7 @@
                                         <div class="card-body">
                                             <div class="form-group">
                                                 <textarea id="compose-textarea" class="form-control" name="keterangan" placeholder="Masukan keterangan"
-                                                    style="height: 300px; display: none;" value ="">{{ old('keterangan') }}</textarea>
+                                                    style="height: 300px; display: none;">{{ old('keterangan', $laporan->keterangan) }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -67,8 +68,6 @@
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </div>
-
-
             </form>
         </div>
         </div>

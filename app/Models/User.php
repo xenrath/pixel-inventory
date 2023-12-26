@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -13,10 +14,14 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
+        'kode_user',
         'nama',
         'username',
+        'telp',
+        'alamat',
         'password',
-        'role'
+        'role',
+        'gambar'
     ];
 
     protected $hidden = [
@@ -41,5 +46,10 @@ class User extends Authenticatable
             return true;
         }
         return false;
+    }
+
+    public static function getId()
+    {
+        return $getId = DB::table('users')->orderBy('id', 'DESC')->take(1)->get();
     }
 }
