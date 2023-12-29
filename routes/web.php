@@ -21,9 +21,16 @@ Route::middleware('admin')->prefix('admin')->group(function() {
     Route::get('laporan', [\App\Http\Controllers\Admin\LaporanController::class, 'index']);
     Route::get('pemasukan/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PemasukanController::class, 'cetakpdf']);
     Route::get('pengeluaran/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PengeluaranController::class, 'cetakpdf']);
+    Route::get('profile', [\App\Http\Controllers\Admin\ProfileController::class, 'index']);
+    Route::post('profile/update', [\App\Http\Controllers\Admin\ProfileController::class, 'update']);
+
 });
 
 
 Route::middleware('sales')->prefix('sales')->group(function() {
     Route::get('/', [\App\Http\Controllers\Sales\HomeController::class, 'index']);
+    Route::resource('barang', \App\Http\Controllers\Sales\BarangController::class);
+    Route::resource('laporan', \App\Http\Controllers\Sales\LaporanController::class);
+    Route::get('laporan', [\App\Http\Controllers\Sales\LaporanController::class, 'index']);
+
 });

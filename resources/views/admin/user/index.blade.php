@@ -33,7 +33,7 @@
                     <h3 class="card-title">Data User</h3>
                     <div class="float-right">
                         <a href="{{ url('admin/user/create') }}" class="btn btn-primary btn-sm">
-                            <i class="fas fa-plus"></i> Perbarui
+                            <i class="fas fa-plus"></i> Tambah
                         </a>
                     </div>
                 </div>

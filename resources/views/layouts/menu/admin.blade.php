@@ -34,7 +34,7 @@
 </li>
 <li class="nav-item">
     <a href="{{ url('admin/pemasukan') }}" class="nav-link {{ request()->is('admin/pemasukan*') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-shipping-fast"></i>
+        <i class="nav-icon fas fa-clipboard-list"></i>
         <p>
             Data Pemasukan
         </p>

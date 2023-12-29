@@ -51,8 +51,8 @@
     <div class="wrapper">
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="{{ asset('storage/uploads/logo.png') }}" alt="Riva Jaya"
-                height="80" width="80">
+            <img class="animation__shake" src="{{ asset('storage/uploads/logo.png') }}" alt="Riva Jaya" height="80"
+                width="80">
         </div>
 
         <!-- Navbar -->
@@ -88,7 +88,13 @@
                         @else
                             @include('layouts.menu.sales')
                         @endif
-                        <br>
+                        <li class="nav-header">Profile</li>
+                        <li class="nav-item">
+                            <a href="{{ url('admin/profile') }}"
+                                class="nav-link {{ request()->is('admin/profile') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-user-edit"></i>
+                                <p>Update Profile</p>
+                            </a>
                         <li class="nav-header">
                             <button type="button" data-toggle="modal" data-target="#modal-logout"
                                 class="btn btn-danger btn-block">Logout</button>
@@ -216,7 +222,7 @@
         });
     </script>
 
-     <script>
+    <script>
         $(document).ready(function() {
             $('#datatables66').DataTable({
                 "lengthMenu": [
