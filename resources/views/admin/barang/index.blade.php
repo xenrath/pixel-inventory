@@ -31,11 +31,11 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Data Barang</h3>
-                    {{-- <div class="float-right">
+                    <div class="float-right">
                         <a href="{{ url('admin/barang/create') }}" class="btn btn-primary btn-sm">
                             <i class="fas fa-plus"></i> Tambah
                         </a>
-                    </div> --}}
+                    </div>
                 </div>
                 <div class="card-body">
                     <table id="example1" class="table table-bordered table-striped">
@@ -46,7 +46,7 @@
                                 <th>Nama Barang</th>
                                 <th>Jumlah</th>
                                 <th>Satuan</th>
-                                {{-- <th class="text-center" width="150">Opsi</th> --}}
+                                <th class="text-center" width="150">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,12 +57,14 @@
                                     <td>{{ $barang->nama_barang }}</td>
                                     <td>{{ $barang->jumlah }}</td>
                                     <td>{{ $barang->satuan }}</td>
-                                    {{-- <td class="text-center">
+                                    <td class="text-center">
                                         <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal"
                                             data-target="#modal-add-{{ $barang->id }}">
                                             <i class="fas fa-plus"></i>
                                         </button>
-                                       
+                                        {{-- <a href="{{ url('admin/barang/' . $barang->id) }}" class="btn btn-info btn-sm">
+                                            <i class="fas fa-eye"></i>
+                                        </a> --}}
                                         <a href="{{ url('admin/barang/' . $barang->id . '/edit') }}"
                                             class="btn btn-warning btn-sm">
                                             <i class="fas fa-edit"></i>
@@ -71,7 +73,7 @@
                                             data-target="#modal-hapus-{{ $barang->id }}">
                                             <i class="fas fa-trash"></i>
                                         </button>
-                                    </td> --}}
+                                    </td>
                                 </tr>
                                 <div class="modal fade" id="modal-hapus-{{ $barang->id }}">
                                     <div class="modal-dialog">
