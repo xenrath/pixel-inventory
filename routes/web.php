@@ -23,7 +23,7 @@ Route::middleware('admin')->prefix('admin')->group(function() {
     Route::get('pengeluaran/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PengeluaranController::class, 'cetakpdf']);
     Route::get('profile', [\App\Http\Controllers\Admin\ProfileController::class, 'index']);
     Route::post('profile/update', [\App\Http\Controllers\Admin\ProfileController::class, 'update']);
-
+    Route::delete('pengeluaran/delete_barang/{id}', [\App\Http\Controllers\Admin\PengeluaranController::class, 'delete_barang']);
 });
 
 
@@ -32,5 +32,8 @@ Route::middleware('sales')->prefix('sales')->group(function() {
     Route::resource('barang', \App\Http\Controllers\Sales\BarangController::class);
     Route::resource('laporan', \App\Http\Controllers\Sales\LaporanController::class);
     Route::get('laporan', [\App\Http\Controllers\Sales\LaporanController::class, 'index']);
+    Route::resource('pemasukan', \App\Http\Controllers\Sales\PemasukanController::class);
+    Route::get('pemasukan/cetak-pdf/{id}', [\App\Http\Controllers\Sales\PemasukanController::class, 'cetakpdf']);
+    Route::get('pemasukan', [\App\Http\Controllers\Sales\PemasukanController::class, 'index']);
 
 });

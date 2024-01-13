@@ -57,6 +57,23 @@
                             <input type="text" class="form-control" id="satuan" name="satuan"
                                 placeholder="Masukan satuan" value="{{ old('satuan') }}">
                         </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="harga_pcs">Harga / pcs</label>
+                                    <input type="number" class="form-control" id="harga_pcs" name="harga_pcs"
+                                        placeholder="Masukan harga pcs" value="{{ old('harga_pcs') }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="harga_dus">Harga / dus</label>
+                                    <input type="number" class="form-control" id="harga_dus" name="harga_dus"
+                                        placeholder="Masukan harga dus" value="{{ old('harga_dus') }}">
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="gambar">Gambar <small>(Kosongkan saja jika tidak
                                     ingin menambahkan)</small></label>

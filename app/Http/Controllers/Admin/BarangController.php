@@ -29,12 +29,16 @@ class BarangController extends Controller
                 'nama_barang' => 'required',
                 'jumlah' => 'required',
                 'satuan' => 'required',
+                'harga_pcs' => 'required',
+                'harga_dus' => 'required',
                 'gambar' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
             ],
             [
                 'nama_barang.required' => 'Masukkan nama barang',
                 'jumlah.required' => 'Masukkan jumlah',
                 'satuan.required' => 'Masukkan satuan',
+                'harga_pcs.required' => 'Masukkan harga per pcs',
+                'harga_dus.required' => 'Masukkan harga per dus',
                 'gambar.image' => 'Gambar yang dimasukan salah!',
             ]
         );
@@ -98,12 +102,16 @@ class BarangController extends Controller
                 'nama_barang' => 'required',
                 'jumlah' => 'required',
                 'satuan' => 'required',
+                'harga_pcs' => 'required',
+                'harga_dus' => 'required',
                 'gambar' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
             ],
             [
                 'nama_barang.required' => 'Masukkan nama barang',
                 'jumlah.required' => 'Masukkan jumlah',
                 'satuan.required' => 'Masukkan satuan',
+                'harga_pcs.required' => 'Masukkan harga per pcs',
+                'harga_dus.required' => 'Masukkan harga per dus',
                 'gambar.image' => 'Gambar yang dimasukan salah!',
             ]
         );
@@ -127,6 +135,8 @@ class BarangController extends Controller
         $barang->nama_barang = $request->nama_barang;
         $barang->jumlah = $request->jumlah;
         $barang->satuan = $request->satuan;
+        $barang->harga_pcs = $request->harga_pcs;
+        $barang->harga_dus = $request->harga_dus;
         $barang->deskripsi = $request->deskripsi;
         $barang->gambar = $namaGambar;
         $barang->save();

@@ -73,7 +73,7 @@
             <!-- Brand Logo -->
             <a href="{{ url('/') }}" class="brand-link">
                 <img src="{{ asset('adminlte/dist/img/user.png') }}" alt="Sistem Riva Jaya" class="brand-image">
-                <span class="brand-text font-wight-bold">Sistem Riva Jaya</span>
+                <span class="brand-text font-wight-bold">Riva Jaya Abadi</span>
             </a>
 
             <!-- Sidebar -->

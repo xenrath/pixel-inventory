@@ -57,9 +57,11 @@ class PemasukanController extends Controller
         $validasi_barang = Validator::make($request->all(), [
             'supplier_id' => 'required',
             'user_id' => 'required',
+            'grand_total' => 'required',
         ], [
             'supplier_id.required' => 'Pilih nama supplier!',
             'user_id.required' => 'Pilih nama sales!',
+            'grand_total.required' => 'Grand total kosong!',
         ]);
 
         $error_barangs = array();
@@ -77,7 +79,11 @@ class PemasukanController extends Controller
                     'barang_id.' . $i => 'required',
                     'kode_barang.' . $i => 'required',
                     'nama_barang.' . $i => 'required',
+                    'harga_pcs.' . $i => 'required',
+                    'harga_dus.' . $i => 'required',
+                    'satuan.' . $i => 'required',
                     'jumlah.' . $i => 'required',
+                    'total.' . $i => 'required',
                 ]);
 
                 if ($validator_produk->fails()) {
@@ -87,13 +93,21 @@ class PemasukanController extends Controller
                 $barang_id = $request->barang_id[$i] ?? '';
                 $kode_barang = $request->kode_barang[$i] ?? '';
                 $nama_barang = $request->nama_barang[$i] ?? '';
+                $harga_pcs = $request->harga_pcs[$i] ?? '';
+                $harga_dus = $request->harga_dus[$i] ?? '';
+                $satuan = $request->satuan[$i] ?? '';
                 $jumlah = $request->jumlah[$i] ?? '';
+                $total = $request->total[$i] ?? '';
 
                 $data_pembelians->push([
                     'barang_id' => $barang_id,
                     'kode_barang' => $kode_barang,
                     'nama_barang' => $nama_barang,
-                    'jumlah' => $jumlah
+                    'harga_pcs' => $harga_pcs,
+                    'harga_dus' => $harga_dus,
+                    'satuan' => $satuan,
+                    'jumlah' => $jumlah,
+                    'total' => $total
                 ]);
             }
         }
@@ -122,6 +136,7 @@ class PemasukanController extends Controller
             'nama' => $request->nama,
             'telp_sales' => $request->telp_sales,
             'alamat_sales' => $request->alamat_sales,
+            'grand_total' =>  str_replace('.', '', $request->grand_total),
             'kode_pemasukan' => $kode,
             'tanggal' => $format_tanggal,
             'tanggal_awal' => $tanggal,
@@ -134,7 +149,11 @@ class PemasukanController extends Controller
                     'barang_id' => $data_pesanan['barang_id'],
                     'kode_barang' => $data_pesanan['kode_barang'],
                     'nama_barang' => $data_pesanan['nama_barang'],
+                    'harga_pcs' => str_replace('.', '', $data_pesanan['harga_pcs']),
+                    'harga_dus' => str_replace('.', '', $data_pesanan['harga_dus']),
+                    'satuan' => $data_pesanan['satuan'],
                     'jumlah' => $data_pesanan['jumlah'],
+                    'total' => str_replace('.', '', $data_pesanan['total']),
                 ]);
             }
         }
@@ -197,33 +216,42 @@ class PemasukanController extends Controller
 
         if ($request->has('barang_id')) {
             for ($i = 0; $i < count($request->barang_id); $i++) {
-                $validasi_produk = Validator::make($request->all(), [
+                $validator_produk = Validator::make($request->all(), [
                     'barang_id.' . $i => 'required',
                     'kode_barang.' . $i => 'required',
                     'nama_barang.' . $i => 'required',
+                    'harga_pcs.' . $i => 'required',
+                    'harga_dus.' . $i => 'required',
+                    'satuan.' . $i => 'required',
                     'jumlah.' . $i => 'required',
+                    'total.' . $i => 'required',
                 ]);
 
-                if ($validasi_produk->fails()) {
-                    array_push($error_pesanans, "Barang nomor " . ($i + 1) . " belum dilengkapi!");
+                if ($validator_produk->fails()) {
+                    $error_pesanans[] = "Barang nomor " . ($i + 1) . " belum dilengkapi!";
                 }
 
-
-                $barang_id = is_null($request->barang_id[$i]) ? '' : $request->barang_id[$i];
-                $kode_barang = is_null($request->kode_barang[$i]) ? '' : $request->kode_barang[$i];
-                $nama_barang = is_null($request->nama_barang[$i]) ? '' : $request->nama_barang[$i];
-                $jumlah = is_null($request->jumlah[$i]) ? '' : $request->jumlah[$i];
+                $barang_id = $request->barang_id[$i] ?? '';
+                $kode_barang = $request->kode_barang[$i] ?? '';
+                $nama_barang = $request->nama_barang[$i] ?? '';
+                $harga_pcs = $request->harga_pcs[$i] ?? '';
+                $harga_dus = $request->harga_dus[$i] ?? '';
+                $satuan = $request->satuan[$i] ?? '';
+                $jumlah = $request->jumlah[$i] ?? '';
+                $total = $request->total[$i] ?? '';
 
                 $data_pembelians->push([
                     'detail_id' => $request->detail_ids[$i] ?? null,
                     'barang_id' => $barang_id,
                     'kode_barang' => $kode_barang,
                     'nama_barang' => $nama_barang,
+                    'harga_pcs' => $harga_pcs,
+                    'harga_dus' => $harga_dus,
+                    'satuan' => $satuan,
                     'jumlah' => $jumlah,
-
+                    'total' => $total
                 ]);
             }
-        } else {
         }
         if ($validasi_pelanggan->fails() || $error_pesanans) {
             return back()
@@ -238,10 +266,10 @@ class PemasukanController extends Controller
         $format_tanggal = $tanggal1->format('d F Y');
 
         $tanggal = Carbon::now()->format('Y-m-d');
-        $transaksi = Pemasukan::findOrFail($id);
+        $barangs = Pemasukan::findOrFail($id);
 
         // Update the main transaction
-        $transaksi->update([
+        $barangs->update([
             'supplier_id' => $request->supplier_id,
             'nama_supp' => $request->nama_supp,
             'telp' => $request->telp,
@@ -250,9 +278,10 @@ class PemasukanController extends Controller
             'nama' => $request->nama,
             'telp_sales' => $request->telp_sales,
             'alamat_sales' => $request->alamat_sales,
+            'grand_total' =>  str_replace('.', '', $request->grand_total),
         ]);
 
-        $transaksi_id = $transaksi->id;
+        $barang_id = $barangs->id;
 
         $detailIds = $request->input('detail_ids');
 
@@ -261,33 +290,44 @@ class PemasukanController extends Controller
 
             if ($detailId) {
                 Detail_pemasukan::where('id', $detailId)->update([
-                    'pemasukan_id' => $transaksi->id,
+                    'pemasukan_id' => $barangs->id,
                     'barang_id' => $data_pesanan['barang_id'],
                     'kode_barang' => $data_pesanan['kode_barang'],
                     'nama_barang' => $data_pesanan['nama_barang'],
+                    'harga_pcs' => str_replace('.', '', $data_pesanan['harga_pcs']),
+                    'harga_dus' => str_replace('.', '', $data_pesanan['harga_dus']),
+                    'satuan' => $data_pesanan['satuan'],
                     'jumlah' => $data_pesanan['jumlah'],
+                    'total' => str_replace('.', '', $data_pesanan['total']),
                 ]);
             } else {
                 $existingDetail = Detail_pemasukan::where([
-                    'pemasukan_id' => $transaksi->id,
+                    'pemasukan_id' => $barangs->id,
                     'barang_id' => $data_pesanan['barang_id'],
                     'kode_barang' => $data_pesanan['kode_barang'],
                     'nama_barang' => $data_pesanan['nama_barang'],
+                    'harga_pcs' => str_replace('.', '', $data_pesanan['harga_pcs']),
+                    'harga_dus' => str_replace('.', '', $data_pesanan['harga_dus']),
+                    'satuan' => $data_pesanan['satuan'],
                     'jumlah' => $data_pesanan['jumlah'],
+                    'total' => str_replace('.', '', $data_pesanan['total']),
                 ])->first();
 
                 if (!$existingDetail) {
                     Detail_pemasukan::create([
-                        'pemasukan_id' => $transaksi->id,
+                        'pemasukan_id' => $barangs->id,
                         'barang_id' => $data_pesanan['barang_id'],
                         'kode_barang' => $data_pesanan['kode_barang'],
                         'nama_barang' => $data_pesanan['nama_barang'],
+                        'harga_pcs' => str_replace('.', '', $data_pesanan['harga_pcs']),
+                        'harga_dus' => str_replace('.', '', $data_pesanan['harga_dus']),
+                        'satuan' => $data_pesanan['satuan'],
                         'jumlah' => $data_pesanan['jumlah'],
+                        'total' => str_replace('.', '', $data_pesanan['total']),
                     ]);
                 }
             }
         }
-
         return redirect('admin/pemasukan')->with('success', 'Berhasil memperbarui pemasukan');
 
         // $pemasukan = Pembelian_ban::find($transaksi);

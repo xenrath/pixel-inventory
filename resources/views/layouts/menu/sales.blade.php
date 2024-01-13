@@ -17,8 +17,16 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ url('sales/laporan') }}" class="nav-link {{ request()->is('laporan*') ? 'active' : '' }}">
+    <a href="{{ url('sales/pemasukan') }}" class="nav-link {{ request()->is('sales/pemasukan*') ? 'active' : '' }}">
         <i class="nav-icon fas fa-clipboard-list"></i>
+        <p>
+            Data Pemasukan
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ url('sales/laporan') }}" class="nav-link {{ request()->is('laporan*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-clipboard-check"></i>
         <p>
             Data Laporan
         </p>

@@ -45,8 +45,9 @@
                                 <th>Kode Barang</th>
                                 <th>Nama Barang</th>
                                 <th>Jumlah</th>
-                                <th>Satuan</th>
-                                {{-- <th class="text-center" width="150">Opsi</th> --}}
+                                {{-- <th>Satuan</th> --}}
+                                <th>Harga / pcs</th>
+                                <th>Harga / dus</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -56,22 +57,11 @@
                                     <td>{{ $barang->kode_barang }}</td>
                                     <td>{{ $barang->nama_barang }}</td>
                                     <td>{{ $barang->jumlah }}</td>
-                                    <td>{{ $barang->satuan }}</td>
-                                    {{-- <td class="text-center">
-                                        <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal"
-                                            data-target="#modal-add-{{ $barang->id }}">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                       
-                                        <a href="{{ url('admin/barang/' . $barang->id . '/edit') }}"
-                                            class="btn btn-warning btn-sm">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#modal-hapus-{{ $barang->id }}">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td> --}}
+                                    {{-- <td>{{ $barang->satuan }}</td> --}}
+                                    <td> {{ number_format($barang->harga_pcs, 0, ',', '.') }}
+                                    </td>
+                                    <td> {{ number_format($barang->harga_dus, 0, ',', '.') }}
+                                    </td>
                                 </tr>
                                 <div class="modal fade" id="modal-hapus-{{ $barang->id }}">
                                     <div class="modal-dialog">
@@ -117,9 +107,8 @@
                                                         <div class="card-body">
                                                             <div class="form-group">
                                                                 <label for="jumlah">Stok</label>
-                                                                <input type="number" class="form-control"
-                                                                    id="jumlah" name="jumlah"
-                                                                    placeholder="Masukan jumlah"
+                                                                <input type="number" class="form-control" id="jumlah"
+                                                                    name="jumlah" placeholder="Masukan jumlah"
                                                                     value="{{ old('jumlah', $barang->jumlah) }}">
                                                             </div>
                                                         </div>

@@ -72,6 +72,7 @@
                                 <th>Tanggal</th>
                                 <th>Nama Supplier</th>
                                 <th>Nama Sales</th>
+                                <th>Grand Total</th>
                                 <th class="text-center" width="120">Opsi</th>
                             </tr>
                         </thead>
@@ -82,6 +83,7 @@
                                 <td>{{ $pemasukan->tanggal }}</td>
                                 <td>{{ $pemasukan->supplier->nama_supp }}</td>
                                 <td>{{ $pemasukan->user->nama }}</td>
+                                <td> {{ number_format($pemasukan->grand_total, 0, ',', '.') }}</td>
                                 <td class="text-center">
                                     <a href="{{ url('admin/pemasukan/cetak-pdf/' . $pemasukan->id) }}"
                                         class="btn btn-primary btn-sm">

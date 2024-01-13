@@ -102,7 +102,8 @@
                                             <input type="text" class="form-control" id="user_id" readonly
                                                 name="user_id" placeholder="" value="{{ old('user_id') }}">
                                         </div>
-                                        <label style="font-size:14px" class="form-label" for="nama_driver">Nama Sales</label>
+                                        <label style="font-size:14px" class="form-label" for="nama_driver">Nama
+                                            Sales</label>
                                         <div class="form-group d-flex">
                                             <input class="form-control" id="nama" name="nama" type="text"
                                                 placeholder="" value="{{ old('nama') }}" readonly
@@ -148,7 +149,11 @@
                                             <th style="font-size:14px" class="text-center">No</th>
                                             <th style="font-size:14px">Kode Barang</th>
                                             <th style="font-size:14px">Nama Barang</th>
+                                            <th style="font-size:14px">Harga pcs</th>
+                                            <th style="font-size:14px">Harga dus</th>
+                                            <th style="font-size:14px">Satuan</th>
                                             <th style="font-size:14px">Jumlah</th>
+                                            <th style="font-size:14px">Total</th>
                                             <th style="font-size:14px">Opsi</th>
                                         </tr>
                                     </thead>
@@ -175,8 +180,42 @@
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <input style="font-size:14px" type="number" class="form-control"
-                                                        id="jumlah-0" name="jumlah[]">
+                                                    <input style="font-size:14px" type="text"
+                                                        class="form-control harga_pcs" readonly id="harga_pcs-0"
+                                                        name="harga_pcs[]">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input style="font-size:14px" type="text"
+                                                        class="form-control harga_dus" readonly id="harga_dus-0"
+                                                        name="harga_dus[]">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <select class="form-control" style="font-size:14px" id="satuan-0"
+                                                        name="satuan[]">
+                                                        <option value="">- Pilih Satuan -</option>
+                                                        <option value="pcs"
+                                                            {{ old('satuan') == 'pcs' ? 'selected' : null }}>
+                                                            pcs</option>
+                                                        <option value="dus"
+                                                            {{ old('satuan') == 'dus' ? 'selected' : null }}>
+                                                            dus</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input style="font-size:14px" type="number"
+                                                        class="form-control jumlah" id="jumlah-0" name="jumlah[]">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input style="font-size:14px" type="text" readonly
+                                                        class="form-control total" id="total-0" name="total[]">
                                                 </div>
                                             </td>
                                             <td style="width: 100px">
@@ -192,6 +231,12 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <div class="form-group mt-3">
+                                    <label style="font-size:14px" for="grand_total">Grand Total</label>
+                                    <input style="text-align: end; margin:right:10px; font-size:14px;" type="text"
+                                        class="form-control grand_total" id="grand_total" name="grand_total"
+                                        placeholder="" value="{{ old('grand_total') }}">
+                                </div>
                             </div>
                             <div class="card-footer text-right">
                                 <button type="reset" class="btn btn-secondary">Reset</button>
@@ -304,19 +349,25 @@
                                     <th>Kode Barang</th>
                                     <th>Nama Barang</th>
                                     <th>Stok</th>
+                                    <th>Harga pcs</th>
+                                    <th>Harga dus</th>
                                     <th>Opsi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($barangs as $barang)
-                                    <tr data-id="{{ $barang->id }}"
-                                        data-kode_barang="{{ $barang->kode_barang }}"
+                                    <tr data-id="{{ $barang->id }}" data-kode_barang="{{ $barang->kode_barang }}"
                                         data-nama_barang="{{ $barang->nama_barang }}"
-                                        data-param="{{ $loop->index }}">
+                                        data-harga_pcs="{{ $barang->harga_pcs }}"
+                                        data-harga_dus="{{ $barang->harga_dus }}" data-param="{{ $loop->index }}">
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $barang->kode_barang }}</td>
                                         <td>{{ $barang->nama_barang }}</td>
                                         <td>{{ $barang->jumlah }}</td>
+                                        <td> {{ number_format($barang->harga_pcs, 0, ',', '.') }}
+                                        </td>
+                                        <td> {{ number_format($barang->harga_dus, 0, ',', '.') }}
+                                        </td>
                                         <td class="text-center">
                                             <button type="button" id="btnTambah" class="btn btn-primary btn-sm"
                                                 onclick="getBarang({{ $loop->index }})">
@@ -368,7 +419,6 @@
 
         function barang(param) {
             activeSpecificationIndex = param;
-            // Show the modal and filter rows if necessary
             $('#tableBarang').modal('show');
         }
 
@@ -377,14 +427,92 @@
             var barang_id = selectedRow.data('id');
             var kode_barang = selectedRow.data('kode_barang');
             var nama_barang = selectedRow.data('nama_barang');
+            var harga_pcs = selectedRow.data('harga_pcs');
+            var harga_dus = selectedRow.data('harga_dus');
+            var jumlah = 0;
+            var total = 0;
 
-            // Update the form fields for the active specification
             $('#barang_id-' + activeSpecificationIndex).val(barang_id);
             $('#kode_barang-' + activeSpecificationIndex).val(kode_barang);
             $('#nama_barang-' + activeSpecificationIndex).val(nama_barang);
-
+            $('#harga_pcs-' + activeSpecificationIndex).val(harga_pcs.toLocaleString('id-ID'));
+            $('#harga_dus-' + activeSpecificationIndex).val(harga_dus.toLocaleString('id-ID'));
+            $('#jumlah-' + activeSpecificationIndex).val(jumlah);
+            $('#total-' + activeSpecificationIndex).val(total);
+            
+            updateGrandTotal()
             $('#tableBarang').modal('hide');
         }
+    </script>
+
+    <script>
+        // function Hitung(startingElement) {
+        //     $(document).on("input", startingElement, function() {
+        //         var currentRow = $(this).closest('tr');
+        //         var satuan = currentRow.find('select[name="satuan[]"]').val();
+        //         var jumlah = parseFloat(currentRow.find(".jumlah").val()) || 0;
+        //         var harga_pcs = parseFloat(currentRow.find(".harga_pcs").val().replace(/\./g, '')) || 0;
+        //         var harga_dus = parseFloat(currentRow.find(".harga_dus").val().replace(/\./g, '')) || 0;
+
+        //         if (satuan === 'pcs') {
+        //             var harga_jual = harga_pcs * jumlah;
+        //         } else if (satuan === 'dus') {
+        //             var harga_jual = harga_dus * jumlah;
+        //         } else {
+        //             // Handle other cases if needed
+        //             var harga_jual = 0;
+        //         }
+
+        //         currentRow.find(".total").val(harga_jual.toLocaleString('id-ID'));
+
+        //         updateGrandTotal();
+        //     });
+        // }
+
+        function Hitung(startingElement) {
+            function updateTotal(currentRow) {
+                var satuan = currentRow.find('select[name="satuan[]"]').val();
+                var jumlah = parseFloat(currentRow.find(".jumlah").val()) || 0;
+                var harga_pcs = parseFloat(currentRow.find(".harga_pcs").val().replace(/\./g, '')) || 0;
+                var harga_dus = parseFloat(currentRow.find(".harga_dus").val().replace(/\./g, '')) || 0;
+
+                var harga_jual = 0;
+
+                if (satuan === 'pcs') {
+                    harga_jual = harga_pcs * jumlah;
+                } else if (satuan === 'dus') {
+                    harga_jual = harga_dus * jumlah;
+                }
+
+                currentRow.find(".total").val(harga_jual.toLocaleString('id-ID'));
+                updateGrandTotal();
+            }
+
+            $(document).on("input", startingElement, function() {
+                var currentRow = $(this).closest('tr');
+                updateTotal(currentRow);
+            });
+
+            $(document).on("change", 'select[name="satuan[]"]', function() {
+                var currentRow = $(this).closest('tr');
+                updateTotal(currentRow);
+            });
+        }
+
+        function updateGrandTotal() {
+            var grandTotal = 0;
+            $('input[name^="total"]').each(function() {
+                var nominalValue = parseFloat($(this).val().replace(/\./g, '')) || 0;
+                grandTotal += nominalValue;
+            });
+            $('#grand_total').val(grandTotal.toLocaleString('id-ID'));
+        }
+
+        $(document).ready(function() {
+            Hitung(".jumlah");
+            Hitung(".harga_dus");
+            updateGrandTotal();
+        });
     </script>
 
     <script>
@@ -421,7 +549,7 @@
 
             if (jumlah_barang === 0) {
                 var itembarangs = '<tr>';
-                itembarangs += '<td class="text-center" colspan="5">- Barang belum ditambahkan -</td>';
+                itembarangs += '<td class="text-center" colspan="9">- Barang belum ditambahkan -</td>';
                 itembarangs += '</tr>';
                 $('#tabel-barang').html(itembarangs);
             } else {
@@ -430,19 +558,29 @@
                     urutan[i].innerText = i + 1;
                 }
             }
+
+            updateGrandTotal()
         }
 
         function itemBarang(urutan, key, value = null) {
             var barang_id = '';
             var kode_barang = '';
             var nama_barang = '';
+            var harga_pcs = '';
+            var harga_dus = '';
+            var satuan = '';
             var jumlah = '';
+            var total = '';
 
             if (value !== null) {
                 barang_id = value.barang_id;
                 kode_barang = value.kode_barang;
                 nama_barang = value.nama_barang;
+                harga_pcs = value.harga_pcs;
+                harga_dus = value.harga_dus;
+                satuan = value.satuan;
                 jumlah = value.jumlah;
+                total = value.total;
             }
 
             // urutan 
@@ -478,14 +616,61 @@
             itembarangs += '</div>';
             itembarangs += '</td>';
 
+            // harga_pcs 
+            itembarangs += '<td>';
+            itembarangs += '<div class="form-group">'
+            itembarangs +=
+                '<input type="text" class="form-control harga_pcs" readonly style="font-size:14px" id="harga_pcs-' +
+                urutan +
+                '" name="harga_pcs[]" value="' + harga_pcs + '" ';
+            itembarangs += '</div>';
+            itembarangs += '</td>';
+
+            // harga_dus 
+            itembarangs += '<td>';
+            itembarangs += '<div class="form-group">'
+            itembarangs +=
+                '<input type="text" class="form-control harga_dus" style="font-size:14px" readonly  id="harga_dus-' +
+                urutan +
+                '" name="harga_dus[]" value="' + harga_dus + '" ';
+            itembarangs += '</div>';
+            itembarangs += '</td>';
+
+
+            // satuan
+            itembarangs += '<td>';
+            itembarangs += '<div class="form-group">';
+            itembarangs += '<select style="font-size:14px" class="form-control" id="satuan-' + urutan +
+                '" name="satuan[]">';
+            itembarangs += '<option value="">- Pilih Satuan -</option>';
+            itembarangs += '<option value="pcs"' + (satuan === 'pcs' ? ' selected' : '') + '>pcs</option>';
+            itembarangs += '<option value="dus"' + (satuan === 'dus' ? ' selected' : '') +
+                '>dus</option>';
+            itembarangs += '</select>';
+            itembarangs += '</div>';
+            itembarangs += '</td>';
+
             // jumlah 
             itembarangs += '<td>';
             itembarangs += '<div class="form-group">'
-            itembarangs += '<input type="number" class="form-control" style="font-size:14px" id="jumlah-' +
+            itembarangs +=
+                '<input type="text" class="form-control jumlah" style="font-size:14px"  id="jumlah-' +
                 urutan +
                 '" name="jumlah[]" value="' + jumlah + '" ';
             itembarangs += '</div>';
             itembarangs += '</td>';
+
+
+            // total 
+            itembarangs += '<td>';
+            itembarangs += '<div class="form-group">'
+            itembarangs +=
+                '<input type="text" class="form-control total" readonly style="font-size:14px" id="total-' +
+                urutan +
+                '" name="total[]" value="' + total + '" ';
+            itembarangs += '</div>';
+            itembarangs += '</td>';
+
 
             itembarangs += '<td style="width: 100px">';
             itembarangs += '<button type="button" class="btn btn-primary btn-sm" onclick="barang(' + urutan +

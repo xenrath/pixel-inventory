@@ -72,6 +72,7 @@
                                 <th>Tanggal</th>
                                 <th>Nama Supplier</th>
                                 <th>Nama Sales</th>
+                                <th>Grand Total</th>
                                 <th class="text-center" width="120">Opsi</th>
                             </tr>
                         </thead>
@@ -82,6 +83,7 @@
                                 <td>{{ $pengeluaran->tanggal }}</td>
                                 <td>{{ $pengeluaran->supplier->nama_supp }}</td>
                                 <td>{{ $pengeluaran->user->nama }}</td>
+                                <td> {{ number_format($pengeluaran->grand_total, 0, ',', '.') }}</td>
                                 <td class="text-center">
                                     <a href="{{ url('admin/pengeluaran/cetak-pdf/' . $pengeluaran->id) }}"
                                         class="btn btn-primary btn-sm">
@@ -112,7 +114,8 @@
                                         <div class="modal-footer justify-content-between">
                                             <button type="button" class="btn btn-default"
                                                 data-dismiss="modal">Batal</button>
-                                            <form action="{{ url('admin/pengeluaran/' . $pengeluaran->id) }}" method="POST">
+                                            <form action="{{ url('admin/pengeluaran/' . $pengeluaran->id) }}"
+                                                method="POST">
                                                 @csrf
                                                 @method('delete')
                                                 <button type="submit" class="btn btn-danger">Hapus</button>

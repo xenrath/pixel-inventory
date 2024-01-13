@@ -175,7 +175,7 @@
     <br>
     <table cellpadding="2" cellspacing="0">
         <tr>
-            <td class="info-catatan2" style="font-size: 15px;">Toko Riva Jaya</td>
+            <td class="info-catatan2" style="font-size: 15px;">Toko Riva Jaya Abadi</td>
             <td class="info-catatan2" style="font-size: 15px; margin-left: 40px; display: block;">Nama Supplier</td>
             <td style="text-align: left; font-size: 15px;">
                 <span class="content2">
@@ -248,10 +248,12 @@
     <table style="width: 100%; border-top: 1px solid black;" cellpadding="2" cellspacing="0">
         <tr>
             <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">No.</td>
-            <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">Kode Barang</td>
-            <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">Nama Barang</td>
-            {{-- <td class="td" style="text-align: left; padding: 5px; font-size: 15px;">Satuan</td> --}}
+            <td class="td" style="text-align: left; padding: 5px; font-size: 15px;">Kode Barang</td>
+            <td class="td" style="text-align: left; padding: 5px; font-size: 15px;">Nama Barang</td>
+            <td class="td" style="text-align: left; padding: 5px; font-size: 15px;">Satuan</td>
+            <td class="td" style="text-align: right; padding: 5px; font-size: 15px;">Harga</td>
             <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">Jumlah</td>
+            <td class="td" style="text-align: right; padding: 5px; font-size: 15px;">Total</td>
         </tr>
         <tr style="border-bottom: 1px solid black;">
             <td colspan="8" style="padding: 0px;"></td>
@@ -264,27 +266,39 @@
             <tr>
                 <td class="td" style="text-align: center;  font-size: 15px;">{{ $loop->iteration }}
                 </td>
-                <td class="td" style="text-align: center;  font-size: 15px;">{{ $item->kode_barang }}</td>
-                <td class="info-text info-left" style="font-size: 15px; text-align: center;">
+                <td class="td" style="text-align: left;  font-size: 15px;">{{ $item->kode_barang }}</td>
+                <td class="info-text info-left" style="font-size: 15px; text-align: left;">
                     {{ $item->nama_barang }}
                 </td>
-                {{-- <td class="td" style="text-align: left; font-size: 15px;">
+                <td class="td" style="text-align: left; font-size: 15px;">
                     {{ $item->satuan }}
-                </td> --}}
+                </td>
+                @if ($item->satuan == 'pcs')
+                    <td class="td" style="text-align: right; font-size: 15px;">
+                        {{ number_format($item->harga_pcs, 0, ',', '.') }}
+                    </td>
+                @else
+                    <td class="td" style="text-align: right; font-size: 15px;">
+                        {{ number_format($item->harga_dus, 0, ',', '.') }}
+                    </td>
+                @endif
                 <td class="td" style="text-align: center;  font-size: 15px;">
                     {{ $item->jumlah }}
+                </td>
+                <td class="td" style="text-align: right;  font-size: 15px;">
+                    {{ number_format($item->total, 0, ',', '.') }}
                 </td>
             </tr>
             @php
                 $totalQuantity += 1;
-                $totalHarga += $item->harga;
+                $totalHarga += $item->total;
             @endphp
         @endforeach
         <tr style="border-bottom: 1px solid black;">
-            <td colspan="4" style="padding: 0px;"></td>
+            <td colspan="7" style="padding: 0px;"></td>
         </tr>
-        {{-- <tr>
-            <td colspan="4"
+        <tr>
+            <td colspan="6"
                 style="text-align: right; font-weight: bold; margin-top:5px; margin-bottom:5px; font-size: 15px;">Sub
                 Total
                 Rp.
@@ -292,7 +306,7 @@
             <td class="td" style="text-align: right; font-weight: bold; font-size: 15px;">
                 {{ number_format($totalHarga, 0, ',', '.') }}
             </td>
-        </tr> --}}
+        </tr>
     </table>
     <br>
     <table width="100%">
@@ -301,7 +315,7 @@
                 <div class="info-catatan" style="max-width: 230px;">
                     <table>
                         <tr>
-                            <td class="info-catatan2" style="font-size: 15px;">Nama Supplier</td>
+                            <td class="info-catatan2" style="font-size: 15px;">Nama Bank</td>
                             <td class="info-item" style="font-size: 15px;">:</td>
                             <td class="info-text info-left" style="font-size: 15px;">
                                 {{ $pengeluaran->supplier->nama_bank }}
