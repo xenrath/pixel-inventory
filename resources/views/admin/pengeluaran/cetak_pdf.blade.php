@@ -212,7 +212,7 @@
             </td>
         </tr>
         <tr>
-            <td class="info-text info-left" style="font-size: 15px;">Telp  081568445462
+            <td class="info-text info-left" style="font-size: 15px;">Telp 081568445462
             </td>
             <td class="info-catatan2" style="font-size: 15px; margin-left: 40px; display: block;">ID Supplier</td>
 
