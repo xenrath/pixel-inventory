@@ -19,8 +19,11 @@ return new class extends Migration
             $table->foreign('barang_id')->references('id')->on('barangs')->onDelete('set null');
             $table->string('kode_barang')->nullable();
             $table->string('nama_barang')->nullable();
+            $table->string('harga_pcs')->nullable();
+            $table->string('harga_dus')->nullable();
+            $table->string('satuan')->nullable();
             $table->string('jumlah')->nullable();
-            $table->string('keterangan')->nullable();
+            $table->string('total')->nullable();
             $table->timestamps();
         });
     }

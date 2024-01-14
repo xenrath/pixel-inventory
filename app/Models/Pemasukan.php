@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 class Pemasukan extends Model
 {
     use HasFactory;
+    use LogsActivity;
 
     protected $fillable = [
         'kode_pemasukan',
@@ -18,6 +20,7 @@ class Pemasukan extends Model
         'telp',
         'alamat',
         'nama',
+        'grand_total',
         'telp_sales',
         'alamat_sales',
         'keterangan',
@@ -25,6 +28,12 @@ class Pemasukan extends Model
         'tanggal_awal',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable('*');
+    }
+    
     public function supplier()
     {
         return $this->belongsTo(Supplier::class);

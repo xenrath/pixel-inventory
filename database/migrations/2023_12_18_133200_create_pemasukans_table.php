@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('telp_sales')->nullable();
             $table->string('alamat_sales')->nullable();
             $table->string('keterangan')->nullable();
+            $table->string('grand_total')->nullable();
             $table->string('tanggal')->nullable();
             $table->string('tanggal_awal')->nullable();
             $table->timestamps();

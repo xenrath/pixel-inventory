@@ -11,6 +11,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Supplier extends Model
 {
     use HasFactory;
+    use LogsActivity;
 
     protected $fillable = [
         'kode_supplier',
@@ -23,9 +24,14 @@ class Supplier extends Model
         'tanggal_awal',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable('*');
+    }
+
     public static function getId()
     {
         return $getId = DB::table('suppliers')->orderBy('id', 'DESC')->take(1)->get();
     }
-
 }
