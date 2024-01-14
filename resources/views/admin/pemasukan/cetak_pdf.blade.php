@@ -185,7 +185,7 @@
             </td>
         </tr>
         <tr>
-            <td class="info-text info-left" style="font-size: 15px;">JL. xxxxxxxxxx
+            <td class="info-text info-left" style="font-size: 15px;">Jl. Pojosumarto 2
                 {{-- <br>
                 SLAWI TEGAL <br>
                 Telp/ Fax 02836195326 02836195187 --}}
@@ -200,7 +200,7 @@
             </td>
         </tr>
         <tr>
-            <td class="info-text info-left" style="font-size: 15px;">SLAWI TEGAL
+            <td class="info-text info-left" style="font-size: 15px;">Talang, Tegal
             </td>
             <td class="info-catatan2" style="font-size: 15px; margin-left: 40px; display: block;">Telp / Hp</td>
             <td style="text-align: left; font-size: 15px;">
@@ -212,7 +212,7 @@
             </td>
         </tr>
         <tr>
-            <td class="info-text info-left" style="font-size: 15px;">Telp/ Fax 87857050 46346346436
+            <td class="info-text info-left" style="font-size: 15px;">Telp  081568445462
             </td>
             <td class="info-catatan2" style="font-size: 15px; margin-left: 40px; display: block;">ID Supplier</td>
 
