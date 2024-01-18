@@ -12,6 +12,7 @@ class Barang extends Model
 {
     use HasFactory;
     use LogsActivity;
+    
     protected $fillable = [
         'kode_barang',
         'nama_barang',
@@ -19,6 +20,8 @@ class Barang extends Model
         'satuan',
         'harga_pcs',
         'harga_dus',
+        'harga_renceng',
+        'harga_pack',
         'gambar',
         'deskripsi',
         'tanggal_awal',

@@ -81,7 +81,13 @@
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $pengeluaran->kode_pengeluaran }}</td>
                                 <td>{{ $pengeluaran->tanggal }}</td>
-                                <td>{{ $pengeluaran->supplier->nama_supp }}</td>
+                                <td>
+                                    @if ($pemasukan->supplier_id)
+                                        {{ $pemasukan->supplier->nama_supp }}
+                                    @else
+                                        {{ $pemasukan->nama_supp }}
+                                    @endif
+                                </td>
                                 <td>{{ $pengeluaran->user->nama }}</td>
                                 <td> {{ number_format($pengeluaran->grand_total, 0, ',', '.') }}</td>
                                 <td class="text-center">

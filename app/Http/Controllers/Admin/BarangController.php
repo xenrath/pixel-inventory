@@ -12,7 +12,7 @@ class BarangController extends Controller
 {
     public function index()
     {
-        $barangs = Barang::all();
+        $barangs = Barang::orderBy('nama_barang')->get();
         return view('admin.barang.index', compact('barangs'));
     }
 
@@ -23,25 +23,25 @@ class BarangController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'nama_barang' => 'required',
-                'jumlah' => 'required',
-                'satuan' => 'required',
-                'harga_pcs' => 'required',
-                'harga_dus' => 'required',
-                'gambar' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
-            ],
-            [
-                'nama_barang.required' => 'Masukkan nama barang',
-                'jumlah.required' => 'Masukkan jumlah',
-                'satuan.required' => 'Masukkan satuan',
-                'harga_pcs.required' => 'Masukkan harga per pcs',
-                'harga_dus.required' => 'Masukkan harga per dus',
-                'gambar.image' => 'Gambar yang dimasukan salah!',
-            ]
-        );
+        $validator = Validator::make($request->all(), [
+            'nama_barang' => 'required',
+            'jumlah' => 'required',
+            'satuan' => 'required',
+            'harga_pcs' => 'required',
+            'harga_dus' => 'required',
+            'harga_renceng' => 'required',
+            'harga_pack' => 'required',
+            'gambar' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+        ], [
+            'nama_barang.required' => 'Masukkan nama barang',
+            'jumlah.required' => 'Masukkan jumlah',
+            'satuan.required' => 'Masukkan satuan',
+            'harga_pcs.required' => 'Masukkan harga per pcs',
+            'harga_dus.required' => 'Masukkan harga per dus',
+            'harga_renceng.required' => 'Masukkan harga per renceng',
+            'harga_pack.required' => 'Masukkan harga per pack',
+            'gambar.image' => 'Gambar yang dimasukan salah!'
+        ]);
 
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
@@ -56,13 +56,10 @@ class BarangController extends Controller
             $namaGambar = '';
         }
 
-        Barang::create(array_merge(
-            $request->all(),
-            [
-                'gambar' => $namaGambar,
-                'kode_barang' => $this->kode(),
-            ]
-        ));
+        Barang::create(array_merge($request->all(), [
+            'gambar' => $namaGambar,
+            'kode_barang' => $this->kode(),
+        ]));
 
         return redirect('admin/barang')->with('success', 'Berhasil menambahkan barang');
     }
@@ -96,25 +93,25 @@ class BarangController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'nama_barang' => 'required',
-                'jumlah' => 'required',
-                'satuan' => 'required',
-                'harga_pcs' => 'required',
-                'harga_dus' => 'required',
-                'gambar' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
-            ],
-            [
-                'nama_barang.required' => 'Masukkan nama barang',
-                'jumlah.required' => 'Masukkan jumlah',
-                'satuan.required' => 'Masukkan satuan',
-                'harga_pcs.required' => 'Masukkan harga per pcs',
-                'harga_dus.required' => 'Masukkan harga per dus',
-                'gambar.image' => 'Gambar yang dimasukan salah!',
-            ]
-        );
+        $validator = Validator::make($request->all(), [
+            'nama_barang' => 'required',
+            'jumlah' => 'required',
+            'satuan' => 'required',
+            'harga_pcs' => 'required',
+            'harga_dus' => 'required',
+            'harga_renceng' => 'required',
+            'harga_pack' => 'required',
+            'gambar' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+        ], [
+            'nama_barang.required' => 'Masukkan nama barang',
+            'jumlah.required' => 'Masukkan jumlah',
+            'satuan.required' => 'Masukkan satuan',
+            'harga_pcs.required' => 'Masukkan harga per pcs',
+            'harga_dus.required' => 'Masukkan harga per dus',
+            'harga_renceng.required' => 'Masukkan harga per renceng',
+            'harga_pack.required' => 'Masukkan harga per pack',
+            'gambar.image' => 'Gambar yang dimasukan salah!',
+        ]);
 
         if ($validator->fails()) {
             $error = $validator->errors()->all();
@@ -146,16 +143,11 @@ class BarangController extends Controller
 
     public function stok(Request $request, $id)
     {
-
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'jumlah' => 'required',
-            ],
-            [
-                'jumlah.required' => 'Masukkan jumlah',
-            ]
-        );
+        $validator = Validator::make($request->all(), [
+            'jumlah' => 'required',
+        ], [
+            'jumlah.required' => 'Masukkan jumlah',
+        ]);
 
         if ($validator->fails()) {
             $error = $validator->errors()->all();

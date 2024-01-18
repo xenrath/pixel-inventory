@@ -73,7 +73,22 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="harga_renceng">Harga / renceng</label>
+                                    <input type="number" class="form-control" id="harga_renceng" name="harga_renceng"
+                                        placeholder="Masukan harga renceng" value="{{ old('harga_renceng') }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="harga_pack">Harga / pack</label>
+                                    <input type="number" class="form-control" id="harga_pack" name="harga_pack"
+                                        placeholder="Masukan harga pack" value="{{ old('harga_pack') }}">
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="gambar">Gambar <small>(Kosongkan saja jika tidak
                                     ingin menambahkan)</small></label>

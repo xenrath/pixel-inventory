@@ -29,7 +29,7 @@
                     <div class="small-box bg-info">
                         <div class="inner">
                             <h3>
-                                10&nbsp;data
+                                {{ $barang }}&nbsp;data
                             </h3>
                             <p>Data Barang</p>
                         </div>
@@ -44,7 +44,7 @@
                     <div class="small-box bg-primary">
                         <div class="inner">
                             <h3>
-                                10&nbsp;data
+                                {{ $pemasukan }}&nbsp;data
                             </h3>
                             <p>Data Pemasukan</p>
                         </div>
@@ -59,7 +59,7 @@
                     <div class="small-box bg-danger">
                         <div class="inner">
                             <h3>
-                                10&nbsp;data
+                                {{ $pengeluaran }}&nbsp;data
                             </h3>
                             <p>Data Pengeluaran</p>
                         </div>

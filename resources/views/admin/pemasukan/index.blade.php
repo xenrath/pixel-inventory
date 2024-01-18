@@ -81,7 +81,13 @@
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $pemasukan->kode_pemasukan }}</td>
                                 <td>{{ $pemasukan->tanggal }}</td>
-                                <td>{{ $pemasukan->supplier->nama_supp }}</td>
+                                <td>
+                                    @if ($pemasukan->supplier_id)
+                                        {{ $pemasukan->supplier->nama_supp }}
+                                    @else
+                                        {{ $pemasukan->nama_supp }}
+                                    @endif
+                                </td>
                                 <td>{{ $pemasukan->user->nama }}</td>
                                 <td> {{ number_format($pemasukan->grand_total, 0, ',', '.') }}</td>
                                 <td class="text-center">
@@ -89,10 +95,10 @@
                                         class="btn btn-primary btn-sm">
                                         <i class="fas fa-print"></i>
                                     </a>
-                                    <a href="{{ url('admin/pemasukan/' . $pemasukan->id . '/edit') }}"
+                                    {{-- <a href="{{ url('admin/pemasukan/' . $pemasukan->id . '/edit') }}"
                                         class="btn btn-warning btn-sm">
                                         <i class="fas fa-edit"></i>
-                                    </a>
+                                    </a> --}}
                                     <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal"
                                         data-target="#modal-hapus-{{ $pemasukan->id }}">
                                         <i class="fas fa-trash"></i>
