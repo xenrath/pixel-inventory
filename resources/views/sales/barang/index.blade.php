@@ -177,8 +177,8 @@
                 </div>
                 @if ($barangs->total() > 10)
                     <div class="card-footer">
-                        <div class="pagination">
-                            {{ $barangs->appends(Request::all())->links('pagination::bootstrap-4') }}
+                        <div class="pagination float-right">
+                            {{ $barangs->appends(Request::all())->links('pagination::simple-bootstrap-4') }}
                         </div>
                     </div>
                 @endif
