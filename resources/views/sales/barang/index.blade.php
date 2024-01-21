@@ -46,132 +46,134 @@
                             </div>
                         </div>
                     </form>
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th class="text-center" style="width: 40px">No</th>
-                                <th>Nama Barang</th>
-                                <th>Stok</th>
-                                <th class="text-center" style="width: 40px">Opsi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($barangs as $key => $barang)
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
                                 <tr>
-                                    <td class="text-center">{{ $barangs->firstItem() + $key }}</td>
-                                    <td class="text-wrap">{{ $barang->nama_barang }}</td>
-                                    <td>
-                                        {{ $barang->jumlah }} {{ $barang->satuan }}
-                                    </td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info" data-toggle="modal"
-                                            data-target="#modal-detail-{{ $barang->id }}">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                    </td>
+                                    <th class="text-center" style="width: 40px">No</th>
+                                    <th>Nama Barang</th>
+                                    <th>Stok</th>
+                                    <th class="text-center" style="width: 40px">Opsi</th>
                                 </tr>
-                                <div class="modal fade" id="modal-detail-{{ $barang->id }}">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Detail Barang</h4>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <div class="row mb-2">
-                                                                    <div class="col-12">
-                                                                        <strong>Kode</strong>
-                                                                    </div>
-                                                                    <div class="col-12">
-                                                                        {{ $barang->kode_barang }}
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mb-2">
-                                                                    <div class="col-12">
-                                                                        <strong>Nama Barang</strong>
-                                                                    </div>
-                                                                    <div class="col-12">
-                                                                        {{ $barang->nama_barang }}
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mb-2">
-                                                                    <div class="col-12">
-                                                                        <strong>Stok</strong>
-                                                                    </div>
-                                                                    <div class="col-12">
-                                                                        {{ $barang->jumlah }} {{ $barang->satuan }}
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mb-2">
-                                                                    <div class="col-12">
-                                                                        <strong>Keterangan</strong>
-                                                                    </div>
-                                                                    <div class="col-12">
-                                                                        {{ $barang->keterangan ?? '-' }}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div class="row mb-2">
-                                                                    <div class="col-12">
-                                                                        <strong>Harga Pcs</strong>
-                                                                    </div>
-                                                                    <div class="col-12">
-                                                                        @rupiah($barang->harga_pcs)
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mb-2">
-                                                                    <div class="col-12">
-                                                                        <strong>Harga Dus</strong>
-                                                                    </div>
-                                                                    <div class="col-12">
-                                                                        @rupiah($barang->harga_dus)
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mb-2">
-                                                                    <div class="col-12">
-                                                                        <strong>Harga Renceng</strong>
-                                                                    </div>
-                                                                    <div class="col-12">
-                                                                        @rupiah($barang->harga_renceng)
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mb-2">
-                                                                    <div class="col-12">
-                                                                        <strong>Harga Pack</strong>
-                                                                    </div>
-                                                                    <div class="col-12">
-                                                                        @rupiah($barang->harga_pack)
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    @if ($barang->gambar)
-                                                        <div class="col">
-                                                            <img src="{{ asset('storage/uploads/' . $barang->gambar) }}"
-                                                                alt="">
-                                                        </div>
-                                                    @endif
+                            </thead>
+                            <tbody>
+                                @foreach ($barangs as $key => $barang)
+                                    <tr>
+                                        <td class="text-center">{{ $barangs->firstItem() + $key }}</td>
+                                        <td class="text-wrap">{{ $barang->nama_barang }}</td>
+                                        <td>
+                                            {{ $barang->jumlah }} {{ $barang->satuan }}
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-info" data-toggle="modal"
+                                                data-target="#modal-detail-{{ $barang->id }}">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <div class="modal fade" id="modal-detail-{{ $barang->id }}">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Detail Barang</h4>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default"
-                                                    data-dismiss="modal">Tutup</button>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-12">
+                                                                            <strong>Kode</strong>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            {{ $barang->kode_barang }}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-12">
+                                                                            <strong>Nama Barang</strong>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            {{ $barang->nama_barang }}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-12">
+                                                                            <strong>Stok</strong>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            {{ $barang->jumlah }} {{ $barang->satuan }}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-12">
+                                                                            <strong>Keterangan</strong>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            {{ $barang->keterangan ?? '-' }}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-12">
+                                                                            <strong>Harga Pcs</strong>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            @rupiah($barang->harga_pcs)
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-12">
+                                                                            <strong>Harga Dus</strong>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            @rupiah($barang->harga_dus)
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-12">
+                                                                            <strong>Harga Renceng</strong>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            @rupiah($barang->harga_renceng)
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-12">
+                                                                            <strong>Harga Pack</strong>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            @rupiah($barang->harga_pack)
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @if ($barang->gambar)
+                                                            <div class="col">
+                                                                <img src="{{ asset('storage/uploads/' . $barang->gambar) }}"
+                                                                    alt="">
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default"
+                                                        data-dismiss="modal">Tutup</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 @if ($barangs->total() > 10)
                     <div class="card-footer">
