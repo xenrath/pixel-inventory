@@ -7,7 +7,7 @@ Auth::routes();
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
 
-Route::middleware('admin')->prefix('admin')->group(function() {
+Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\HomeController::class, 'index']);
     Route::resource('user', \App\Http\Controllers\Admin\UserController::class);
     Route::resource('barang', \App\Http\Controllers\Admin\BarangController::class);
@@ -20,7 +20,7 @@ Route::middleware('admin')->prefix('admin')->group(function() {
 
     Route::get('pemasukan/get_item/{id}', [\App\Http\Controllers\Admin\PemasukanController::class, 'get_item']);
     Route::get('pemasukan', [\App\Http\Controllers\Admin\PemasukanController::class, 'index']);
-    
+
     Route::get('pengeluaran', [\App\Http\Controllers\Admin\PengeluaranController::class, 'index']);
     Route::get('laporan', [\App\Http\Controllers\Admin\LaporanController::class, 'index']);
     Route::get('pemasukan/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PemasukanController::class, 'cetakpdf']);
@@ -31,13 +31,13 @@ Route::middleware('admin')->prefix('admin')->group(function() {
 });
 
 
-Route::middleware('sales')->prefix('sales')->group(function() {
+Route::middleware('sales')->prefix('sales')->group(function () {
     Route::get('/', [\App\Http\Controllers\Sales\HomeController::class, 'index']);
     Route::resource('barang', \App\Http\Controllers\Sales\BarangController::class);
     Route::resource('laporan', \App\Http\Controllers\Sales\LaporanController::class);
     Route::get('laporan', [\App\Http\Controllers\Sales\LaporanController::class, 'index']);
-    Route::resource('pemasukan', \App\Http\Controllers\Sales\PemasukanController::class);
-    Route::get('pemasukan/cetak-pdf/{id}', [\App\Http\Controllers\Sales\PemasukanController::class, 'cetakpdf']);
-    Route::get('pemasukan', [\App\Http\Controllers\Sales\PemasukanController::class, 'index']);
 
+    Route::get('pemasukan/get_item/{id}', [\App\Http\Controllers\Sales\PemasukanController::class, 'get_item']);
+    Route::get('pemasukan/cetak-pdf/{id}', [\App\Http\Controllers\Sales\PemasukanController::class, 'cetakpdf']);
+    Route::resource('pemasukan', \App\Http\Controllers\Sales\PemasukanController::class);
 });

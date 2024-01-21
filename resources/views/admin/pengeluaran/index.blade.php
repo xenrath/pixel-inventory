@@ -82,10 +82,10 @@
                                 <td>{{ $pengeluaran->kode_pengeluaran }}</td>
                                 <td>{{ $pengeluaran->tanggal }}</td>
                                 <td>
-                                    @if ($pemasukan->supplier_id)
-                                        {{ $pemasukan->supplier->nama_supp }}
+                                    @if ($pengeluaran->supplier_id)
+                                        {{ $pengeluaran->supplier->nama_supp }}
                                     @else
-                                        {{ $pemasukan->nama_supp }}
+                                        {{ $pengeluaran->nama_supp }}
                                     @endif
                                 </td>
                                 <td>{{ $pengeluaran->user->nama }}</td>
@@ -95,10 +95,10 @@
                                         class="btn btn-primary btn-sm">
                                         <i class="fas fa-print"></i>
                                     </a>
-                                    <a href="{{ url('admin/pengeluaran/' . $pengeluaran->id . '/edit') }}"
+                                    {{-- <a href="{{ url('admin/pengeluaran/' . $pengeluaran->id . '/edit') }}"
                                         class="btn btn-warning btn-sm">
                                         <i class="fas fa-edit"></i>
-                                    </a>
+                                    </a> --}}
                                     <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal"
                                         data-target="#modal-hapus-{{ $pengeluaran->id }}">
                                         <i class="fas fa-trash"></i>

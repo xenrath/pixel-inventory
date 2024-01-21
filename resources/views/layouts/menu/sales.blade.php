@@ -25,7 +25,7 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ url('sales/laporan') }}" class="nav-link {{ request()->is('laporan*') ? 'active' : '' }}">
+    <a href="{{ url('sales/laporan') }}" class="nav-link {{ request()->is('sales/laporan*') ? 'active' : '' }}">
         <i class="nav-icon fas fa-clipboard-check"></i>
         <p>
             Data Laporan

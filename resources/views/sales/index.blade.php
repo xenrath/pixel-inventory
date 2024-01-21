@@ -29,7 +29,7 @@
                     <div class="small-box bg-info">
                         <div class="inner">
                             <h3>
-                                10&nbsp;data
+                                {{ $barang }}&nbsp;data
                             </h3>
                             <p>Data Barang</p>
                         </div>

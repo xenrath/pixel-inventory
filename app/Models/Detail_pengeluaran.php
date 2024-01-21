@@ -20,6 +20,8 @@ class Detail_pengeluaran extends Model
         'nama_barang',
         'harga_pcs',
         'harga_dus',
+        'harga_renceng',
+        'harga_pack',
         'satuan',
         'jumlah',
         'total',

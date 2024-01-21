@@ -282,12 +282,12 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center" style="width: 40px">#</th>
-                                        <th>Nama Barang</th>
+                                        <th>Barang</th>
+                                        <th>Jumlah</th>
                                         <th>Harga Pcs</th>
                                         <th>Harga Dus</th>
                                         <th>Harga Renceng</th>
                                         <th>Harga Pack</th>
-                                        <th>Jumlah</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -301,11 +301,11 @@
                                                 </div>
                                             </td>
                                             <td>{{ $barang->nama_barang }}</td>
-                                            <td>{{ $barang->harga_pcs }}</td>
-                                            <td>{{ $barang->harga_dus }}</td>
-                                            <td>{{ $barang->harga_renceng }}</td>
-                                            <td>{{ $barang->harga_pack }}</td>
                                             <td>{{ $barang->jumlah }} {{ $barang->satuan }}</td>
+                                            <td>@rupiah($barang->harga_pcs)</td>
+                                            <td>@rupiah($barang->harga_dus)</td>
+                                            <td>@rupiah($barang->harga_renceng)</td>
+                                            <td>@rupiah($barang->harga_pack)</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('nama_barang')->nullable();
             $table->string('harga_pcs')->nullable();
             $table->string('harga_dus')->nullable();
+            $table->string('harga_renceng')->nullable();
+            $table->string('harga_pack')->nullable();
             $table->string('satuan')->nullable();
             $table->string('jumlah')->nullable();
             $table->string('total')->nullable();

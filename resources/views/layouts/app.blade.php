@@ -95,6 +95,8 @@
                                 <i class="nav-icon fas fa-user-edit"></i>
                                 <p>Update Profile</p>
                             </a>
+                        </li>
+                        <br>
                         <li class="nav-header">
                             <button type="button" data-toggle="modal" data-target="#modal-logout"
                                 class="btn btn-danger btn-block">Logout</button>

@@ -41,8 +41,7 @@ class LaporanController extends Controller
 
     public function create()
     {
-
-        return view('sales/laporan.create');
+        return view('sales.laporan.create');
     }
 
     public function store(Request $request)
@@ -82,7 +81,7 @@ class LaporanController extends Controller
     public function edit($id)
     {
         $laporan = Laporan::where('id', $id)->first();
-        return view('sales/laporan.update', compact('laporan'));
+        return view('sales.laporan.update', compact('laporan'));
     }
 
     public function show($id)
