@@ -370,13 +370,13 @@
             col += '<select class="form-control" id="harga-' + data.id + '" name="harga[' + data.id +
                 ']" onchange="get_total(' + data.id + ')">';
             col += '<option value="">Pilih</option>';
-            col += '<option value="' + data.harga_pcs + '" ' + check_pcs + '>' + rupiah(data.harga_pcs, "Rp") +
+            col += '<option value="' + data.harga_pcs + '" ' + check_pcs + '>' + rupiah(data.harga_pcs ?? "0", "Rp") +
                 ' (pcs)</option>';
-            col += '<option value="' + data.harga_dus + '" ' + check_dus + '>' + rupiah(data.harga_dus, "Rp") +
+            col += '<option value="' + data.harga_dus + '" ' + check_dus + '>' + rupiah(data.harga_dus ?? "0", "Rp") +
                 ' (dus)</option>';
-            col += '<option value="' + data.harga_renceng + '" ' + check_renceng + '>' + rupiah(data.harga_renceng, "Rp") +
+            col += '<option value="' + data.harga_renceng + '" ' + check_renceng + '>' + rupiah(data.harga_renceng ?? "0", "Rp") +
                 ' (renceng)</option>';
-            col += '<option value="' + data.harga_pack + '" ' + check_pack + '>' + rupiah(data.harga_pack, "Rp") +
+            col += '<option value="' + data.harga_pack + '" ' + check_pack + '>' + rupiah(data.harga_pack ?? "0", "Rp") +
                 ' (pack)</option>';
             col += '</select>';
             col += '</div>';

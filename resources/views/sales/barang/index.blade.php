@@ -51,13 +51,13 @@
                             <thead>
                                 <tr>
                                     <th class="text-center" style="width: 40px">No</th>
-                                    <th>Nama Barang</th>
+                                    <th>Barang</th>
                                     <th>Stok</th>
                                     <th class="text-center" style="width: 40px">Opsi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($barangs as $key => $barang)
+                                @forelse ($barangs as $key => $barang)
                                     <tr>
                                         <td class="text-center">{{ $barangs->firstItem() + $key }}</td>
                                         <td class="text-wrap">{{ $barang->nama_barang }}</td>
@@ -170,7 +170,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td class="text-center" colspan="4">- Barang tidak ditemukan -</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
