@@ -51,7 +51,7 @@
                             <tr>
                                 <th class="text-center" style="width: 40px">No</th>
                                 <th>Nama Barang</th>
-                                <th style="width: 80px">Stok</th>
+                                <th>Stok</th>
                                 <th class="text-center" style="width: 40px">Opsi</th>
                             </tr>
                         </thead>

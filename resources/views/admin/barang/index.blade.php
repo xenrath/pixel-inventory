@@ -59,10 +59,8 @@
                                             {{ $barang->jumlah }}
                                             {{ $barang->satuan }}
                                         </td>
-                                        <td> {{ number_format($barang->harga_pcs, 0, ',', '.') }}
-                                        </td>
-                                        <td> {{ number_format($barang->harga_dus, 0, ',', '.') }}
-                                        </td>
+                                        <td>@rupiah($barang->harga_pcs)</td>
+                                        <td>@rupiah($barang->harga_dus)</td>
                                         <td class="text-center">
                                             <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal"
                                                 data-target="#modal-add-{{ $barang->id }}">
