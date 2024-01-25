@@ -119,7 +119,7 @@ class PengeluaranController extends Controller
         $format_tanggal = $tanggal1->format('d F Y');
         $tanggal = Carbon::now()->format('Y-m-d');
 
-        $barangs = Pengeluaran::create([
+        $pengeluaran = Pengeluaran::create([
             'supplier_id' => $request->supplier_id,
             'nama_supp' => $request->nama_supp,
             'telp' => $request->telp,
@@ -134,12 +134,12 @@ class PengeluaranController extends Controller
             'tanggal_awal' => $tanggal,
         ]);
 
-        if ($barangs) {
+        if ($pengeluaran) {
             foreach ($data_pembelians as $data_pesanan) {
                 $barang = Barang::where('id', $data_pesanan['id'])->first();
 
                 Detail_pengeluaran::create([
-                    'pemasukan_id' => $barangs->id,
+                    'pengeluaran_id' => $pengeluaran->id,
                     'barang_id' => $barang->id,
                     'kode_barang' => $barang->kode_barang,
                     'nama_barang' => $barang->nama_barang,
