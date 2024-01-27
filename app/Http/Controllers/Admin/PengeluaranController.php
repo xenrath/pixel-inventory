@@ -45,7 +45,7 @@ class PengeluaranController extends Controller
 
     public function create()
     {
-        $sales = User::all();
+        $sales = User::where('role', 'sales')->get();
         $suppliers = Supplier::all();
         $barangs = Barang::all();
 
