@@ -85,6 +85,7 @@ class PengeluaranController extends Controller
                 }
 
                 $harga = $request->harga[$id] ?? '';
+                $satuan = $request->satuan[$id] ?? '';
                 $jumlah = $request->jumlah[$id] ?? '';
                 $total = $request->total[$id] ?? '';
 
@@ -98,6 +99,7 @@ class PengeluaranController extends Controller
                     'harga_renceng' => $barang->harga_renceng,
                     'harga_pack' => $barang->harga_pack,
                     'harga' => $harga,
+                    'satuan' => $satuan,
                     'jumlah' => $jumlah,
                     'total' => $total,
                 ]);
@@ -147,7 +149,7 @@ class PengeluaranController extends Controller
                     'harga_dus' => $barang->harga_dus,
                     'harga_renceng' => $barang->harga_renceng,
                     'harga_pack' => $barang->harga_pack,
-                    'satuan' => $barang->satuan,
+                    'satuan' => $data_pesanan['satuan'],
                     'jumlah' => $data_pesanan['jumlah'],
                     'total' => $data_pesanan['total'],
                 ]);
@@ -185,7 +187,6 @@ class PengeluaranController extends Controller
 
     public function edit($id)
     {
-
         $pengeluaran = Pengeluaran::where('id', $id)->first();
         $details = Detail_pengeluaran::where('pengeluaran_id', $id)->get();
         $sales = User::all();

@@ -247,13 +247,11 @@
     {{-- <hr style="border-top: 0.5px solid black; margin: 3px 0;"> --}}
     <table style="width: 100%; border-top: 1px solid black;" cellpadding="2" cellspacing="0">
         <tr>
-            <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">No.</td>
-            <td class="td" style="text-align: left; padding: 5px; font-size: 15px;">Kode Barang</td>
-            <td class="td" style="text-align: left; padding: 5px; font-size: 15px;">Nama Barang</td>
-            <td class="td" style="text-align: left; padding: 5px; font-size: 15px;">Satuan</td>
-            <td class="td" style="text-align: right; padding: 5px; font-size: 15px;">Harga</td>
-            <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">Jumlah</td>
-            <td class="td" style="text-align: right; padding: 5px; font-size: 15px;">Total</td>
+            <td class="td" style="text-align: center; font-size: 15px;">No.</td>
+            <td class="td" style="font-size: 15px;">Nama Barang</td>
+            <td class="td" style="font-size: 15px;">Harga</td>
+            <td class="td" style="font-size: 15px;">Jumlah</td>
+            <td class="td" style="text-align: center; font-size: 15px;">Total</td>
         </tr>
         <tr style="border-bottom: 1px solid black;">
             <td colspan="8" style="padding: 0px;"></td>
@@ -264,29 +262,27 @@
         @endphp
         @foreach ($details as $item)
             <tr>
-                <td class="td" style="text-align: center;  font-size: 15px;">{{ $loop->iteration }}
+                <td class="td" style="text-align: center; font-size: 15px;">{{ $loop->iteration }}
                 </td>
-                <td class="td" style="text-align: left;  font-size: 15px;">{{ $item->kode_barang }}</td>
-                <td class="info-text info-left" style="font-size: 15px; text-align: left;">
+                <td class="info-text info-left" style="font-size: 15px; ">
                     {{ $item->nama_barang }}
                 </td>
-                <td class="td" style="text-align: left; font-size: 15px;">
-                    {{ $item->satuan }}
+                <td class="td" style="font-size: 15px;">
+                    @if ($item->satuan == 'pcs')
+                        @harga($item->harga_pcs)
+                    @elseif($item->satuan == 'dus')
+                        @harga($item->harga_dus)
+                    @elseif($item->satuan == 'renceng')
+                        @harga($item->harga_renceng)
+                    @elseif($item->satuan == 'pack')
+                        @harga($item->harga_pack)
+                    @endif
                 </td>
-                @if ($item->satuan == 'pcs')
-                    <td class="td" style="text-align: right; font-size: 15px;">
-                        {{ number_format($item->harga_pcs, 0, ',', '.') }}
-                    </td>
-                @else
-                    <td class="td" style="text-align: right; font-size: 15px;">
-                        {{ number_format($item->harga_dus, 0, ',', '.') }}
-                    </td>
-                @endif
-                <td class="td" style="text-align: center;  font-size: 15px;">
-                    {{ $item->jumlah }}
+                <td class="td" style="font-size: 15px;">
+                    {{ $item->jumlah }} {{ ucfirst($item->satuan) }}
                 </td>
-                <td class="td" style="text-align: right;  font-size: 15px;">
-                    {{ number_format($item->total, 0, ',', '.') }}
+                <td class="td" style="text-align: right; font-size: 15px;">
+                    @harga($item->total)
                 </td>
             </tr>
             @php
@@ -295,16 +291,15 @@
             @endphp
         @endforeach
         <tr style="border-bottom: 1px solid black;">
-            <td colspan="7" style="padding: 0px;"></td>
+            <td colspan="5" style="padding: 0px;"></td>
         </tr>
         <tr>
-            <td colspan="6"
-                style="text-align: right; font-weight: bold; margin-top:5px; margin-bottom:5px; font-size: 15px;">Sub
-                Total
-                Rp.
+            <td colspan="4"
+                style="text-align: right; font-weight: bold; margin-top:5px; margin-bottom:5px; font-size: 15px;">
+                Sub Total
             </td>
             <td class="td" style="text-align: right; font-weight: bold; font-size: 15px;">
-                {{ number_format($totalHarga, 0, ',', '.') }}
+                @rupiah($pemasukan->grand_total)
             </td>
         </tr>
     </table>
@@ -345,7 +340,7 @@
         <tr>
             <td style="text-align: center;">
                 <table style="margin: 0 auto;">
-                      <tr style="text-align: center;">
+                    <tr style="text-align: center;">
                         <td class="label" style="min-height: 16px;">&nbsp;</td>
                     </tr>
                     <tr>

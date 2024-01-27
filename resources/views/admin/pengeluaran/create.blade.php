@@ -335,26 +335,13 @@
         }
 
         function set_item(urutan, data, is_session = false) {
-            var check_pcs = '';
-            var check_dus = '';
-            var check_renceng = '';
-            var check_pack = '';
+            var satuan = '';
             var jumlah = 1;
             var total = 0;
 
             if (is_session) {
                 document.getElementById('checkbox-barang-' + data.id).checked = true;
-
-                if (data.harga == data.harga_pcs) {
-                    check_pcs = 'selected';
-                } else if (data.harga == data.harga_dus) {
-                    check_dus = 'selected';
-                } else if (data.harga == data.harga_renceng) {
-                    check_renceng = 'selected';
-                } else if (data.harga == data.harga_pack) {
-                    check_pack = 'selected';
-                }
-
+                satuan = data.satuan;
                 jumlah = data.jumlah;
                 total = data.total;
             }
@@ -368,17 +355,28 @@
             col += '<td>';
             col += '<div class="form-group mb-0">';
             col += '<select class="form-control" id="harga-' + data.id + '" name="harga[' + data.id +
-                ']" onchange="get_total(' + data.id + ')">';
+                ']" onchange="get_total(' + data.id + ', ' + true + ')">';
             col += '<option value="">Pilih</option>';
-            col += '<option value="' + data.harga_pcs + '" ' + check_pcs + '>' + rupiah(data.harga_pcs ?? "0", "Rp") +
+            col += '<option value="' + data.harga_pcs + '" data-satuan="pcs" ' + (satuan == "pcs" ? "selected" : "") +
+                '>' + rupiah(data.harga_pcs ??
+                    "0", "Rp") +
                 ' (pcs)</option>';
-            col += '<option value="' + data.harga_dus + '" ' + check_dus + '>' + rupiah(data.harga_dus ?? "0", "Rp") +
+            col += '<option value="' + data.harga_dus + '" data-satuan="dus" ' + (satuan == "dus" ? "selected" : "") +
+                '>' + rupiah(data.harga_dus ??
+                    "0", "Rp") +
                 ' (dus)</option>';
-            col += '<option value="' + data.harga_renceng + '" ' + check_renceng + '>' + rupiah(data.harga_renceng ?? "0", "Rp") +
+            col += '<option value="' + data.harga_renceng + '" data-satuan="renceng" ' + (satuan == "renceng" ?
+                    "selected" : "") + '>' + rupiah(data
+                    .harga_renceng ?? "0",
+                    "Rp") +
                 ' (renceng)</option>';
-            col += '<option value="' + data.harga_pack + '" ' + check_pack + '>' + rupiah(data.harga_pack ?? "0", "Rp") +
+            col += '<option value="' + data.harga_pack + '" data-satuan="pack" ' + (satuan == "pack" ? "selected" :
+                "") + '>' + rupiah(data
+                    .harga_pack ?? "0", "Rp") +
                 ' (pack)</option>';
             col += '</select>';
+            col += '<input type="hidden" class="form-control" name="satuan[' + data.id + ']" id="satuan-' + data.id +
+                '" value="' + satuan + '">';
             col += '</div>';
             col += '</td>';
             col += '<td>';
@@ -443,7 +441,7 @@
             return prefix == undefined ? rupiah : (rupiah ? 'Rp' + rupiah : '');
         }
 
-        function get_total(id) {
+        function get_total(id, is_select = false) {
             var harga = $('#harga-' + id).val();
             var jumlah = $('#jumlah-' + id).val();
             var total = 0;
@@ -455,6 +453,10 @@
             $('#total-' + id).val(total);
 
             set_grand_total();
+
+            if (is_select) {
+                $('#satuan-' + id).val($('#harga-' + id).find(':selected').data('satuan'));
+            }
         }
 
         function set_grand_total() {

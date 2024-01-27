@@ -89,7 +89,7 @@
                                     @endif
                                 </td>
                                 <td>{{ $pemasukan->user->nama }}</td>
-                                <td> {{ number_format($pemasukan->grand_total, 0, ',', '.') }}</td>
+                                <td>@rupiah($pemasukan->grand_total)</td>
                                 <td class="text-center">
                                     <a href="{{ url('sales/pemasukan/cetak-pdf/' . $pemasukan->id) }}"
                                         class="btn btn-primary btn-sm">

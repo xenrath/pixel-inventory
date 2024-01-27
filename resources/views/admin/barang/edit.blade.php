@@ -44,38 +44,54 @@
                     @csrf
                     @method('put')
                     <div class="card-body">
-                        <div class="form-nama_barang">
+                        <div class="form-group mb-3">
                             <label for="nama_barang">Nama Barang</label>
                             <input type="text" class="form-control" id="nama_barang" name="nama_barang"
                                 placeholder="Masukan nama barang" value="{{ old('nama_barang', $barang->nama_barang) }}">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="jumlah">Jumlah</label>
                             <input type="number" class="form-control" id="jumlah" name="jumlah"
                                 placeholder="Masukan jumlah" value="{{ old('jumlah', $barang->jumlah) }}">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="satuan">Satuan</label>
                             <input type="text" class="form-control" id="satuan" name="satuan"
                                 placeholder="Masukan satuan" value="{{ old('satuan', $barang->satuan) }}">
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="harga_pcs">Harga / pcs</label>
+                                <div class="form-group mb-3">
+                                    <label for="harga_pcs">Harga Pcs</label>
                                     <input type="number" class="form-control" id="harga_pcs" name="harga_pcs"
                                         placeholder="Masukan harga pcs" value="{{ old('harga_pcs', $barang->harga_pcs) }}">
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="harga_dus">Harga / dus</label>
+                                <div class="form-group mb-3">
+                                    <label for="harga_dus">Harga Dus</label>
                                     <input type="number" class="form-control" id="harga_dus" name="harga_dus"
                                         placeholder="Masukan harga dus" value="{{ old('harga_dus', $barang->harga_dus) }}">
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
+                                    <label for="harga_renceng">Harga Renceng</label>
+                                    <input type="number" class="form-control" id="harga_renceng" name="harga_renceng"
+                                        placeholder="Masukan harga pcs" value="{{ old('harga_renceng', $barang->harga_renceng) }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
+                                    <label for="harga_pack">Harga Pack</label>
+                                    <input type="number" class="form-control" id="harga_pack" name="harga_pack"
+                                        placeholder="Masukan harga dus" value="{{ old('harga_pack', $barang->harga_pack) }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
                             <label for="gambar">Gambar <small>(Kosongkan saja jika tidak
                                     ingin menambahkan)</small></label>
                             <div class="custom-file">
@@ -84,7 +100,7 @@
                                 <label class="custom-file-label" for="gambar">Masukkan gambar</label>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="deskripsi">Keterangan</label>
                             <textarea type="text" class="form-control" id="deskripsi" name="deskripsi" placeholder="Masukan keterangan">{{ old('deskripsi', $barang->deskripsi) }}</textarea>
                         </div>

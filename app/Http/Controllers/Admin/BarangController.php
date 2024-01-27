@@ -134,6 +134,8 @@ class BarangController extends Controller
         $barang->satuan = $request->satuan;
         $barang->harga_pcs = $request->harga_pcs;
         $barang->harga_dus = $request->harga_dus;
+        $barang->harga_renceng = $request->harga_renceng;
+        $barang->harga_pack = $request->harga_pack;
         $barang->deskripsi = $request->deskripsi;
         $barang->gambar = $namaGambar;
         $barang->save();

@@ -85,6 +85,7 @@ class PemasukanController extends Controller
                 }
 
                 $harga = $request->harga[$id] ?? '';
+                $satuan = $request->satuan[$id] ?? '';
                 $jumlah = $request->jumlah[$id] ?? '';
                 $total = $request->total[$id] ?? '';
 
@@ -98,6 +99,7 @@ class PemasukanController extends Controller
                     'harga_renceng' => $barang->harga_renceng,
                     'harga_pack' => $barang->harga_pack,
                     'harga' => $harga,
+                    'satuan' => $satuan,
                     'jumlah' => $jumlah,
                     'total' => $total,
                 ]);
@@ -119,7 +121,7 @@ class PemasukanController extends Controller
         $format_tanggal = $tanggal1->format('d F Y');
         $tanggal = Carbon::now()->format('Y-m-d');
 
-        $barangs = Pemasukan::create([
+        $pemasukan = Pemasukan::create([
             'supplier_id' => $request->supplier_id,
             'nama_supp' => $request->nama_supp,
             'telp' => $request->telp,
@@ -134,11 +136,11 @@ class PemasukanController extends Controller
             'tanggal_awal' => $tanggal,
         ]);
         
-        if ($barangs) {
+        if ($pemasukan) {
             foreach ($data_pembelians as $data_pesanan) {
                 $barang = Barang::where('id', $data_pesanan['id'])->first();
                 Detail_pemasukan::create([
-                    'pemasukan_id' => $barangs->id,
+                    'pemasukan_id' => $pemasukan->id,
                     'barang_id' => $barang->id,
                     'kode_barang' => $barang->kode_barang,
                     'nama_barang' => $barang->nama_barang,
@@ -146,7 +148,7 @@ class PemasukanController extends Controller
                     'harga_dus' => $barang->harga_dus,
                     'harga_renceng' => $barang->harga_renceng,
                     'harga_pack' => $barang->harga_pack,
-                    'satuan' => $barang->satuan,
+                    'satuan' => $data_pesanan['satuan'],
                     'jumlah' => $data_pesanan['jumlah'],
                     'total' => $data_pesanan['total'],
                 ]);

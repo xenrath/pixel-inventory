@@ -49,7 +49,7 @@ class PemasukanController extends Controller
         $suppliers = Supplier::all();
         $barangs = Barang::all();
 
-        return view('admin/pemasukan.create', compact('sales', 'suppliers', 'barangs'));
+        return view('admin.pemasukan.create', compact('sales', 'suppliers', 'barangs'));
     }
 
     public function store(Request $request)
@@ -85,6 +85,7 @@ class PemasukanController extends Controller
                 }
 
                 $harga = $request->harga[$id] ?? '';
+                $satuan = $request->satuan[$id] ?? '';
                 $jumlah = $request->jumlah[$id] ?? '';
                 $total = $request->total[$id] ?? '';
 
@@ -98,6 +99,7 @@ class PemasukanController extends Controller
                     'harga_renceng' => $barang->harga_renceng,
                     'harga_pack' => $barang->harga_pack,
                     'harga' => $harga,
+                    'satuan' => $satuan,
                     'jumlah' => $jumlah,
                     'total' => $total,
                 ]);
@@ -146,7 +148,7 @@ class PemasukanController extends Controller
                     'harga_dus' => $barang->harga_dus,
                     'harga_renceng' => $barang->harga_renceng,
                     'harga_pack' => $barang->harga_pack,
-                    'satuan' => $barang->satuan,
+                    'satuan' => $data_pesanan['satuan'],
                     'jumlah' => $data_pesanan['jumlah'],
                     'total' => $data_pesanan['total'],
                 ]);
