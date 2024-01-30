@@ -170,12 +170,12 @@
 
 <body style="margin: 0; padding: 0;">
     {{-- <div id="logo-container">
-        <img src="{{ asset('storage/uploads/user/logo.png') }}" alt="Toko Riva Jaya" width="100" height="50">
+        <img src="{{ asset('storage/uploads/user/logo.png') }}" alt="Riva Jaya" width="100" height="50">
     </div> --}}
     <br>
     <table cellpadding="2" cellspacing="0">
         <tr>
-            <td class="info-catatan2" style="font-size: 15px;">Toko Riva Jaya Abadi</td>
+            <td class="info-catatan2" style="font-size: 15px;">Riva Jaya Abadi</td>
             <td class="info-catatan2" style="font-size: 15px; margin-left: 40px; display: block;">Nama Supplier</td>
             <td style="text-align: left; font-size: 15px;">
                 <span class="content2">
