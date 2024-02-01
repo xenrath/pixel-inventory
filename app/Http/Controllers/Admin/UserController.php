@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Carbon\Carbon;
-use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -29,7 +28,7 @@ class UserController extends Controller
             $request->all(),
             [
                 'role' => 'required',
-                'username' => 'required',
+                'username' => 'required|unique:users',
                 'nama' => 'required',
                 'telp' => 'required',
                 'alamat' => 'required',
@@ -38,6 +37,7 @@ class UserController extends Controller
             [
                 'role.required' => 'Pilih jabatan',
                 'username.required' => 'Masukkan username',
+                'username.unique' => 'Username sudah digunakan!',
                 'nama.required' => 'Masukkan nama lengkap',
                 'telp.required' => 'Masukkan no telepon',
                 'alamat.required' => 'Masukkan alamat',
@@ -105,7 +105,7 @@ class UserController extends Controller
             $request->all(),
             [
                 'role' => 'required',
-                'username' => 'required',
+                'username' => 'required|unique:users,username,' . $id,
                 'nama' => 'required',
                 'telp' => 'required',
                 'alamat' => 'required',
@@ -114,6 +114,7 @@ class UserController extends Controller
             [
                 'role.required' => 'Pilih jabatan',
                 'username.required' => 'Masukkan username',
+                'username.unique' => 'Username sudah digunakan!',
                 'nama.required' => 'Masukkan nama lengkap',
                 'telp.required' => 'Masukkan no telepon',
                 'alamat.required' => 'Masukkan alamat',
