@@ -95,10 +95,10 @@
                                         class="btn btn-primary btn-sm">
                                         <i class="fas fa-print"></i>
                                     </a>
-                                    {{-- <a href="{{ url('admin/pemasukan/' . $pemasukan->id . '/edit') }}"
+                                    <a href="{{ url('admin/pemasukan/' . $pemasukan->id . '/edit') }}"
                                         class="btn btn-warning btn-sm">
                                         <i class="fas fa-edit"></i>
-                                    </a> --}}
+                                    </a>
                                     <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal"
                                         data-target="#modal-hapus-{{ $pemasukan->id }}">
                                         <i class="fas fa-trash"></i>

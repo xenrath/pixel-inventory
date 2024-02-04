@@ -54,140 +54,151 @@
                 autocomplete="off">
                 @csrf
                 @method('put')
-                <div class="card">
-                </div>
-                <div>
-                    <div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Supplier</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="form-group" hidden>
-                                            <label for="supplier_id">Supplier Id</label>
-                                            <input type="text" class="form-control" id="supplier_id" readonly
-                                                name="supplier_id" placeholder=""
-                                                value="{{ old('supplier_id', $pemasukan->supplier_id) }}">
-                                        </div>
-                                        <label style="font-size:14px" class="form-label" for="nama_supp">Nama</label>
-                                        <div class="form-group d-flex">
-                                            <input class="form-control" id="nama_supp" name="nama_supp" type="text"
-                                                placeholder="" value="{{ old('nama_supp', $pemasukan->nama_supp) }}"
-                                                readonly style="margin-right: 10px; font-size:14px" />
-                                            <button class="btn btn-primary" type="button"
-                                                onclick="showSupplier(this.value)">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                        </div>
-                                        <div class="form-group">
-                                            <label style="font-size:14px" for="telp">No. Telp</label>
-                                            <input style="font-size:14px" type="text" class="form-control" id="telp"
-                                                readonly name="telp" placeholder=""
-                                                value="{{ old('telp', $pemasukan->telp) }}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label style="font-size:14px" for="alamat">Alamat</label>
-                                            <input style="font-size:14px" type="text" class="form-control" id="alamat"
-                                                readonly name="alamat" placeholder=""
-                                                value="{{ old('alamat', $pemasukan->alamat) }}">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Sales</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="form-group" hidden>
-                                            <label for="user_id">User Id</label>
-                                            <input type="text" class="form-control" id="user_id" readonly
-                                                name="user_id" placeholder=""
-                                                value="{{ old('user_id', $pemasukan->user_id) }}">
-                                        </div>
-                                        <label style="font-size:14px" class="form-label" for="nama_driver">Nama
-                                            Sales</label>
-                                        <div class="form-group d-flex">
-                                            <input class="form-control" id="nama" name="nama" type="text"
-                                                placeholder="" value="{{ old('nama', $pemasukan->nama) }}" readonly
-                                                style="margin-right: 10px;font-size:14px" />
-                                            <button class="btn btn-primary" type="button"
-                                                onclick="showSales(this.value)">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                        </div>
-                                        <div class="form-group">
-                                            <label style="font-size:14px" for="telp_sales">No. Telp</label>
-                                            <input style="font-size:14px" type="tex" class="form-control"
-                                                id="telp_sales" readonly name="telp_sales" placeholder=""
-                                                value="{{ old('telp_sales', $pemasukan->telp_sales) }}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label style="font-size:14px" for="alamat_sales">Alamat</label>
-                                            <input style="font-size:14px" type="text" class="form-control"
-                                                id="alamat_sales" readonly name="alamat_sales" placeholder=""
-                                                value="{{ old('alamat_sales', $pemasukan->alamat_sales) }}">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
+                <div class="row">
+                    <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Barang <span>
-                                    </span></h3>
-                                <div class="float-right">
-                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                        data-target="#modal-barang">
-                                        Pilih Barang
+                                <h3 class="card-title">Supplier</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group" hidden>
+                                    <label for="supplier_id">Supplier Id</label>
+                                    <input type="text" class="form-control" id="supplier_id" readonly name="supplier_id"
+                                        placeholder="" value="{{ old('supplier_id', $pemasukan->supplier_id) }}">
+                                </div>
+                                <label style="font-size:14px" class="form-label" for="nama_supp">Nama</label>
+                                <div class="form-group d-flex">
+                                    <input class="form-control" id="nama_supp" name="nama_supp" type="text"
+                                        placeholder="" value="{{ old('nama_supp', $pemasukan->nama_supp) }}" readonly
+                                        style="margin-right: 10px; font-size:14px" />
+                                    <button class="btn btn-primary" type="button" onclick="showSupplier(this.value)">
+                                        <i class="fas fa-search"></i>
                                     </button>
                                 </div>
+                                <div class="form-group">
+                                    <label style="font-size:14px" for="telp">No. Telp</label>
+                                    <input style="font-size:14px" type="text" class="form-control" id="telp"
+                                        readonly name="telp" placeholder="" value="{{ old('telp', $pemasukan->telp) }}">
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:14px" for="alamat">Alamat</label>
+                                    <input style="font-size:14px" type="text" class="form-control" id="alamat"
+                                        readonly name="alamat" placeholder=""
+                                        value="{{ old('alamat', $pemasukan->alamat) }}">
+                                </div>
                             </div>
-                            <!-- /.card-header -->
-                            <div class="card-body p-0">
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 40px" class="text-center">No</th>
-                                            <th>Nama Barang</th>
-                                            <th style="width: 220px;">
-                                                Harga
-                                                <small>(satuan)</small>
-                                            </th>
-                                            <th style="width: 180px;">Jumlah</th>
-                                            <th style="width: 220px;">Total</th>
-                                            <th class="text-center" style="width: 40px;">Opsi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tabel-barang">
-                                        <tr id="tabel-barang-kosong">
-                                            <td class="text-center" colspan="6">
-                                                - Belum ada barang yang dipilih -
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th colspan="4">Grand Total</th>
-                                            <th colspan="2">
-                                                <span id="span-grand-total">Rp0</span>
-                                                <input type="hidden" class="form-control" name="grand_total"
-                                                    id="grand-total" value="0">
-                                            </th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="text-right pt-3 pb-5">
-                            <button type="submit" class="btn btn-primary">Simpan Pemasukan</button>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Sales</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group" hidden>
+                                    <label for="user_id">User Id</label>
+                                    <input type="text" class="form-control" id="user_id" readonly name="user_id"
+                                        placeholder="" value="{{ old('user_id', $pemasukan->user_id) }}">
+                                </div>
+                                <label style="font-size:14px" class="form-label" for="nama_driver">Nama
+                                    Sales</label>
+                                <div class="form-group d-flex">
+                                    <input class="form-control" id="nama" name="nama" type="text" placeholder=""
+                                        value="{{ old('nama', $pemasukan->nama) }}" readonly
+                                        style="margin-right: 10px;font-size:14px" />
+                                    <button class="btn btn-primary" type="button" onclick="showSales(this.value)">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:14px" for="telp_sales">No. Telp</label>
+                                    <input style="font-size:14px" type="tex" class="form-control" id="telp_sales"
+                                        readonly name="telp_sales" placeholder=""
+                                        value="{{ old('telp_sales', $pemasukan->telp_sales) }}">
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size:14px" for="alamat_sales">Alamat</label>
+                                    <input style="font-size:14px" type="text" class="form-control" id="alamat_sales"
+                                        readonly name="alamat_sales" placeholder=""
+                                        value="{{ old('alamat_sales', $pemasukan->alamat_sales) }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Barang <span>
+                            </span></h3>
+                        <div class="float-right">
+                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                data-target="#modal-barang">
+                                Pilih Barang
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width: 40px" class="text-center">No</th>
+                                    <th>Nama Barang</th>
+                                    <th style="width: 220px;">
+                                        Harga
+                                        <small>(satuan)</small>
+                                    </th>
+                                    <th style="width: 180px;">Jumlah</th>
+                                    <th style="width: 220px;">Total</th>
+                                    <th class="text-center" style="width: 40px;">Opsi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabel-barang">
+                                {{-- @foreach ($details as $detail)
+                                    <tr>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td>{{ $detail->nama_barang }}</td>
+                                        <td>
+                                            @if ($detail->satuan == 'pcs')
+                                                @rupiah($detail->harga_pcs) (pcs)
+                                            @elseif($detail->satuan == 'dus')
+                                                @rupiah($detail->harga_dus) (dus)
+                                            @elseif($detail->satuan == 'renceng')
+                                                @rupiah($detail->harga_renceng) (renceng)
+                                            @elseif($detail->satuan == 'pack')
+                                                @rupiah($detail->harga_pack) (pack)
+                                            @endif
+                                        </td>
+                                        <td>{{ $detail->jumlah }}</td>
+                                        <td>@rupiah($detail->total)</td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-danger btn-sm">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach --}}
+                                <tr id="tabel-barang-kosong" style="display: none">
+                                    <td class="text-center" colspan="6">
+                                        - Belum ada barang yang dipilih -
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="4">Grand Total</th>
+                                    <th colspan="2">
+                                        <span id="span-grand-total">Rp0</span>
+                                        <input type="hidden" class="form-control" name="grand_total" id="grand-total"
+                                            value="0">
+                                    </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="text-right pt-3 pb-5">
+                    <button type="submit" class="btn btn-primary">Simpan Pemasukan</button>
                 </div>
             </form>
         </div>
@@ -276,7 +287,7 @@
             </div>
         </div>
         <div class="modal fade" id="modal-barang" data-backdrop="static">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Data Barang</h4>
@@ -290,35 +301,45 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center" style="width: 40px">#</th>
-                                        <th>Nama Barang</th>
+                                        <th>Barang</th>
+                                        <th>Jumlah</th>
                                         <th>Harga Pcs</th>
                                         <th>Harga Dus</th>
                                         <th>Harga Renceng</th>
                                         <th>Harga Pack</th>
-                                        <th>Jumlah</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($barangs as $barang)
+                                        @php
+                                            if (in_array($barang->id, array_keys($detail_id_data))) {
+                                                $detail_id = $detail_id_data[$barang->id];
+                                            } else {
+                                                $detail_id = 0;
+                                            }
+                                        @endphp
                                         <tr>
                                             <td class="text-center">
                                                 <div class="icheck-primary d-inline">
                                                     <input type="checkbox" id="checkbox-barang-{{ $barang->id }}"
-                                                        onclick="add_item({{ $barang->id }})">
+                                                        onclick="add_item({{ $barang->id }}, {{ $detail_id }})">
                                                     <label for="checkbox-barang-{{ $barang->id }}"></label>
                                                 </div>
                                             </td>
                                             <td>{{ $barang->nama_barang }}</td>
-                                            <td>{{ $barang->harga_pcs }}</td>
-                                            <td>{{ $barang->harga_dus }}</td>
-                                            <td>{{ $barang->harga_renceng }}</td>
-                                            <td>{{ $barang->harga_pack }}</td>
                                             <td>{{ $barang->jumlah }} {{ $barang->satuan }}</td>
+                                            <td>@rupiah($barang->harga_pcs)</td>
+                                            <td>@rupiah($barang->harga_dus)</td>
+                                            <td>@rupiah($barang->harga_renceng)</td>
+                                            <td>@rupiah($barang->harga_pack)</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Selesai</button>
                     </div>
                 </div>
             </div>
@@ -328,7 +349,7 @@
     <script>
         var item_id = [];
 
-        function add_item(id) {
+        function add_item(id, detail_id) {
             var checkbox = document.getElementById('checkbox-barang-' + id);
             if (checkbox.checked) {
                 if (!item_id.includes(id)) {
@@ -347,33 +368,22 @@
                     $('#tabel-barang-kosong').hide();
                 }
             } else {
-                delete_item(id);
+                delete_item(id, detail_id);
             }
         }
 
         function set_item(urutan, data, is_session = false) {
-            var check_pcs = '';
-            var check_dus = '';
-            var check_renceng = '';
-            var check_pack = '';
+            var satuan = '';
             var jumlah = 1;
             var total = 0;
+            var detail_id = 0;
 
             if (is_session) {
                 document.getElementById('checkbox-barang-' + data.id).checked = true;
-
-                if (data.harga == data.harga_pcs) {
-                    check_pcs = 'selected';
-                } else if (data.harga == data.harga_dus) {
-                    check_dus = 'selected';
-                } else if (data.harga == data.harga_renceng) {
-                    check_renceng = 'selected';
-                } else if (data.harga == data.harga_pack) {
-                    check_pack = 'selected';
-                }
-
+                satuan = data.satuan;
                 jumlah = data.jumlah;
                 total = data.total;
+                detail_id = data.detail_id;
             }
 
             var col = '<tr id="tr-barang-' + data.id + '">';
@@ -385,17 +395,27 @@
             col += '<td>';
             col += '<div class="form-group mb-0">';
             col += '<select class="form-control" id="harga-' + data.id + '" name="harga[' + data.id +
-                ']" onchange="get_total(' + data.id + ')">';
+                ']" onchange="get_total(' + data.id + ', ' + true + ')">';
             col += '<option value="">Pilih</option>';
-            col += '<option value="' + data.harga_pcs + '" ' + check_pcs + '>' + rupiah(data.harga_pcs, "Rp") +
+            col += '<option value="' + data.harga_pcs + '" data-satuan="pcs" ' + (satuan == "pcs" ? "selected" : "") +
+                '>' + rupiah(data.harga_pcs ??
+                    "0", "Rp") +
                 ' (pcs)</option>';
-            col += '<option value="' + data.harga_dus + '" ' + check_dus + '>' + rupiah(data.harga_dus, "Rp") +
+            col += '<option value="' + data.harga_dus + '" data-satuan="dus" ' + (satuan == "dus" ? "selected" : "") +
+                '>' + rupiah(data.harga_dus ??
+                    "0", "Rp") +
                 ' (dus)</option>';
-            col += '<option value="' + data.harga_renceng + '" ' + check_renceng + '>' + rupiah(data.harga_renceng, "Rp") +
-                ' (renceng)</option>';
-            col += '<option value="' + data.harga_pack + '" ' + check_pack + '>' + rupiah(data.harga_pack, "Rp") +
+            col += '<option value="' + data.harga_renceng + '" data-satuan="renceng" ' + (satuan == "renceng" ?
+                "selected" : "") + '>' + rupiah(data
+                .harga_renceng ?? "0",
+                "Rp") + ' (renceng)</option>';
+            col += '<option value="' + data.harga_pack + '" data-satuan="pack" ' + (satuan == "pack" ? "selected" :
+                    "") + '>' + rupiah(data
+                    .harga_pack ?? "0", "Rp") +
                 ' (pack)</option>';
             col += '</select>';
+            col += '<input type="hidden" class="form-control" name="satuan[' + data.id + ']" id="satuan-' + data.id +
+                '" value="' + satuan + '">';
             col += '</div>';
             col += '</td>';
             col += '<td>';
@@ -413,7 +433,7 @@
                 ']" value="' + total + '">';
             col += '</td>';
             col += '<td class="text-center">';
-            col += '<button type="button" class="btn btn-danger btn-sm" onclick="delete_item(' + data.id + ')">';
+            col += '<button type="button" class="btn btn-danger btn-sm" onclick="delete_item(' + data.id + ', ' + detail_id + ')">';
             col += '<i class="fas fa-trash"></i>';
             col += '</button>';
             col += '</td>';
@@ -426,7 +446,7 @@
             }
         }
 
-        function delete_item(id) {
+        function delete_item(id, detail_id) {
             $('#tr-barang-' + id).remove();
             item_id = item_id.filter(i => i !== id);
 
@@ -438,6 +458,17 @@
                 for (let i = 0; i < urutan.length; i++) {
                     urutan[i].innerText = i + 1;
                 }
+            }
+
+            if (detail_id !== 0) {
+                $.ajax({
+                    url: "{{ url('admin/pemasukan/delete_item') }}" + '/' + detail_id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        $('#checkbox-barang-' + id).attr('onclick', 'add_item(' + id + ', 0)');
+                    },
+                });
             }
 
             set_grand_total();
@@ -460,7 +491,7 @@
             return prefix == undefined ? rupiah : (rupiah ? 'Rp' + rupiah : '');
         }
 
-        function get_total(id) {
+        function get_total(id, is_select = false) {
             var harga = $('#harga-' + id).val();
             var jumlah = $('#jumlah-' + id).val();
             var total = 0;
@@ -472,6 +503,10 @@
             $('#total-' + id).val(total);
 
             set_grand_total();
+
+            if (is_select) {
+                $('#satuan-' + id).val($('#harga-' + id).find(':selected').data('satuan'));
+            }
         }
 
         function set_grand_total() {

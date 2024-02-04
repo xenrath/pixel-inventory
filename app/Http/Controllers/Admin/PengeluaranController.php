@@ -188,12 +188,26 @@ class PengeluaranController extends Controller
     public function edit($id)
     {
         $pengeluaran = Pengeluaran::where('id', $id)->first();
-        $details = Detail_pengeluaran::where('pengeluaran_id', $id)->get();
+        $details = Detail_pengeluaran::where('pengeluaran_id', $id)
+            ->select(
+                'id as detail_id',
+                'barang_id as id',
+                'nama_barang',
+                'harga_pcs',
+                'harga_dus',
+                'harga_renceng',
+                'harga_pack',
+                'satuan',
+                'jumlah',
+                'total',
+            )
+            ->get();
+        $detail_id_data = Detail_pengeluaran::where('pengeluaran_id', $id)->pluck('id', 'barang_id')->toArray();
         $sales = User::all();
         $suppliers = Supplier::all();
         $barangs = Barang::all();
 
-        return view('admin.pengeluaran.update', compact('details', 'pengeluaran', 'sales', 'suppliers', 'barangs'));
+        return view('admin.pengeluaran.update', compact('details', 'detail_id_data', 'pengeluaran', 'sales', 'suppliers', 'barangs'));
     }
 
     public function update(Request $request, $id)
@@ -210,52 +224,43 @@ class PengeluaranController extends Controller
         $error_pesanans = array();
         $data_pembelians = collect();
 
-
         if ($validasi_pelanggan->fails()) {
             array_push($error_pelanggans, $validasi_pelanggan->errors()->all()[0]);
         }
 
-        $transaksi = Pengeluaran::findOrFail($id);
-
-        if ($request->has('barang_id')) {
-            for ($i = 0; $i < count($request->barang_id); $i++) {
+        if ($request->has('id')) {
+            foreach ($request->id as $key => $barang_id) {
                 $validator_produk = Validator::make($request->all(), [
-                    'barang_id.' . $i => 'required',
-                    'kode_barang.' . $i => 'required',
-                    'nama_barang.' . $i => 'required',
-                    'harga_pcs.' . $i => 'required',
-                    'harga_dus.' . $i => 'required',
-                    'satuan.' . $i => 'required',
-                    'jumlah.' . $i => 'required',
-                    'total.' . $i => 'required',
+                    'harga.' . $barang_id => 'required',
+                    'jumlah.' . $barang_id => 'required',
                 ]);
 
                 if ($validator_produk->fails()) {
-                    $error_pesanans[] = "Barang nomor " . ($i + 1) . " belum dilengkapi!";
+                    $error_pesanans[] = "Barang nomor " . ($key + 1) . " belum dilengkapi!";
                 }
 
-                $barang_id = $request->barang_id[$i] ?? '';
-                $kode_barang = $request->kode_barang[$i] ?? '';
-                $nama_barang = $request->nama_barang[$i] ?? '';
-                $harga_pcs = $request->harga_pcs[$i] ?? '';
-                $harga_dus = $request->harga_dus[$i] ?? '';
-                $satuan = $request->satuan[$i] ?? '';
-                $jumlah = $request->jumlah[$i] ?? '';
-                $total = $request->total[$i] ?? '';
+                $harga = $request->harga[$barang_id] ?? '';
+                $satuan = $request->satuan[$barang_id] ?? '';
+                $jumlah = $request->jumlah[$barang_id] ?? '';
+                $total = $request->total[$barang_id] ?? '';
+
+                $barang = Barang::where('id', $barang_id)->first();
 
                 $data_pembelians->push([
-                    'detail_id' => $request->detail_ids[$i] ?? null,
-                    'barang_id' => $barang_id,
-                    'kode_barang' => $kode_barang,
-                    'nama_barang' => $nama_barang,
-                    'harga_pcs' => $harga_pcs,
-                    'harga_dus' => $harga_dus,
+                    'id' => $barang_id,
+                    'nama_barang' => $barang->nama_barang,
+                    'harga_pcs' => $barang->harga_pcs,
+                    'harga_dus' => $barang->harga_dus,
+                    'harga_renceng' => $barang->harga_renceng,
+                    'harga_pack' => $barang->harga_pack,
+                    'harga' => $harga,
                     'satuan' => $satuan,
                     'jumlah' => $jumlah,
-                    'total' => $total
+                    'total' => $total,
                 ]);
             }
         }
+
         if ($validasi_pelanggan->fails() || $error_pesanans) {
             return back()
                 ->withInput()
@@ -264,145 +269,42 @@ class PengeluaranController extends Controller
                 ->with('data_pembelians', $data_pembelians);
         }
 
-        // format tanggal indo
-        $tanggal1 = Carbon::now('Asia/Jakarta');
-        $format_tanggal = $tanggal1->format('d F Y');
-
-        $tanggal = Carbon::now()->format('Y-m-d');
-        $barangs = Pengeluaran::findOrFail($id);
-
-        // Update the main transaction
-        $barangs->update([
-            'supplier_id' => $request->supplier_id,
-            'nama_supp' => $request->nama_supp,
-            'telp' => $request->telp,
-            'alamat' => $request->alamat,
-            'user_id' => $request->user_id,
-            'nama' => $request->nama,
-            'telp_sales' => $request->telp_sales,
-            'alamat_sales' => $request->alamat_sales,
-            'grand_total' =>  str_replace('.', '', $request->grand_total),
+        Pengeluaran::where('id', $id)->update([
+            'grand_total' => $request->grand_total
         ]);
 
-        $barang_id = $barangs->id;
-
-        $detailIds = $request->input('detail_ids');
-
-        // foreach ($data_pembelians as $data_pesanan) {
-        //     $detailId = $data_pesanan['detail_id'];
-
-        //     if ($detailId) {
-        //         Detail_pengeluaran::where('id', $detailId)->update([
-        //             'pengeluaran_id' => $barangs->id,
-        //             'barang_id' => $data_pesanan['barang_id'],
-        //             'kode_barang' => $data_pesanan['kode_barang'],
-        //             'nama_barang' => $data_pesanan['nama_barang'],
-        //             'harga_pcs' => str_replace('.', '', $data_pesanan['harga_pcs']),
-        //             'harga_dus' => str_replace('.', '', $data_pesanan['harga_dus']),
-        //             'satuan' => $data_pesanan['satuan'],
-        //             'jumlah' => $data_pesanan['jumlah'],
-        //             'total' => str_replace('.', '', $data_pesanan['total']),
-        //         ]);
-        //     } else {
-        //         $existingDetail = Detail_pengeluaran::where([
-        //             'pengeluaran_id' => $barangs->id,
-        //             'barang_id' => $data_pesanan['barang_id'],
-        //             'kode_barang' => $data_pesanan['kode_barang'],
-        //             'nama_barang' => $data_pesanan['nama_barang'],
-        //             'harga_pcs' => str_replace('.', '', $data_pesanan['harga_pcs']),
-        //             'harga_dus' => str_replace('.', '', $data_pesanan['harga_dus']),
-        //             'satuan' => $data_pesanan['satuan'],
-        //             'jumlah' => $data_pesanan['jumlah'],
-        //             'total' => str_replace('.', '', $data_pesanan['total']),
-        //         ])->first();
-
-        //         if (!$existingDetail) {
-        //             Detail_pengeluaran::create([
-        //                 'pengeluaran_id' => $barangs->id,
-        //                 'barang_id' => $data_pesanan['barang_id'],
-        //                 'kode_barang' => $data_pesanan['kode_barang'],
-        //                 'nama_barang' => $data_pesanan['nama_barang'],
-        //                 'harga_pcs' => str_replace('.', '', $data_pesanan['harga_pcs']),
-        //                 'harga_dus' => str_replace('.', '', $data_pesanan['harga_dus']),
-        //                 'satuan' => $data_pesanan['satuan'],
-        //                 'jumlah' => $data_pesanan['jumlah'],
-        //                 'total' => str_replace('.', '', $data_pesanan['total']),
-        //             ]);
-        //         }
-        //     }
-        // }
-
-        foreach ($data_pembelians as $data_pesanan) {
-            $detailId = $data_pesanan['detail_id'];
-
-            if ($detailId) {
-                $detailToUpdate = Detail_pengeluaran::find($detailId);
-
-                if ($detailToUpdate) {
-                    $jumlahLamaDetail = $detailToUpdate->jumlah;
-                    $jumlahBaruDetail = $data_pesanan['jumlah'];
-
-                    $selisihStok = $jumlahBaruDetail - $jumlahLamaDetail;
-                    $baranggs = Barang::find($detailToUpdate->barang_id);
-
-                    if ($baranggs) {
-                        $jumlahLamaBarang = $baranggs->jumlah;
-                        $jumlahBaruBarang = $data_pesanan['jumlah'];
-                        $jumlahTotalBarang = $jumlahLamaBarang - $selisihStok;
-
-                        $detailToUpdate->update([
-                            'pengeluaran_id' => $barangs->id,
-                            'barang_id' => $data_pesanan['barang_id'],
-                            'kode_barang' => $data_pesanan['kode_barang'],
-                            'nama_barang' => $data_pesanan['nama_barang'],
-                            'harga_pcs' => str_replace('.', '', $data_pesanan['harga_pcs']),
-                            'harga_dus' => str_replace('.', '', $data_pesanan['harga_dus']),
-                            'satuan' => $data_pesanan['satuan'],
-                            'jumlah' => $data_pesanan['jumlah'],
-                            'total' => str_replace('.', '', $data_pesanan['total']),
-                        ]);
-
-                        $baranggs->update([
-                            'jumlah' => $jumlahTotalBarang,
-                        ]);
-                    }
-                }
+        foreach ($request->id as $barang_id) {
+            $detail = Detail_pengeluaran::where([
+                ['pengeluaran_id', $id],
+                ['barang_id', $barang_id]
+            ])->exists();
+            if ($detail) {
+                Detail_pengeluaran::where([
+                    ['pengeluaran_id', $id],
+                    ['barang_id', $barang_id]
+                ])->update([
+                    'satuan' => $request->satuan[$barang_id],
+                    'jumlah' => $request->jumlah[$barang_id],
+                    'total' => $request->total[$barang_id]
+                ]);
             } else {
-                $existingDetail = Detail_pengeluaran::where([
-                    'pengeluaran_id' => $barangs->id,
-                    'barang_id' => $data_pesanan['barang_id'],
-                    'kode_barang' => $data_pesanan['kode_barang'],
-                    'nama_barang' => $data_pesanan['nama_barang'],
-                    'harga_pcs' => str_replace('.', '', $data_pesanan['harga_pcs']),
-                    'harga_dus' => str_replace('.', '', $data_pesanan['harga_dus']),
-                    'satuan' => $data_pesanan['satuan'],
-                    'jumlah' => $data_pesanan['jumlah'],
-                    'total' => str_replace('.', '', $data_pesanan['total']),
-                ])->first();
-
-                if (!$existingDetail) {
-                    Detail_pengeluaran::create([
-                        'pengeluaran_id' => $barangs->id,
-                        'barang_id' => $data_pesanan['barang_id'],
-                        'kode_barang' => $data_pesanan['kode_barang'],
-                        'nama_barang' => $data_pesanan['nama_barang'],
-                        'harga_pcs' => str_replace('.', '', $data_pesanan['harga_pcs']),
-                        'harga_dus' => str_replace('.', '', $data_pesanan['harga_dus']),
-                        'satuan' => $data_pesanan['satuan'],
-                        'jumlah' => $data_pesanan['jumlah'],
-                        'total' => str_replace('.', '', $data_pesanan['total']),
-                    ]);
-
-                    $baranggs = Barang::find($data_pesanan['barang_id']);
-
-                    if ($baranggs) {
-                        $newQuantity = $baranggs->jumlah - $data_pesanan['jumlah'];
-                        $newQuantity = max(0, $newQuantity);
-                        $baranggs->update(['jumlah' => $newQuantity]);
-                    }
-                }
+                $barang = Barang::where('id', $barang_id)->first();
+                Detail_pengeluaran::create([
+                    'pengeluaran_id' => $id,
+                    'barang_id' => $barang->id,
+                    'kode_barang' => $barang->kode_barang,
+                    'nama_barang' => $barang->nama_barang,
+                    'harga_pcs' => $barang->harga_pcs,
+                    'harga_dus' => $barang->harga_dus,
+                    'harga_renceng' => $barang->harga_renceng,
+                    'harga_pack' => $barang->harga_pack,
+                    'satuan' => $request->satuan[$barang_id],
+                    'jumlah' => $request->jumlah[$barang_id],
+                    'total' => $request->total[$barang_id],
+                ]);
             }
         }
+
         return redirect('admin/pengeluaran')->with('success', 'Berhasil memperbarui pengeluaran');
     }
 
@@ -465,6 +367,16 @@ class PengeluaranController extends Controller
         $pengeluaran->delete();
 
         return redirect('admin/pengeluaran')->with('success', 'Berhasil menghapus pengeluaran');
+    }
+
+    public function delete_item($id)
+    {
+        $detail = Detail_pengeluaran::where('id', $id);
+        if ($detail->exists()) {
+            $detail->delete();
+        }
+
+        return true;
     }
 
     // public function destroy($id)
