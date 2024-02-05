@@ -17,13 +17,14 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('laporan', \App\Http\Controllers\Admin\LaporanController::class);
     Route::post('stok/{id}', [\App\Http\Controllers\Admin\BarangController::class, 'stok']);
 
-
     Route::get('pemasukan/get_item/{id}', [\App\Http\Controllers\Admin\PemasukanController::class, 'get_item']);
     Route::get('pemasukan/delete_item/{id}', [\App\Http\Controllers\Admin\PemasukanController::class, 'delete_item']);
     Route::get('pemasukan', [\App\Http\Controllers\Admin\PemasukanController::class, 'index']);
     
+    Route::get('pengeluaran/get_item/{id}', [\App\Http\Controllers\Admin\PengeluaranController::class, 'get_item']);
     Route::get('pengeluaran/delete_item/{id}', [\App\Http\Controllers\Admin\PengeluaranController::class, 'delete_item']);
     Route::get('pengeluaran', [\App\Http\Controllers\Admin\PengeluaranController::class, 'index']);
+    
     Route::get('laporan', [\App\Http\Controllers\Admin\LaporanController::class, 'index']);
     Route::get('pemasukan/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PemasukanController::class, 'cetakpdf']);
     Route::get('pengeluaran/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PengeluaranController::class, 'cetakpdf']);

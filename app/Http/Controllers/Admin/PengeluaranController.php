@@ -319,6 +319,12 @@ class PengeluaranController extends Controller
         return $pdf->stream('Pengeluaran_barang.pdf');
     }
 
+    public function get_item($id)
+    {
+        $barang = Barang::where('id', $id)->first();
+        return $barang;
+    }
+
     public function delete_barang($id)
     {
         $item = Detail_pengeluaran::find($id);
