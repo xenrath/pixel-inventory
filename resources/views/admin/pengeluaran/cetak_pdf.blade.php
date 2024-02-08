@@ -179,7 +179,11 @@
             <td class="info-catatan2" style="font-size: 15px; margin-left: 40px; display: block;">Nama Supplier</td>
             <td style="text-align: left; font-size: 15px;">
                 <span class="content2">
-                    {{ $pengeluaran->supplier->nama_supp }}
+                    @if ($pengeluaran->supplier)
+                        {{ $pengeluaran->supplier->nama_supp }}
+                    @else
+                        tidak ada
+                    @endif
                 </span>
                 <br>
             </td>
@@ -194,7 +198,11 @@
             <td class="info-catatan2" style="font-size: 15px; margin-left: 40px; display: block;">Alamat</td>
             <td style="text-align: left; font-size: 15px;">
                 <span class="content2">
-                    {{ $pengeluaran->supplier->alamat }}
+                    @if ($pengeluaran->supplier)
+                        {{ $pengeluaran->supplier->alamat }}
+                    @else
+                        tidak ada
+                    @endif
                 </span>
                 <br>
             </td>
@@ -205,8 +213,17 @@
             <td class="info-catatan2" style="font-size: 15px; margin-left: 40px; display: block;">Telp / Hp</td>
             <td style="text-align: left; font-size: 15px;">
                 <span class="content2">
-                    {{ $pengeluaran->supplier->telp }} /
-                    {{ $pengeluaran->supplier->hp }}
+                    @if ($pengeluaran->supplier)
+                        {{ $pengeluaran->supplier->telp }}
+                    @else
+                        tidak ada
+                    @endif
+                    /
+                    @if ($pengeluaran->supplier)
+                        {{ $pengeluaran->supplier->hp }}
+                    @else
+                        tidak ada
+                    @endif
                 </span>
                 <br>
             </td>
@@ -218,7 +235,12 @@
 
             <td style="text-align: left; font-size: 15px;">
                 <span class="content2">
-                    {{ $pengeluaran->supplier->kode_supplier }}
+                    @if ($pengeluaran->supplier)
+                        {{ $pengeluaran->supplier->kode_supplier }}
+                    @else
+                        tidak ada
+                    @endif
+
                 </span>
                 <br>
             </td>
@@ -313,21 +335,33 @@
                             <td class="info-catatan2" style="font-size: 15px;">Nama Bank</td>
                             <td class="info-item" style="font-size: 15px;">:</td>
                             <td class="info-text info-left" style="font-size: 15px;">
-                                {{ $pengeluaran->supplier->nama_bank }}
+                                @if ($pengeluaran->supplier)
+                                    {{ $pengeluaran->supplier->nama_bank }}
+                                @else
+                                    tidak ada
+                                @endif
                             </td>
                         </tr>
                         <tr>
                             <td class="info-catatan2" style="font-size: 15px;">No. Rekening</td>
                             <td class="info-item" style="font-size: 15px;">:</td>
                             <td class="info-text info-left" style="font-size: 15px;">
-                                {{ $pengeluaran->supplier->norek }}
+                                @if ($pengeluaran->supplier)
+                                    {{ $pengeluaran->supplier->norek }}
+                                @else
+                                    tidak ada
+                                @endif
                             </td>
                         </tr>
                         <tr>
                             <td class="info-catatan2" style="font-size: 15px;">Atas Nama</td>
                             <td class="info-item" style="font-size: 15px;">:</td>
                             <td class="info-text info-left" style="font-size: 15px;">
-                                {{ $pengeluaran->supplier->atas_nama }}
+                                @if ($pengeluaran->supplier)
+                                    {{ $pengeluaran->supplier->atas_nama }}
+                                @else
+                                    tidak ada
+                                @endif
                             </td>
                         </tr>
                     </table>
