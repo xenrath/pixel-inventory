@@ -308,6 +308,25 @@ class PengeluaranController extends Controller
         return redirect('admin/pengeluaran')->with('success', 'Berhasil memperbarui pengeluaran');
     }
 
+    public function destroy($id)
+    {
+        $pengeluaran = Pengeluaran::find($id);
+        $detail_pengeluarans = Detail_pengeluaran::where('pengeluaran_id', $id)->get();
+
+        foreach ($detail_pengeluarans as $detail_pengeluaran) {
+            $jumlah = Barang::where('id', $detail_pengeluaran->barang_id)->value('jumlah');
+            Barang::where('id', $detail_pengeluaran->barang_id)
+                ->update([
+                    'jumlah' => $jumlah + $detail_pengeluaran->jumlah
+                ]);
+            $detail_pengeluaran->delete();
+        }
+        
+        $pengeluaran->delete();
+
+        return redirect('admin/pengeluaran')->with('success', 'Berhasil menghapus pengeluaran');
+    }
+
     public function cetakpdf($id)
     {
         $pengeluaran = Pengeluaran::find($id);
@@ -357,23 +376,23 @@ class PengeluaranController extends Controller
         }
     }
 
-    public function delete($id)
-    {
-        $pengeluaran = Pengeluaran::find($id);
-        $detailPengeluaran = Detail_pengeluaran::where('pengeluaran_id', $id)->get();
+    // public function delete($id)
+    // {
+    //     $pengeluaran = Pengeluaran::find($id);
+    //     $detailPengeluaran = Detail_pengeluaran::where('pengeluaran_id', $id)->get();
 
-        foreach ($detailPengeluaran as $detail) {
-            $barangId = $detail->barang_id;
-            $barang = Barang::find($barangId);
+    //     foreach ($detailPengeluaran as $detail) {
+    //         $barangId = $detail->barang_id;
+    //         $barang = Barang::find($barangId);
 
-            $newQuantity = $barang->jumlah + $detail->jumlah;
-            $barang->update(['jumlah' => $newQuantity]);
-        }
-        $pengeluaran->detail_pengeluaran()->delete();
-        $pengeluaran->delete();
+    //         $newQuantity = $barang->jumlah + $detail->jumlah;
+    //         $barang->update(['jumlah' => $newQuantity]);
+    //     }
+    //     $pengeluaran->detail_pengeluaran()->delete();
+    //     $pengeluaran->delete();
 
-        return redirect('admin/pengeluaran')->with('success', 'Berhasil menghapus pengeluaran');
-    }
+    //     return redirect('admin/pengeluaran')->with('success', 'Berhasil menghapus pengeluaran');
+    // }
 
     public function delete_item($id)
     {
@@ -384,13 +403,4 @@ class PengeluaranController extends Controller
 
         return true;
     }
-
-    // public function destroy($id)
-    // {
-    //     $pengeluaran = Pengeluaran::find($id);
-    //     $pengeluaran->detail_pengeluaran()->delete();
-    //     $pengeluaran->delete();
-
-    //     return redirect('admin/pengeluaran')->with('success', 'Berhasil menghapus pengeluaran');
-    // }
 }
