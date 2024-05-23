@@ -39,8 +39,8 @@ Route::middleware('sales')->prefix('sales')->group(function () {
     Route::resource('barang', \App\Http\Controllers\Sales\BarangController::class);
     Route::resource('laporan', \App\Http\Controllers\Sales\LaporanController::class);
     Route::get('laporan', [\App\Http\Controllers\Sales\LaporanController::class, 'index']);
-
-    Route::get('pemasukan/get_item/{id}', [\App\Http\Controllers\Sales\PemasukanController::class, 'get_item']);
+    Route::get('profile', [\App\Http\Controllers\Sales\ProfileController::class, 'index']);
+    Route::post('profile/update', [\App\Http\Controllers\Sales\ProfileController::class, 'update']);    Route::get('pemasukan/get_item/{id}', [\App\Http\Controllers\Sales\PemasukanController::class, 'get_item']);
     Route::get('pemasukan/delete_item/{id}', [\App\Http\Controllers\Sales\PemasukanController::class, 'delete_item']);
     Route::get('pemasukan/cetak-pdf/{id}', [\App\Http\Controllers\Sales\PemasukanController::class, 'cetakpdf']);
     Route::resource('pemasukan', \App\Http\Controllers\Sales\PemasukanController::class);

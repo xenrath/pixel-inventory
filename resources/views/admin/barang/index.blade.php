@@ -26,7 +26,7 @@
                     <h3 class="card-title">Data Barang</h3>
                 </div>
                 <div class="card-body p-0">
-                    <form action="{{ url('sales/barang') }}" method="GET" id="get-keyword" autocomplete="off">
+                    <form action="{{ url('admin/barang') }}" method="GET" id="get-keyword" autocomplete="off">
                         @csrf
                         <div class="row p-3">
                             <div class="col-0 col-md-8"></div>

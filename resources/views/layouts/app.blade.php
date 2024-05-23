@@ -85,18 +85,28 @@
                         <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
                         @if (auth()->user()->isAdmin())
                             @include('layouts.menu.admin')
+                            <li class="nav-header">Profile</li>
+                            <li class="nav-item">
+                                <a href="{{ url('admin/profile') }}"
+                                    class="nav-link {{ request()->is('admin/profile') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-user-edit"></i>
+                                    <p>Update Profile</p>
+                                </a>
+                            </li>
+                            <br>
                         @else
                             @include('layouts.menu.sales')
+                            <li class="nav-header">Profile</li>
+                            <li class="nav-item">
+                                <a href="{{ url('sales/profile') }}"
+                                    class="nav-link {{ request()->is('sales/profile') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-user-edit"></i>
+                                    <p>Update Profile</p>
+                                </a>
+                            </li>
+                            <br>
                         @endif
-                        <li class="nav-header">Profile</li>
-                        <li class="nav-item">
-                            <a href="{{ url('admin/profile') }}"
-                                class="nav-link {{ request()->is('admin/profile') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-user-edit"></i>
-                                <p>Update Profile</p>
-                            </a>
-                        </li>
-                        <br>
+                            <br>
                         <li class="nav-header">
                             <button type="button" data-toggle="modal" data-target="#modal-logout"
                                 class="btn btn-danger btn-block">Logout</button>
