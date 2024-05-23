@@ -10,9 +10,16 @@ use Illuminate\Support\Facades\Validator;
 
 class BarangController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $barangs = Barang::orderBy('nama_barang')->get();
+        $keyword = $request->keyword;
+
+        if ($keyword) {
+            $barangs = Barang::where('nama_barang', 'like', "%$keyword%")->paginate(10);
+        } else {
+            $barangs = Barang::paginate(10);
+        }
+
         return view('admin.barang.index', compact('barangs'));
     }
 
