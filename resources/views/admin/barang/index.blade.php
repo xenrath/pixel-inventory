@@ -24,6 +24,12 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Data Barang</h3>
+                    <div class="float-right">
+                        <a href="{{ url('admin/barang/create') }}" class="btn btn-primary btn-sm">
+                            <i class="fas fa-plus"></i>
+                            Tambah
+                        </a>
+                    </div>
                 </div>
                 <div class="card-body p-0">
                     <form action="{{ url('admin/barang') }}" method="GET" id="get-keyword" autocomplete="off">
