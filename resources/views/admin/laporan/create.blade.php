@@ -42,35 +42,15 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <section class="content">
-                                <div class="container-fluid">
-                                    <!-- /.col -->
-                                    <div class="card card-primary card-outline">
-                                        <div class="card-header">
-                                            <h3 class="card-title">Masukkan laporan harian</h3>
-                                        </div>
-                                        <!-- /.card-header -->
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <textarea id="compose-textarea" class="form-control" name="keterangan" placeholder="Masukan keterangan"
-                                                    style="height: 300px; display: none;" value ="">{{ old('keterangan') }}</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
+                            <textarea id="compose-textarea" class="form-control" name="keterangan" placeholder="Masukan keterangan">{{ old('keterangan') }}</textarea>
                         </div>
                     </div>
-
                     <div class="card-footer text-right">
                         <button type="reset" class="btn btn-secondary">Reset</button>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </div>
-
-
             </form>
-        </div>
         </div>
     </section>
 @endsection

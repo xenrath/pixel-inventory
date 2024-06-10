@@ -65,7 +65,7 @@
                             <tr>
                                 <th class="text-center">No</th>
                                 <th>Kode Laporan</th>
-                                <th>Catatan</th>
+                                {{-- <th>Catatan</th> --}}
                                 <th>Nama Sales</th>
                                 <th>Tanggal</th>
                                 <th class="text-center" width="120">Opsi</th>
@@ -75,7 +75,7 @@
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $laporan->kode_laporan }}</td>
-                                <td>{!! Illuminate\Support\Str::limit($laporan->keterangan, 30, '...') !!}</td>
+                                {{-- <td>{!! Illuminate\Support\Str::limit($laporan->keterangan, 30, '...') !!}</td> --}}
                                 <td>{{ $laporan->user->nama }}</td>
                                 <td>{{ $laporan->tanggal_awal }}</td>
                                 <td class="text-center">

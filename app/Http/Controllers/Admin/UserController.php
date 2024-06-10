@@ -11,63 +11,43 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        $users = User::where('role', 'sales')
+            ->select('id', 'nama', 'telp', 'alamat')
+            ->paginate(10);
+
         return view('admin.user.index', compact('users'));
     }
 
     public function create()
     {
-        return view('admin/user.create');
+        return view('admin.user.create');
     }
 
     public function store(Request $request)
     {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'role' => 'required',
-                'username' => 'required|unique:users',
-                'nama' => 'required',
-                'telp' => 'required',
-                'alamat' => 'required',
-                'gambar' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
-            ],
-            [
-                'role.required' => 'Pilih jabatan',
-                'username.required' => 'Masukkan username',
-                'username.unique' => 'Username sudah digunakan!',
-                'nama.required' => 'Masukkan nama lengkap',
-                'telp.required' => 'Masukkan no telepon',
-                'alamat.required' => 'Masukkan alamat',
-                'gambar.image' => 'Gambar yang dimasukan salah!',
-            ]
-        );
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required',
+            'telp' => 'required',
+        ], [
+            'nama.required' => 'Nama Lengkap harus diisi!',
+            'telp.required' => 'Nomor Telepon harus diisi!',
+        ]);
 
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
             return back()->withInput()->with('error', $errors);
         }
 
-        if ($request->gambar) {
-            $gambar = str_replace(' ', '', $request->gambar->getClientOriginalName());
-            $namaGambar = 'user/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
-            $request->gambar->storeAs('public/uploads/', $namaGambar);
-        } else {
-            $namaGambar = null;
-        }
-
-        User::create(array_merge(
-            $request->all(),
-            [
-                'gambar' => $namaGambar,
-                'password' => bcrypt('12345'),
-                'kode_user' => $this->kode(),
-                'tanggal' => Carbon::now('Asia/Jakarta'),
-
-            ]
-        ));
+        User::create([
+            'username' => $request->telp,
+            'password' => bcrypt('sales'),
+            'nama' => $request->nama,
+            'alamat' => $request->alamat,
+            'telp' => $request->telp,
+            'role' => 'sales'
+        ]);
 
         return redirect('admin/user')->with('success', 'Berhasil menambahkan user');
     }
@@ -89,14 +69,14 @@ class UserController extends Controller
     {
 
         $user = User::where('id', $id)->first();
-        return view('admin/user.show', compact('user'));
+        return view('admin.user.show', compact('user'));
     }
 
     public function edit($id)
     {
 
         $user = User::where('id', $id)->first();
-        return view('admin/user.update', compact('user'));
+        return view('admin.user.update', compact('user'));
     }
 
     public function update(Request $request, $id)

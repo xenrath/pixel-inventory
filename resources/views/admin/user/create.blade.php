@@ -26,12 +26,12 @@
             @if (session('error'))
                 <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h5>
-                        <i class="icon fas fa-ban"></i> Gagal!
-                    </h5>
-                    @foreach (session('error') as $error)
-                        - {{ $error }} <br>
-                    @endforeach
+                    <h5>Gagal!</h5>
+                    <ul class="px-3 mb-0">
+                        @foreach (session('error') as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
             @endif
             <div class="card">
@@ -42,52 +42,27 @@
                 <form action="{{ url('admin/user') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     <div class="card-body">
-                        <div class="form-group">
-                            <label class="form-label" for="role">Jabatan</label>
-                            <select class="form-control" id="role" name="role">
-                                <option value="">- Pilih Jabatan -</option>
-                                <option value="admin" {{ old('role') == 'admin' ? 'selected' : null }}>
-                                    Admin</option>
-                                <option value="sales" {{ old('role') == 'sales' ? 'selected' : null }}>
-                                    Sales</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" name="username"
-                                placeholder="Masukan username" value="{{ old('username') }}">
-                        </div>
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="nama">Nama Lengkap</label>
                             <input type="text" class="form-control" id="nama" name="nama"
-                                placeholder="Masukan nama lengkap" value="{{ old('nama') }}">
+                                placeholder="masukan nama lengkap" value="{{ old('nama') }}">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="telp">No. Telepon</label>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">+62</span>
                                 </div>
                                 <input type="text" id="telp" name="telp" class="form-control"
-                                    placeholder="Masukan nomor telepon" value="{{ old('telp') }}">
+                                    placeholder="masukan nomor telepon" value="{{ old('telp') }}">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="alamat">Alamat</label>
-                            <textarea type="text" class="form-control" id="alamat" name="alamat" placeholder="Masukan alamat">{{ old('alamat') }}</textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="gambar">Gambar <small>(Kosongkan saja jika tidak
-                                    ingin menambahkan)</small></label>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="gambar" name="gambar"
-                                    accept="image/*">
-                                <label class="custom-file-label" for="gambar">Masukkan gambar</label>
-                            </div>
+                            <textarea type="text" class="form-control" id="alamat" name="alamat" placeholder="masukan alamat">{{ old('alamat') }}</textarea>
                         </div>
                     </div>
                     <div class="card-footer text-right">
-                        <button type="reset" class="btn btn-secondary">Reset</button>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
