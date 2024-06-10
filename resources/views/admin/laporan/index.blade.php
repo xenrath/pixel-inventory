@@ -79,10 +79,10 @@
                                 <td>{{ $laporan->user->nama }}</td>
                                 <td>{{ $laporan->tanggal_awal }}</td>
                                 <td class="text-center">
-                                    <button type="submit" class="btn btn-info btn-sm" data-toggle="modal"
-                                        data-target="#modal-show-{{ $laporan->id }}">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
+                                    <a href="{{ url('admin/laporan/print/' . $laporan->id) }}"
+                                        class="btn btn-dark btn-sm">
+                                        <i class="fas fa-print"></i>
+                                    </a>
                                     <a href="{{ url('admin/laporan/' . $laporan->id . '/edit') }}"
                                         class="btn btn-warning btn-sm">
                                         <i class="fas fa-edit"></i>
@@ -91,7 +91,6 @@
                                         data-target="#modal-hapus-{{ $laporan->id }}">
                                         <i class="fas fa-trash"></i>
                                     </button>
-
                                 </td>
                             </tr>
                             <div class="modal fade" id="modal-hapus-{{ $laporan->id }}">
@@ -114,28 +113,6 @@
                                                 @method('delete')
                                                 <button type="submit" class="btn btn-danger">Hapus</button>
                                             </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="modal fade" id="modal-show-{{ $laporan->id }}">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Detail Laporan</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div style="border: 1px solid #ccc; padding: 10px;">
-                                                {!! $laporan->keterangan !!}
-                                                <br>
-                                                <br>
-                                                <br>
-                                                {!! $laporan->user->nama !!}
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

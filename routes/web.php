@@ -25,6 +25,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('pengeluaran/delete_item/{id}', [\App\Http\Controllers\Admin\PengeluaranController::class, 'delete_item']);
     Route::get('pengeluaran', [\App\Http\Controllers\Admin\PengeluaranController::class, 'index']);
     
+    Route::get('laporan/print/{id}', [\App\Http\Controllers\Admin\LaporanController::class, 'print']);
     Route::get('laporan', [\App\Http\Controllers\Admin\LaporanController::class, 'index']);
     Route::get('pemasukan/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PemasukanController::class, 'cetakpdf']);
     Route::get('pengeluaran/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PengeluaranController::class, 'cetakpdf']);

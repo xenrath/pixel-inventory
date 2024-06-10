@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Laporan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
@@ -78,30 +79,19 @@ class LaporanController extends Controller
         return redirect('admin/laporan')->with('success', 'Berhasil menambahkan laporan');
     }
 
-
     public function edit($id)
     {
         $laporan = Laporan::where('id', $id)->first();
         return view('admin/laporan.update', compact('laporan'));
     }
 
-    public function show($id)
-    {
-
-        $laporan = Laporan::where('id', $id)->first();
-    }
-
     public function update(Request $request, $id)
     {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'keterangan' => 'required',
-            ],
-            [
-                'keterangan.required' => 'Masukkan laporan',
-            ]
-        );
+        $validator = Validator::make($request->all(), [
+            'keterangan' => 'required',
+        ], [
+            'keterangan.required' => 'Masukkan laporan',
+        ]);
 
         if ($validator->fails()) {
             $error = $validator->errors()->all();
@@ -115,6 +105,22 @@ class LaporanController extends Controller
         $laporan->save();
 
         return redirect('admin/laporan')->with('success', 'Berhasil memperbarui laporan');
+    }
+
+    public function destroy($id)
+    {
+        $laporan = Laporan::find($id);
+        $laporan->delete();
+
+        return redirect('admin/laporan')->with('success', 'Berhasil menghapus laporan');
+    }
+
+    public function print($id)
+    {
+        $laporan = Laporan::find($id);
+        
+        $pdf = Pdf::loadView('admin.laporan.print', compact('laporan'));
+        return $pdf->stream('Laporan');
     }
 
     public function kode()
@@ -135,13 +141,5 @@ class LaporanController extends Controller
         $kode_item = $data . "/" . $tanggal . $tahun . "/" . $num;
 
         return $kode_item;
-    }
-
-    public function destroy($id)
-    {
-        $laporan = Laporan::find($id);
-        $laporan->delete();
-
-        return redirect('admin/laporan')->with('success', 'Berhasil menghapus laporan');
     }
 }
