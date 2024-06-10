@@ -86,7 +86,7 @@
         </tr>
         <tr>
             <td class="td-1" colspan="3">
-                Isi Laporan
+                <u>Isi Laporan</u>
                 <br>
                 {!! $laporan->keterangan !!}
             </td>
