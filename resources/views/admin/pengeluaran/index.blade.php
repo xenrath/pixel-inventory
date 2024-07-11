@@ -88,7 +88,7 @@
                                         {{ $pengeluaran->nama_supp }}
                                     @endif
                                 </td>
-                                <td>{{ $pengeluaran->user->nama }}</td>
+                                <td>{{ $pengeluaran->user->nama ?? '' }}</td>
                                 <td> {{ number_format($pengeluaran->grand_total, 0, ',', '.') }}</td>
                                 <td class="text-center">
                                     <a href="{{ url('admin/pengeluaran/cetak-pdf/' . $pengeluaran->id) }}"
