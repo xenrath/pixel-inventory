@@ -22,6 +22,7 @@ class Detail_pemasukan extends Model
         'harga_dus',
         'harga_renceng',
         'harga_pack',
+        'harga',
         'satuan',
         'jumlah',
         'total',

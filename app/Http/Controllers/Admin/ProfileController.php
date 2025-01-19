@@ -56,6 +56,7 @@ class ProfileController extends Controller
             'telp' => $request->telp,
             'alamat' => $request->alamat,
         ]);
+        
         return redirect()->back()->with('success', 'Berhasil memperbarui Profile');
     }
 }

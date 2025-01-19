@@ -290,14 +290,17 @@
                     {{ $item->nama_barang }}
                 </td>
                 <td class="td" style="font-size: 15px;">
-                    @if ($item->satuan == 'pcs')
-                        @harga($item->harga_pcs)
-                    @elseif($item->satuan == 'dus')
-                        @harga($item->harga_dus)
-                    @elseif($item->satuan == 'renceng')
-                        @harga($item->harga_renceng)
-                    @elseif($item->satuan == 'pack')
-                        @harga($item->harga_pack)
+                    @if ($item->harga)
+                        @harga($item->harga)
+                    @else
+                        @if ($item->satuan == 'pcs')
+                        @elseif($item->satuan == 'dus')
+                            @harga($item->harga_dus)
+                        @elseif($item->satuan == 'renceng')
+                            @harga($item->harga_renceng)
+                        @elseif($item->satuan == 'pack')
+                            @harga($item->harga_pack)
+                        @endif
                     @endif
                 </td>
                 <td class="td" style="font-size: 15px;">

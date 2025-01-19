@@ -6,6 +6,13 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
+Route::post('supplier-search', [\App\Http\Controllers\HomeController::class, 'supplier_search']);
+Route::get('supplier-set/{id}', [\App\Http\Controllers\HomeController::class, 'supplier_set']);
+Route::post('sales-search', [\App\Http\Controllers\HomeController::class, 'sales_search']);
+Route::get('sales-set/{id}', [\App\Http\Controllers\HomeController::class, 'sales_set']);
+Route::post('barang-search', [\App\Http\Controllers\HomeController::class, 'barang_search']);
+Route::get('barang-get/{id}', [\App\Http\Controllers\HomeController::class, 'barang_get']);
+Route::post('harga-get/{id}', [\App\Http\Controllers\HomeController::class, 'harga_get']);
 
 Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\HomeController::class, 'index']);
@@ -20,11 +27,11 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('pemasukan/get_item/{id}', [\App\Http\Controllers\Admin\PemasukanController::class, 'get_item']);
     Route::get('pemasukan/delete_item/{id}', [\App\Http\Controllers\Admin\PemasukanController::class, 'delete_item']);
     Route::get('pemasukan', [\App\Http\Controllers\Admin\PemasukanController::class, 'index']);
-    
+
     Route::get('pengeluaran/get_item/{id}', [\App\Http\Controllers\Admin\PengeluaranController::class, 'get_item']);
     Route::get('pengeluaran/delete_item/{id}', [\App\Http\Controllers\Admin\PengeluaranController::class, 'delete_item']);
     Route::get('pengeluaran', [\App\Http\Controllers\Admin\PengeluaranController::class, 'index']);
-    
+
     Route::get('laporan/print/{id}', [\App\Http\Controllers\Admin\LaporanController::class, 'print']);
     Route::get('laporan', [\App\Http\Controllers\Admin\LaporanController::class, 'index']);
     Route::get('pemasukan/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PemasukanController::class, 'cetakpdf']);
@@ -41,7 +48,8 @@ Route::middleware('sales')->prefix('sales')->group(function () {
     Route::resource('laporan', \App\Http\Controllers\Sales\LaporanController::class);
     Route::get('laporan', [\App\Http\Controllers\Sales\LaporanController::class, 'index']);
     Route::get('profile', [\App\Http\Controllers\Sales\ProfileController::class, 'index']);
-    Route::post('profile/update', [\App\Http\Controllers\Sales\ProfileController::class, 'update']);    Route::get('pemasukan/get_item/{id}', [\App\Http\Controllers\Sales\PemasukanController::class, 'get_item']);
+    Route::post('profile/update', [\App\Http\Controllers\Sales\ProfileController::class, 'update']);
+    Route::get('pemasukan/get_item/{id}', [\App\Http\Controllers\Sales\PemasukanController::class, 'get_item']);
     Route::get('pemasukan/delete_item/{id}', [\App\Http\Controllers\Sales\PemasukanController::class, 'delete_item']);
     Route::get('pemasukan/cetak-pdf/{id}', [\App\Http\Controllers\Sales\PemasukanController::class, 'cetakpdf']);
     Route::resource('pemasukan', \App\Http\Controllers\Sales\PemasukanController::class);

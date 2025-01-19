@@ -6,15 +6,12 @@
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
+            <div class="row">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Pemasukan</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('sales/pemasukan') }}">Pemasukan</a></li>
-                        <li class="breadcrumb-item active">Tambah</li>
-                    </ol>
+                    <a href="{{ url('admin/pemasukan') }}" class="btn btn-secondary btn-flat float-left mr-2">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <h1>Pemasukan</h1>
                 </div>
             </div>
         </div>
@@ -32,434 +29,744 @@
                     @endforeach
                 </div>
             @endif
-            @if (session('error_barangs') || session('error_pesanans'))
-                <div class="alert alert-danger alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h5>
-                        <i class="icon fas fa-ban"></i> Gagal!
-                    </h5>
-                    @if (session('error_barangs'))
-                        @foreach (session('error_barangs') as $error)
-                            - {{ $error }} <br>
-                        @endforeach
-                    @endif
-                    @if (session('error_pesanans'))
-                        @foreach (session('error_pesanans') as $error)
-                            - {{ $error }} <br>
-                        @endforeach
-                    @endif
-                </div>
-            @endif
             <form action="{{ url('admin/pemasukan') }}" method="POST" autocomplete="off">
                 @csrf
-                <div>
-                    <div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Supplier</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="form-group" hidden>
-                                            <label for="supplier_id">Supplier Id</label>
-                                            <input type="text" class="form-control" id="supplier_id" readonly
-                                                name="supplier_id" placeholder="" value="{{ old('supplier_id') }}">
-                                        </div>
-                                        <label style="font-size:14px" class="form-label" for="nama_supp">Nama</label>
-                                        <div class="form-group d-flex">
-                                            <input class="form-control" id="nama_supp" name="nama_supp" type="text"
-                                                placeholder="" value="{{ old('nama_supp') }}" readonly
-                                                style="margin-right: 10px; font-size:14px" />
-                                            <button class="btn btn-primary" type="button"
-                                                onclick="showSupplier(this.value)">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                        </div>
-                                        <div class="form-group">
-                                            <label style="font-size:14px" for="telp">No. Telp</label>
-                                            <input style="font-size:14px" type="text" class="form-control" id="telp"
-                                                readonly name="telp" placeholder="" value="{{ old('telp') }}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label style="font-size:14px" for="alamat">Alamat</label>
-                                            <input style="font-size:14px" type="text" class="form-control" id="alamat"
-                                                readonly name="alamat" placeholder="" value="{{ old('alamat') }}">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Sales</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="form-group" hidden>
-                                            <label for="user_id">User Id</label>
-                                            <input type="text" class="form-control" id="user_id" readonly
-                                                name="user_id" placeholder="" value="{{ old('user_id') }}">
-                                        </div>
-                                        <label style="font-size:14px" class="form-label" for="nama_driver">Nama
-                                            Sales</label>
-                                        <div class="form-group d-flex">
-                                            <input class="form-control" id="nama" name="nama" type="text"
-                                                placeholder="" value="{{ old('nama') }}" readonly
-                                                style="margin-right: 10px;font-size:14px" />
-                                            <button class="btn btn-primary" type="button"
-                                                onclick="showSales(this.value)">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                        </div>
-                                        <div class="form-group">
-                                            <label style="font-size:14px" for="telp_sales">No. Telp</label>
-                                            <input style="font-size:14px" type="tex" class="form-control"
-                                                id="telp_sales" readonly name="telp_sales" placeholder=""
-                                                value="{{ old('telp_sales') }}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label style="font-size:14px" for="alamat_sales">Alamat</label>
-                                            <input style="font-size:14px" type="text" class="form-control"
-                                                id="alamat_sales" readonly name="alamat_sales" placeholder=""
-                                                value="{{ old('alamat_sales') }}">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="card">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card rounded-0">
                             <div class="card-header">
-                                <h3 class="card-title">Barang <span>
-                                    </span></h3>
-                                <div class="float-right">
-                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                        data-target="#modal-barang">
-                                        Pilih Barang
-                                    </button>
+                                <h3 class="card-title">Supplier</h3>
+                                <button type="button" class="btn btn-info btn-sm btn-flat float-right" data-toggle="modal"
+                                    data-target="#modal-supplier">
+                                    Pilih
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                @error('supplier_id')
+                                    <div class="alert alert-danger alert-dismissible rounded-0">
+                                        <button type="button" class="close" data-dismiss="alert"
+                                            aria-hidden="true">&times;</button>
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                                <div class="p-4 text-center border rounded-0" id="supplier-kosong">
+                                    <span class="text-muted">- Supplier belum dipilih -</span>
+                                </div>
+                                <div id="supplier-detail" style="display: none;">
+                                    <div class="row mb-2">
+                                        <div class="col-md-6">
+                                            <strong>Nama Supplier</strong>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span id="supplier-nama">-</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-md-6">
+                                            <strong>No. Telepon</strong>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span id="supplier-telp">-</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-md-6">
+                                            <strong>Alamat</strong>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span id="supplier-alamat">-</span>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="supplier-id" name="supplier_id" class="form-control rounded-0"
+                                        value="">
                                 </div>
                             </div>
-                            <!-- /.card-header -->
-                            <div class="card-body p-0">
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 40px" class="text-center">No</th>
-                                            <th>Nama Barang</th>
-                                            <th style="width: 220px;">
-                                                Harga
-                                                <small>(satuan)</small>
-                                            </th>
-                                            <th style="width: 180px;">Jumlah</th>
-                                            <th style="width: 220px;">Total</th>
-                                            <th class="text-center" style="width: 40px;">Opsi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tabel-barang">
-                                        <tr id="tabel-barang-kosong">
-                                            <td class="text-center" colspan="6">
-                                                - Belum ada barang yang dipilih -
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th colspan="4">Grand Total</th>
-                                            <th colspan="2">
-                                                <span id="span-grand-total">Rp0</span>
-                                                <input type="hidden" class="form-control" name="grand_total"
-                                                    id="grand-total" value="0">
-                                            </th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="text-right pt-3 pb-5">
-                            <button type="submit" class="btn btn-primary">Simpan Pemasukan</button>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="card rounded-0">
+                            <div class="card-header">
+                                <h3 class="card-title">Sales</h3>
+                                <button type="button" class="btn btn-info btn-sm btn-flat float-right" data-toggle="modal"
+                                    data-target="#modal-sales">
+                                    Pilih
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                @error('user_id')
+                                    <div class="alert alert-danger alert-dismissible rounded-0">
+                                        <button type="button" class="close" data-dismiss="alert"
+                                            aria-hidden="true">&times;</button>
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                                <div class="p-4 text-center border rounded-0" id="sales-kosong">
+                                    <span class="text-muted">- Sales belum dipilih -</span>
+                                </div>
+                                <div id="sales-detail" style="display: none;">
+                                    <div class="row mb-2">
+                                        <div class="col-md-6">
+                                            <strong>Nama Supplier</strong>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span id="sales-nama">-</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-md-6">
+                                            <strong>No. Telepon</strong>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span id="sales-telp">-</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-md-6">
+                                            <strong>Alamat</strong>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span id="sales-alamat">-</span>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="sales-id" name="user_id" class="form-control rounded-0"
+                                        value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card rounded-0">
+                    <div class="card-header">
+                        <h3 class="card-title">Barang</h3>
+                        <button type="button" class="btn btn-info btn-sm btn-flat float-right" data-toggle="modal"
+                            data-target="#modal-barang">
+                            Pilih
+                        </button>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @error('barangs')
+                            <div class="alert alert-danger alert-dismissible rounded-0">
+                                <button type="button" class="close" data-dismiss="alert"
+                                    aria-hidden="true">&times;</button>
+                                {{ $message }}
+                            </div>
+                        @enderror
+                        <div id="barang-alert" class="alert alert-info alert-dismissible rounded-0"
+                            style="display: none;">
+                            <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">&times;</button>
+                            Lakukan <strong>uncheck</strong> untuk menghapus barang
+                        </div>
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px" class="text-center">No</th>
+                                    <th>Barang</th>
+                                    <th style="width: 240px;">
+                                        Harga
+                                        <small class="text-muted">(per satuan)</small>
+                                    </th>
+                                    <th style="width: 160px;">Jumlah</th>
+                                    <th style="width: 160px;">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="barang-tbody">
+                                <tr id="barang-kosong">
+                                    <td class="text-center text-muted" colspan="5">
+                                        - Barang belum ditambahkan -
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="3">Grand Total</th>
+                                    <th colspan="2">
+                                        <span id="span-grand-total">Rp0</span>
+                                        <input type="hidden" class="form-control" name="grand_total" id="grand-total"
+                                            value="0">
+                                    </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="mb-4 text-right">
+                    <button type="submit" class="btn btn-primary btn-flat">Simpan Pemasukan</button>
                 </div>
             </form>
         </div>
-        <div class="modal fade" id="tableSupplier" data-backdrop="static">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
+        <div class="modal fade" id="modal-supplier" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content rounded-0">
                     <div class="modal-header">
                         <h4 class="modal-title">Data Supplier</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                    </div>
+                    <div class="modal-header shadow-sm mb-2">
+                        <div class="input-group">
+                            <input type="search" class="form-control rounded-0" id="keyword-supplier"
+                                placeholder="cari nama / alamat supplier" autocomplete="off">
+                            <div class="input-group-append rounded-0">
+                                <button type="button" class="btn btn-default btn-flat" onclick="supplier_search()">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-body">
-                        <div class="table-responsive scrollbar m-2">
-                            <table id="datatables" class="table table-bordered table-striped">
-                                <thead class="bg-200 text-900">
+                        <table id="supplier-modal-table" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" style="width: 20px;">No</th>
+                                    <th>Supplier</th>
+                                    <th class="text-center" style="width: 40px;">Opsi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="supplier-modal-tbody">
+                                @foreach ($suppliers as $supplier)
                                     <tr>
-                                        <th class="text-center">No</th>
-                                        <th>Kode Supplier</th>
-                                        <th>Nama Supplier</th>
-                                        <th>Telp</th>
-                                        <th>Opsi</th>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td>
+                                            <span>{{ $supplier->nama_supp }}</span>
+                                            <br>
+                                            <small class="text-muted">{{ $supplier->alamat }}</small>
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-outline-primary btn-sm btn-flat"
+                                                data-dismiss="modal" onclick="supplier_set({{ $supplier->id }})">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($suppliers as $supplier)
-                                        <tr>
-                                            <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>{{ $supplier->kode_supplier }}</td>
-                                            <td>{{ $supplier->nama_supp }}</td>
-                                            <td>{{ $supplier->telp }}</td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-primary btn-sm"
-                                                    onclick="getSelectedSupplier('{{ $supplier->id }}', '{{ $supplier->nama_supp }}', '{{ $supplier->telp }}', '{{ $supplier->alamat }}')">
-                                                    <i class="fas fa-plus"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <div id="supplier-modal-loading" class="text-center p-4" style="display: none">
+                            <span>Loading...</span>
                         </div>
+                        <div class="text-center">
+                            <small class="text-muted">Cari dengan <strong>kata kunci</strong> lebih detail</small>
+                            <br>
+                            <small class="text-muted">Menampilkan maksimal 10 data</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer shadow-sm justify-content-between">
+                        <button type="button" class="btn btn-default btn-sm btn-flat"
+                            data-dismiss="modal">Batal</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="tableSales" data-backdrop="static">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
+        <div class="modal fade" id="modal-sales" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content rounded-0">
                     <div class="modal-header">
                         <h4 class="modal-title">Data Sales</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                    </div>
+                    <div class="modal-header shadow-sm mb-2">
+                        <div class="input-group">
+                            <input type="search" class="form-control rounded-0" id="keyword-sales"
+                                placeholder="cari nama / alamat sales" autocomplete="off">
+                            <div class="input-group-append rounded-0">
+                                <button type="button" class="btn btn-default btn-flat" onclick="sales_search()">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-body">
-                        <div class="table-responsive scrollbar m-2">
-                            <table id="datatables1" class="table table-bordered table-striped">
-                                <thead class="bg-200 text-900">
+                        <table id="sales-modal-table" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" style="width: 20px;">No</th>
+                                    <th>Sales</th>
+                                    <th class="text-center" style="width: 40px;">Opsi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sales-modal-tbody">
+                                @foreach ($saless as $sales)
                                     <tr>
-                                        <th class="text-center">No</th>
-                                        <th>Nama Sales</th>
-                                        <th>Telp</th>
-                                        <th>Opsi</th>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td>
+                                            <span>{{ $sales->nama }}</span>
+                                            <br>
+                                            <small class="text-muted">{{ $sales->alamat }}</small>
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-outline-primary btn-sm btn-flat"
+                                                data-dismiss="modal" onclick="sales_set({{ $sales->id }})">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($sales as $saless)
-                                        <tr>
-                                            <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>{{ $saless->nama }}</td>
-                                            <td>{{ $saless->telp }}</td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-primary btn-sm"
-                                                    onclick="getSelectedSales('{{ $saless->id }}', '{{ $saless->nama }}', '{{ $saless->telp }}', '{{ $saless->alamat }}')">
-                                                    <i class="fas fa-plus"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <div id="sales-modal-loading" class="text-center p-4" style="display: none">
+                            <span>Loading...</span>
                         </div>
+                        <div class="text-center">
+                            <small class="text-muted">Cari dengan <strong>kata kunci</strong> lebih detail</small>
+                            <br>
+                            <small class="text-muted">Menampilkan maksimal 10 data</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer shadow-sm justify-content-between">
+                        <button type="button" class="btn btn-default btn-sm btn-flat"
+                            data-dismiss="modal">Batal</button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="modal fade" id="modal-barang" data-backdrop="static">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
+            <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                <div class="modal-content rounded-0">
                     <div class="modal-header">
                         <h4 class="modal-title">Data Barang</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
                     </div>
-                    <div class="modal-body">
-                        <div class="table-responsive">
-                            <table id="example1" class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center" style="width: 40px">#</th>
-                                        <th>Barang</th>
-                                        <th>Jumlah</th>
-                                        <th>Harga Pcs</th>
-                                        <th>Harga Dus</th>
-                                        <th>Harga Renceng</th>
-                                        <th>Harga Pack</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($barangs as $barang)
-                                        <tr>
-                                            <td class="text-center">
-                                                <div class="icheck-primary d-inline">
-                                                    <input type="checkbox" id="checkbox-barang-{{ $barang->id }}"
-                                                        onclick="add_item({{ $barang->id }})">
-                                                    <label for="checkbox-barang-{{ $barang->id }}"></label>
-                                                </div>
-                                            </td>
-                                            <td>{{ $barang->nama_barang }}</td>
-                                            <td>{{ $barang->jumlah }} {{ $barang->satuan }}</td>
-                                            <td>@rupiah($barang->harga_pcs)</td>
-                                            <td>@rupiah($barang->harga_dus)</td>
-                                            <td>@rupiah($barang->harga_renceng)</td>
-                                            <td>@rupiah($barang->harga_pack)</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                    <div class="modal-header shadow-sm mb-2">
+                        <div class="input-group">
+                            <input type="search" class="form-control rounded-0" id="keyword-barang"
+                                placeholder="cari nama barang" autocomplete="off">
+                            <div class="input-group-append rounded-0">
+                                <button type="button" class="btn btn-default btn-flat" onclick="barang_search()">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Selesai</button>
+                    <div class="modal-body">
+                        <table id="barang-modal-table" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" style="width: 20px;">#</th>
+                                    <th>Barang</th>
+                                    <th style="max-width: 200px;">Harga</th>
+                                </tr>
+                            </thead>
+                            <tbody id="barang-modal-tbody">
+                                @foreach ($barangs as $barang)
+                                    <tr>
+                                        <td class="text-center">
+                                            <div class="icheck-primary d-inline">
+                                                <input type="checkbox" id="barang-checkbox-{{ $barang->id }}"
+                                                    onclick="barang_get({{ $barang->id }})">
+                                                <label for="barang-checkbox-{{ $barang->id }}"></label>
+                                            </div>
+                                        </td>
+                                        <td>{{ $barang->nama_barang }}</td>
+                                        <td style="max-width: 200px;">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <strong>per Pcs:</strong>
+                                                    <span>@rupiah($barang->harga_pcs)</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <strong>per Dus:</strong>
+                                                    <span>@rupiah($barang->harga_dus)</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <strong>per Renceng</strong>
+                                                    <span>@rupiah($barang->harga_renceng)</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <strong>per Pack</strong>
+                                                    <span>@rupiah($barang->harga_pack)</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <div id="barang-modal-loading" class="text-center p-4" style="display: none">
+                            <span>Loading...</span>
+                        </div>
+                        <div class="text-center">
+                            <small class="text-muted">Cari dengan <strong>kata kunci</strong> lebih detail</small>
+                            <br>
+                            <small class="text-muted">Menampilkan maksimal 10 data</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer shadow-sm justify-content-end">
+                        <button type="button" class="btn btn-primary btn-sm btn-flat"
+                            data-dismiss="modal">Selesai</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <script>
-        var item_id = [];
+        $('#keyword-supplier').on('search', function() {
+            supplier_search();
+        });
 
-        function add_item(id) {
-            var checkbox = document.getElementById('checkbox-barang-' + id);
-            if (checkbox.checked) {
-                if (!item_id.includes(id)) {
-                    item_id.push(id);
+        function supplier_search() {
+            $('#supplier-modal-table').hide();
+            $('#supplier-modal-tbody').empty();
+            $('#supplier-modal-loading').show();
+            $.ajax({
+                url: "{{ url('supplier-search') }}",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "keyword": $('#keyword-supplier').val(),
+                },
+                dataType: "json",
+                success: function(data) {
+                    $('#supplier-modal-loading').hide();
+                    $('#supplier-modal-table').show();
+                    if (data.length) {
+                        $.each(data, function(key, value) {
+                            supplier_modal(key, value);
+                        });
+                    } else {
+                        var tbody = '<tr>';
+                        tbody += '<td class="text-center" colspan="3">';
+                        tbody += '<span class="text-muted">- Data tidak ditemukan -</span>';
+                        tbody += '</td>';
+                        tbody += '</tr>';
+                        $('#supplier-modal-tbody').append(tbody);
+                    }
+                },
+            });
+        }
+
+        function supplier_modal(key, value) {
+            var no = key + 1;
+            var tbody = '<tr>';
+            tbody += '<td class="text-center">' + no + '</td>';
+            tbody += '<td>';
+            tbody += '<span>' + value.nama_supp + '</span>';
+            tbody += '<br>';
+            tbody += '<small class="text-muted">' + value.alamat + '</small>';
+            tbody += '<td class="text-center">';
+            tbody +=
+                '<button type="button" class="btn btn-outline-primary btn-sm btn-flat" data-dismiss="modal" onclick="supplier_set(' +
+                value.id + ')">';
+            tbody += '<i class="fas fa-check"></i>';
+            tbody += '</button>';
+            tbody += '</td>';
+            tbody += '</tr>';
+
+            $('#supplier-modal-tbody').append(tbody);
+        }
+
+        function supplier_set(id) {
+            $.ajax({
+                url: "{{ url('supplier-set') }}" + "/" + id,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    if (data) {
+                        $('#supplier-kosong').hide();
+                        $('#supplier-detail').show();
+                        $('#supplier-nama').text(data.nama_supp ?? '-');
+                        $('#supplier-telp').text(data.telp ?? '-');
+                        $('#supplier-alamat').text(data.alamat ?? '-');
+                        $('#supplier-id').val(data.id);
+                    } else {
+                        $('#supplier-kosong').show();
+                        $('#supplier-detail').hide();
+                        $('#supplier-id').val("");
+                    }
+                },
+            });
+        }
+
+        var supplier_id = @json(old('supplier_id'));
+        if (supplier_id) {
+            supplier_set(supplier_id);
+        }
+    </script>
+    <script>
+        $('#keyword-sales').on('search', function() {
+            sales_search();
+        });
+
+        function sales_search() {
+            $('#sales-modal-table').hide();
+            $('#sales-modal-tbody').empty();
+            $('#sales-modal-loading').show();
+            $.ajax({
+                url: "{{ url('sales-search') }}",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "keyword": $('#keyword-sales').val(),
+                },
+                dataType: "json",
+                success: function(data) {
+                    $('#sales-modal-loading').hide();
+                    $('#sales-modal-table').show();
+                    if (data.length) {
+                        $.each(data, function(key, value) {
+                            sales_modal(key, value);
+                        });
+                    } else {
+                        var tbody = '<tr>';
+                        tbody += '<td class="text-center" colspan="3">';
+                        tbody += '<span class="text-muted">- Data tidak ditemukan -</span>';
+                        tbody += '</td>';
+                        tbody += '</tr>';
+                        $('#sales-modal-tbody').append(tbody);
+                    }
+                },
+            });
+        }
+
+        function sales_modal(key, value) {
+            var no = key + 1;
+            var tbody = '<tr>';
+            tbody += '<td class="text-center">' + no + '</td>';
+            tbody += '<td>';
+            tbody += '<span>' + value.nama + '</span>';
+            tbody += '<br>';
+            tbody += '<small class="text-muted">' + value.alamat + '</small>';
+            tbody += '<td class="text-center">';
+            tbody +=
+                '<button type="button" class="btn btn-outline-primary btn-sm btn-flat" data-dismiss="modal" onclick="sales_set(' +
+                value.id + ')">';
+            tbody += '<i class="fas fa-check"></i>';
+            tbody += '</button>';
+            tbody += '</td>';
+            tbody += '</tr>';
+
+            $('#sales-modal-tbody').append(tbody);
+        }
+
+        function sales_set(id) {
+            $.ajax({
+                url: "{{ url('sales-set') }}" + "/" + id,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    if (data) {
+                        $('#sales-kosong').hide();
+                        $('#sales-detail').show();
+                        $('#sales-nama').text(data.nama ?? '-');
+                        $('#sales-telp').text(data.telp ?? '-');
+                        $('#sales-alamat').text(data.alamat ?? '-');
+                        $('#sales-id').val(data.id);
+                    } else {
+                        $('#sales-kosong').show();
+                        $('#sales-detail').hide();
+                        $('#sales-id').val("");
+                    }
+                },
+            });
+        }
+
+        var user_id = @json(old('user_id'));
+        if (user_id) {
+            sales_set(user_id);
+        }
+    </script>
+    <script>
+        $('#keyword-barang').on('search', function() {
+            barang_search();
+        });
+
+        function barang_search() {
+            $('#barang-modal-table').hide();
+            $('#barang-modal-tbody').empty();
+            $('#barang-modal-loading').show();
+            $.ajax({
+                url: "{{ url('barang-search') }}",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "keyword": $('#keyword-barang').val(),
+                },
+                dataType: "json",
+                success: function(data) {
+                    $('#barang-modal-loading').hide();
+                    $('#barang-modal-table').show();
+                    if (data.length) {
+                        $.each(data, function(key, value) {
+                            barang_modal(value, barang_item.includes(value.id));
+                        });
+                    } else {
+                        var tbody = '<tr>';
+                        tbody += '<td class="text-center" colspan="3">';
+                        tbody += '<span class="text-muted">- Data tidak ditemukan -</span>';
+                        tbody += '</td>';
+                        tbody += '</tr>';
+                        $('#barang-modal-tbody').append(tbody);
+                    }
+                },
+            });
+        }
+
+        function barang_modal(value, is_selected) {
+            if (is_selected) {
+                var checked = 'checked';
+            } else {
+                var checked = '';
+            }
+
+            var tbody = '<tr>';
+            tbody += '<td class="text-center">';
+            tbody += '<div class="icheck-primary d-inline">';
+            tbody += '<input type="checkbox" id="barang-checkbox-' + value.id + '"';
+            tbody += 'onclick="barang_get(' + value.id + ')" ' + checked + '>';
+            tbody += '<label for="barang-checkbox-' + value.id + '"></label>';
+            tbody += '</div>';
+            tbody += '</td>';
+            tbody += '<td>' + value.nama_barang + '</td>';
+            tbody += '<td style="max-width: 200px;">';
+            tbody += '<div class="row">';
+            tbody += '<div class="col-md-6">';
+            tbody += '<strong>per Pcs:</strong>';
+            tbody += '<span>' + rupiah(value.harga_pcs) + '</span>';
+            tbody += '</div>';
+            tbody += '<div class="col-md-6">';
+            tbody += '<strong>per Dus:</strong>';
+            tbody += '<span>' + rupiah(value.harga_dus) + '</span>';
+            tbody += '</div>';
+            tbody += '<div class="col-md-6">';
+            tbody += '<strong>per Renceng</strong>';
+            tbody += '<span>' + rupiah(value.harga_renceng) + '</span>';
+            tbody += '</div>';
+            tbody += '<div class="col-md-6">';
+            tbody += '<strong>per Pack</strong>';
+            tbody += '<span>' + rupiah(value.harga_pack) + '</span>';
+            tbody += '</div>';
+            tbody += '</div>';
+            tbody += '</td>';
+            tbody += '</tr>';
+            $('#barang-modal-tbody').append(tbody);
+        }
+
+        var barang_item = [];
+
+        function barang_get(id) {
+            var check = $('#barang-checkbox-' + id).prop('checked');
+            if (check) {
+                if (!barang_item.includes(id)) {
+                    var key = barang_item.length;
                     $.ajax({
-                        url: "{{ url('admin/pemasukan/get_item') }}" + '/' + id,
+                        url: "{{ url('barang-get') }}" + "/" + id,
                         type: "GET",
                         dataType: "json",
                         success: function(data) {
-                            var urutan = item_id.length;
-                            set_item(urutan, data);
+                            barang_set(key, data);
                         },
                     });
-                }
-                if (item_id.length > 0) {
-                    $('#tabel-barang-kosong').hide();
+                    barang_item.push(id);
                 }
             } else {
-                delete_item(id);
+                barang_delete(id);
+            }
+            if (barang_item.length > 0) {
+                $('#barang-kosong').hide();
+                $('#barang-alert').show();
+            } else {
+                $('#barang-kosong').show();
+                $('#barang-alert').hide();
             }
         }
 
-        function set_item(urutan, data, is_session = false) {
-            var satuan = '';
+        function barang_set(key, value, is_old = false) {
+            var satuan = "";
+            var harga = "";
+            var is_harga = "readonly";
             var jumlah = 1;
             var total = 0;
-
-            if (is_session) {
-                document.getElementById('checkbox-barang-' + data.id).checked = true;
-                satuan = data.satuan;
-                jumlah = data.jumlah;
-                total = data.total;
+            if (is_old) {
+                satuan = value.satuan;
+                harga = value.harga;
+                is_harga = "";
+                jumlah = value.jumlah;
+                total = value.total;
             }
-
-            var col = '<tr id="tr-barang-' + data.id + '">';
-            col += '<td class="text-center" id="urutan">' + urutan + '</td>';
-            col += '<td>';
-            col += '<input type="hidden" class="form-control" name="id[]" value="' + data.id + '">';
-            col += data.nama_barang;
-            col += '</td>';
-            col += '<td>';
-            col += '<div class="form-group mb-0">';
-            col += '<select class="form-control" id="harga-' + data.id + '" name="harga[' + data.id +
-                ']" onchange="get_total(' + data.id + ', ' + true + ')">';
-            col += '<option value="">Pilih</option>';
-            col += '<option value="' + data.harga_pcs + '" data-satuan="pcs" ' + (satuan == "pcs" ? "selected" : "") +
-                '>' + rupiah(data.harga_pcs ??
-                    "0", "Rp") +
-                ' (pcs)</option>';
-            col += '<option value="' + data.harga_dus + '" data-satuan="dus" ' + (satuan == "dus" ? "selected" : "") +
-                '>' + rupiah(data.harga_dus ??
-                    "0", "Rp") +
-                ' (dus)</option>';
-            col += '<option value="' + data.harga_renceng + '" data-satuan="renceng" ' + (satuan == "renceng" ?
-                "selected" : "") + '>' + rupiah(data
-                .harga_renceng ?? "0",
-                "Rp") + ' (renceng)</option>';
-            col += '<option value="' + data.harga_pack + '" data-satuan="pack" ' + (satuan == "pack" ? "selected" :
-                "") + '>' + rupiah(data
-                    .harga_pack ?? "0", "Rp") +
-                ' (pack)</option>';
-            col += '</select>';
-            col += '<input type="hidden" class="form-control" name="satuan[' + data.id + ']" id="satuan-' + data.id +
-                '" value="' + satuan + '">';
-            col += '</div>';
-            col += '</td>';
-            col += '<td>';
-            col += '<div class="form-group mb-0">';
-            col += '<input type="number" class="form-control" id="jumlah-' + data.id +
-                '" name="jumlah[' + data.id +
-                ']" oninput="this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null" onkeyup="get_total(' +
-                data.id + ')" value="' + jumlah + '">';
-            col += '</div>';
-            col += '</td>';
-            col += '<td>';
-            col += '<span id="span-total-' + data.id + '">' + rupiah("" + total, "Rp") + '</span>';
-            col += '<input type="hidden" class="form-control total" id="total-' + data.id +
-                '" name="total[' + data.id +
-                ']" value="' + total + '">';
-            col += '</td>';
-            col += '<td class="text-center">';
-            col += '<button type="button" class="btn btn-danger btn-sm" onclick="delete_item(' + data.id + ')">';
-            col += '<i class="fas fa-trash"></i>';
-            col += '</button>';
-            col += '</td>';
-            col += '</tr>';
-
-            $('#tabel-barang').append(col);
-
-            if (is_session) {
-                set_grand_total();
-            }
+            var no = key + 1;
+            tbody = '<tr id="barang-list-' + value.id + '">';
+            tbody += '<td id="urutan" class="text-center">' + no + '</td>';
+            tbody += '<td>';
+            tbody += '<span>' + value.nama_barang + '</span>';
+            tbody += '<input type="hidden" class="form-control rounded-0" name="barangs[' + key + '][id]" value="' + value
+                .id + '">';
+            tbody += '<input type="hidden" class="form-control rounded-0" name="barangs[' + key +
+                '][nama_barang]" value="' + value
+                .nama_barang + '">';
+            tbody += '</td>';
+            tbody += '<td>';
+            tbody += '<select id="barang-satuan-' + value.id +
+                '" name="barangs[' + key + '][satuan]" class="form-control rounded-0 mb-2" onchange="harga_get(' +
+                value.id +
+                ')" required>';
+            tbody += '<option value="">- pilih satuan -</option>';
+            tbody += '<option value="pcs" ' + (satuan == "pcs" ? "selected" : "") + '>Pcs</option>';
+            tbody += '<option value="dus" ' + (satuan == "dus" ? "selected" : "") + '>Dus</option>';
+            tbody += '<option value="renceng" ' + (satuan == "renceng" ? "selected" : "") + '>Renceng</option>';
+            tbody += '<option value="pack" ' + (satuan == "pack" ? "selected" : "") + '>Pack</option>';
+            tbody += '</select>';
+            tbody += '<input type="number" class="form-control rounded-0" id="barang-harga-' + value.id +
+                '" name="barangs[' + key + '][harga]" placeholder="pilih satuan" onkeyup="get_total(' + value.id +
+                ')" value="' + harga + '" ' + is_harga + ' required>';
+            tbody += '</td>';
+            tbody += '<td>';
+            tbody += '<input type="number" class="form-control rounded-0" id="barang-jumlah-' + value.id +
+                '" value="' + jumlah + '" name="barangs[' + key + '][jumlah]" onkeyup="get_total(' + value.id +
+                ')" required>';
+            tbody += '</td>';
+            tbody += '<td style="width=200px">';
+            tbody += '<span id="barang-total-' + value.id + '">' + rupiah("" + total, "Rp") + '</span>';
+            tbody += '<input type="hidden" class="form-control total" id="total-' + value.id +
+                '" name="barangs[' + key + '][total]" value="' + total + '" required>';
+            tbody += '</td>';
+            tbody += '</tr>';
+            $('#barang-tbody').append(tbody);
         }
 
-        function delete_item(id) {
-            $('#tr-barang-' + id).remove();
-            item_id = item_id.filter(i => i !== id);
-
-            document.getElementById('checkbox-barang-' + id).checked = false;
-            if (item_id.length === 0) {
-                $('#tabel-barang-kosong').show();
-            } else {
+        function barang_delete(id) {
+            $('#barang-list-' + id).remove();
+            barang_item = barang_item.filter(i => i !== id);
+            if (barang_item.length > 0) {
                 var urutan = document.querySelectorAll('#urutan');
                 for (let i = 0; i < urutan.length; i++) {
                     urutan[i].innerText = i + 1;
                 }
+            } else {
+                $('#barang-kosong').show();
+                $('#barang-alert').hide();
             }
-
             set_grand_total();
         }
 
-        function rupiah(angka, prefix) {
-            var number_string = angka.replace(/[^,\d]/g, '').toString(),
-                split = number_string.split(','),
-                sisa = split[0].length % 3,
-                rupiah = split[0].substr(0, sisa),
-                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-            // tambahkan titik jika yang di input sudah menjadi angka ribuan
-            if (ribuan) {
-                separator = sisa ? '.' : '';
-                rupiah += separator + ribuan.join('.');
-            }
-
-            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-            return prefix == undefined ? rupiah : (rupiah ? 'Rp' + rupiah : '');
+        function harga_get(id) {
+            $.ajax({
+                url: "{{ url('harga-get') }}" + '/' + id,
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "satuan": $('#barang-satuan-' + id).val(),
+                },
+                success: function(data) {
+                    if (data) {
+                        harga = data;
+                        $('#barang-harga-' + id).prop('readonly', false);
+                        $('#barang-harga-' + id).val(data);
+                    } else {
+                        harga = 0;
+                        $('#barang-harga-' + id).prop('readonly', true);
+                        $('#barang-harga-' + id).val("");
+                    }
+                    get_total(id);
+                },
+            });
         }
 
         function get_total(id, is_select = false) {
-            var harga = $('#harga-' + id).val();
-            var jumlah = $('#jumlah-' + id).val();
+            var harga = $('#barang-harga-' + id).val();
+            var jumlah = $('#barang-jumlah-' + id).val();
             var total = 0;
             if (harga !== "" && jumlah !== "") {
                 total = parseInt(harga) * parseInt(jumlah);
+                ' + jumlah + '
             }
-
-            $('#span-total-' + id).text(rupiah("" + total, "Rp"));
+            $('#barang-total-' + id).text(rupiah("" + total, "Rp"));
             $('#total-' + id).val(total);
 
             set_grand_total();
@@ -480,287 +787,39 @@
             $('#grand-total').val(grand_total);
         }
 
-        var data_item = @json(session('data_pembelians'));
+        function rupiah(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
-        if (data_item !== null) {
-            if (data_item.length > 0) {
-                $('#tabel-barang-kosong').hide();
-                $.each(data_item, function(key, value) {
-                    item_id.push(value.id);
-                    var urutan = item_id.length;
-                    set_item(urutan, value, true);
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp' + rupiah : '');
+        }
+
+        var old_barangs = @json(old('barangs'));
+        if (old_barangs !== null) {
+            if (old_barangs.length > 0) {
+                $('#barang-tbody').empty();
+                $.each(old_barangs, function(key, value) {
+                    barang_item.push(parseInt(value.id));
+                    $('#barang-checkbox-' + value.id).prop('checked', true);
+                    barang_set(key, value, true);
                 });
             }
         }
-    </script>
 
-    <script>
-        function showSupplier(selectedCategory) {
-            $('#tableSupplier').modal('show');
-        }
-
-        function getSelectedSupplier(Supplier_id, NamaSup, Telp, Alamat) {
-            document.getElementById('supplier_id').value = Supplier_id;
-            document.getElementById('nama_supp').value = NamaSup;
-            document.getElementById('telp').value = Telp;
-            document.getElementById('alamat').value = Alamat;
-            $('#tableSupplier').modal('hide');
+        var grand_total = @json(old('grand_total'));
+        if (grand_total) {
+            $('#span-grand-total').text(rupiah("" + grand_total, "Rp"));
+            $('#grand-total').val(grand_total);
         }
     </script>
-
-    <script>
-        function showSales(selectedCategory) {
-            $('#tableSales').modal('show');
-        }
-
-        function getSelectedSales(Sales_id, Nama, Telps, Alamats) {
-            document.getElementById('user_id').value = Sales_id;
-            document.getElementById('nama').value = Nama;
-            document.getElementById('telp_sales').value = Telps;
-            document.getElementById('alamat_sales').value = Alamats;
-            $('#tableSales').modal('hide');
-        }
-    </script>
-
-    {{-- <script>
-        var activeSpecificationIndex = 0;
-
-        function barang(param) {
-            activeSpecificationIndex = param;
-            $('#tableBarang').modal('show');
-        }
-
-        function getBarang(rowIndex) {
-            var selectedRow = $('#datatables66 tbody tr:eq(' + rowIndex + ')');
-            var barang_id = selectedRow.data('id');
-            var nama_barang = selectedRow.data('nama_barang');
-            var harga = '<option value="' + selectedRow.data('harga_pcs') + '">';
-            harga += rupiah("" + selectedRow.data('harga_pcs'), 'Rp');
-            harga += ' <small>(pcs)</small></option>';
-            harga += '<option value="' + selectedRow.data('harga_dus') + '">';
-            harga += rupiah("" + selectedRow.data('harga_dus'), 'Rp');
-            harga += ' <small>(dus)</small></option>';
-            harga += '<option value="' + selectedRow.data('harga_renceng') + '">';
-            harga += rupiah("" + selectedRow.data('harga_renceng'), 'Rp');
-            harga += ' <small>(renceng)</small></option>';
-            harga += '<option value="' + selectedRow.data('harga_pack') + '">';
-            harga += rupiah("" + selectedRow.data('harga_pack'), 'Rp');
-            harga += ' <small>(pack)</small></option>';
-            var jumlah = 1;
-            var total = 0;
-
-            $('#barang_id-' + activeSpecificationIndex).val(barang_id);
-            $('#nama_barang-' + activeSpecificationIndex).val(nama_barang);
-            $('#harga-' + activeSpecificationIndex).append(harga);
-            $('#jumlah-' + activeSpecificationIndex).val(jumlah);
-            $('#total-' + activeSpecificationIndex).val(total);
-
-            // updateGrandTotal()
-            $('#tableBarang').modal('hide');
-        }
-    </script> --}}
-
-    {{-- <script>
-        // function Hitung(startingElement) {
-        //     $(document).on("input", startingElement, function() {
-        //         var currentRow = $(this).closest('tr');
-        //         var satuan = currentRow.find('select[name="satuan[]"]').val();
-        //         var jumlah = parseFloat(currentRow.find(".jumlah").val()) || 0;
-        //         var harga_pcs = parseFloat(currentRow.find(".harga_pcs").val().replace(/\./g, '')) || 0;
-        //         var harga_dus = parseFloat(currentRow.find(".harga_dus").val().replace(/\./g, '')) || 0;
-
-        //         if (satuan === 'pcs') {
-        //             var harga_jual = harga_pcs * jumlah;
-        //         } else if (satuan === 'dus') {
-        //             var harga_jual = harga_dus * jumlah;
-        //         } else {
-        //             // Handle other cases if needed
-        //             var harga_jual = 0;
-        //         }
-
-        //         currentRow.find(".total").val(harga_jual.toLocaleString('id-ID'));
-
-        //         updateGrandTotal();
-        //     });
-        // }
-
-        // function Hitung(startingElement) {
-        //     function updateTotal(currentRow) {
-        //         var satuan = currentRow.find('select[name="satuan[]"]').val();
-        //         var jumlah = parseFloat(currentRow.find(".jumlah").val()) || 0;
-        //         var harga_pcs = parseFloat(currentRow.find(".harga_pcs").val().replace(/\./g, '')) || 0;
-        //         var harga_dus = parseFloat(currentRow.find(".harga_dus").val().replace(/\./g, '')) || 0;
-
-        //         var harga_jual = 0;
-
-        //         if (satuan === 'pcs') {
-        //             harga_jual = harga_pcs * jumlah;
-        //         } else if (satuan === 'dus') {
-        //             harga_jual = harga_dus * jumlah;
-        //         }
-
-        //         currentRow.find(".total").val(harga_jual.toLocaleString('id-ID'));
-        //         updateGrandTotal();
-        //     }
-
-        //     $(document).on("input", startingElement, function() {
-        //         var currentRow = $(this).closest('tr');
-        //         updateTotal(currentRow);
-        //     });
-
-        //     $(document).on("change", 'select[name="satuan[]"]', function() {
-        //         var currentRow = $(this).closest('tr');
-        //         updateTotal(currentRow);
-        //     });
-        // }
-
-        function updateGrandTotal() {
-            var grandTotal = 0;
-            $('input[name^="total"]').each(function() {
-                var nominalValue = parseFloat($(this).val().replace(/\./g, '')) || 0;
-                grandTotal += nominalValue;
-            });
-            $('#grand_total').val(grandTotal.toLocaleString('id-ID'));
-        }
-
-        // $(document).ready(function() {
-        //     Hitung(".jumlah");
-        //     updateGrandTotal();
-        // });
-    </script> --}}
-
-    {{-- <script>
-        var data_barang = @json(session('data_pembelians'));
-        var jumlah_barang = 1;
-
-        if (data_barang != null) {
-            jumlah_barang = data_barang.length;
-            $('#tabel-barang').empty();
-            var urutan = 0;
-            $.each(data_barang, function(key, value) {
-                urutan = urutan + 1;
-                itemBarang(urutan, key, value);
-            });
-        }
-
-        function addBarang() {
-            jumlah_barang = jumlah_barang + 1;
-
-            if (jumlah_barang === 1) {
-                $('#tabel-barang').empty();
-            }
-
-            itemBarang(jumlah_barang, jumlah_barang - 1);
-        }
-
-        function removeBarang(params) {
-            jumlah_barang = jumlah_barang - 1;
-
-            var tabel_pesanan = document.getElementById('tabel-barang');
-            var barang = document.getElementById('barang-' + params);
-
-            tabel_pesanan.removeChild(barang);
-
-            if (jumlah_barang === 0) {
-                var itembarangs = '<tr>';
-                itembarangs += '<td class="text-center" colspan="9">- Barang belum ditambahkan -</td>';
-                itembarangs += '</tr>';
-                $('#tabel-barang').html(itembarangs);
-            } else {
-                var urutan = document.querySelectorAll('#urutanbarang');
-                for (let i = 0; i < urutan.length; i++) {
-                    urutan[i].innerText = i + 1;
-                }
-            }
-
-            updateGrandTotal()
-        }
-
-        function itemBarang(urutan, key, value = null) {
-            var barang_id = '';
-            var kode_barang = '';
-            var nama_barang = '';
-            var harga_pcs = '';
-            var harga_dus = '';
-            var satuan = '';
-            var jumlah = '';
-            var total = '';
-
-            if (value !== null) {
-                barang_id = value.barang_id;
-                kode_barang = value.kode_barang;
-                nama_barang = value.nama_barang;
-                harga_pcs = value.harga_pcs;
-                harga_dus = value.harga_dus;
-                satuan = value.satuan;
-                jumlah = value.jumlah;
-                total = value.total;
-            }
-
-            // urutan 
-            var itembarangs = '<tr id="barang-' + urutan + '">';
-            itembarangs += '<td font-size:14px" class="text-center" id="urutanbarang-' + urutan +
-                '">' +
-                urutan + '</td>';
-
-            // nama_barang 
-            itembarangs += '<td>';
-            itembarangs += '<input type="hidden" class="form-control" style="font-size:14px" id="barang_id-' +
-                urutan +
-                '" name="barang_id[]" value="' + barang_id + '" ';
-            itembarangs += '<div class="form-group">'
-            itembarangs += '<input type="text" class="form-control" readonly style="font-size:14px" id="nama_barang-' +
-                urutan +
-                '" name="nama_barang[]" value="' + nama_barang + '" ';
-            itembarangs += '</div>';
-            itembarangs += '</td>';
-
-            // harga
-            itembarangs += '<td>';
-            itembarangs += '<div class="form-group">';
-            itembarangs += '<select class="form-control" style="font-size:14px" id="harga-' + urutan +
-                '" name="harga[]" onchange="get_total(' + urutan + ')">';
-            itembarangs += '<option value="">Pilih</option>';
-            itembarangs += '</select>';
-            itembarangs += '</div>';
-            itembarangs += '</td>';
-
-            // jumlah 
-            itembarangs += '<td>';
-            itembarangs += '<div class="form-group">'
-            itembarangs +=
-                '<input type="text" class="form-control jumlah" style="font-size:14px"  id="jumlah-' +
-                urutan +
-                '" name="jumlah[]" value="' + jumlah + '" ';
-            itembarangs += '</div>';
-            itembarangs += '</td>';
-
-            // total 
-            itembarangs += '<td>';
-            itembarangs += '<div class="form-group">'
-            itembarangs +=
-                '<input type="text" class="form-control total" readonly style="font-size:14px" id="total-' +
-                urutan +
-                '" name="total[]" value="' + total + '" ';
-            itembarangs += '</div>';
-            itembarangs += '</td>';
-
-            // opsi
-            itembarangs += '<td class="text-center">';
-            itembarangs += '<button type="button" class="btn btn-primary btn-sm" onclick="barang(' + urutan +
-                ')">';
-            itembarangs += '<i class="fas fa-plus"></i>';
-            itembarangs += '</button>';
-            itembarangs +=
-                '<button type="button" class="btn btn-danger btn-sm" onclick="removeBarang(' +
-                urutan + ')">';
-            itembarangs += '<i class="fas fa-trash"></i>';
-            itembarangs += '</button>';
-            itembarangs += '</td>';
-            itembarangs += '</tr>';
-
-            $('#tabel-barang').append(itembarangs);
-        }
-    </script> --}}
-
 @endsection

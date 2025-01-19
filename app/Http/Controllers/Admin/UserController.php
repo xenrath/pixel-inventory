@@ -130,6 +130,7 @@ class UserController extends Controller
 
         return redirect('admin/user')->with('success', 'Berhasil mengubah user');
     }
+    
     public function destroy($id)
     {
         $user = User::find($id);
