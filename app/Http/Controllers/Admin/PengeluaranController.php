@@ -265,7 +265,7 @@ class PengeluaranController extends Controller
                 }
             }
         }
-
+        
         return redirect('admin/pengeluaran')->with('success', 'Berhasil memperbarui Pengeluaran');
     }
 
@@ -296,12 +296,23 @@ class PengeluaranController extends Controller
             'supplier_id',
             'tanggal',
             'grand_total',
-            'grand_total',
         )
             ->with('supplier:id,kode_supplier,nama_supp,alamat,telp,hp,nama_bank,norek,atas_nama')
             ->with('user:id,nama')
             ->first();
-        $details = Detail_pengeluaran::where('pengeluaran_id', $id)->get();
+        $details = Detail_pengeluaran::where('pengeluaran_id', $id)
+            ->select(
+                'nama_barang',
+                'harga_pcs',
+                'harga_dus',
+                'harga_renceng',
+                'harga_pack',
+                'harga',
+                'satuan',
+                'jumlah',
+                'total',
+            )
+            ->get();
 
         $pdf = PDF::loadView('admin.pengeluaran.cetak_pdf', compact('details', 'pengeluaran'));
         $pdf->setPaper('letter', 'portrait');

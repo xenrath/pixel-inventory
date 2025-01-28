@@ -29,7 +29,7 @@
                     @endforeach
                 </div>
             @endif
-            <form action="{{ url('admin/pengeluaran/' . $pengeluaran->id) }}" method="POST" autocomplete="off">
+            <form action="{{ url('admin/pengeluaran/' . $pengeluaran->id) }}" method="POST" id="form-submit" autocomplete="off">
                 @csrf
                 @method('PUT')
                 <div class="row">
@@ -193,7 +193,19 @@
                     </div>
                 </div>
                 <div class="mb-4 text-right">
-                    <button type="submit" class="btn btn-primary btn-flat">Simpan Pengeluaran</button>
+                    <button type="submit" id="btn-submit" class="btn btn-primary btn-flat" onclick="btn_submit()">
+                        <span id="btn-submit-loading" style="display: none;">
+                            <i class="fas fa-spinner fa-spin mr-2"></i>
+                            Loading...
+                        </span>
+                        <span id="btn-submit-save">
+                            Simpan Pengeluaran
+                        </span>
+                        <span id="btn-submit-process" style="display: none;">
+                            <i class="fas fa-spinner fa-spin mr-2"></i>
+                            Memproses...
+                        </span>
+                    </button>
                 </div>
             </form>
         </div>
@@ -454,6 +466,9 @@
         }
 
         function supplier_set(id) {
+            $('#btn-submit').prop('disabled', true);
+            $('#btn-submit-save').hide();
+            $('#btn-submit-loading').show();
             $.ajax({
                 url: "{{ url('supplier-set') }}" + "/" + id,
                 type: "GET",
@@ -471,6 +486,9 @@
                         $('#supplier-detail').hide();
                         $('#supplier-id').val("");
                     }
+                    $('#btn-submit').prop('disabled', false);
+                    $('#btn-submit-save').show();
+                    $('#btn-submit-loading').hide();
                 },
             });
         }
@@ -537,6 +555,9 @@
         }
 
         function sales_set(id) {
+            $('#btn-submit').prop('disabled', true);
+            $('#btn-submit-save').hide();
+            $('#btn-submit-loading').show();
             $.ajax({
                 url: "{{ url('sales-set') }}" + "/" + id,
                 type: "GET",
@@ -554,6 +575,9 @@
                         $('#sales-detail').hide();
                         $('#sales-id').val("");
                     }
+                    $('#btn-submit').prop('disabled', false);
+                    $('#btn-submit-save').show();
+                    $('#btn-submit-loading').hide();
                 },
             });
         }
@@ -645,6 +669,9 @@
             var check = $('#barang-checkbox-' + id).prop('checked');
             if (check) {
                 if (!barang_item.includes(id)) {
+                    $('#btn-submit').prop('disabled', true);
+                    $('#btn-submit-save').hide();
+                    $('#btn-submit-loading').show();
                     var key = barang_item.length;
                     $.ajax({
                         url: "{{ url('barang-get') }}" + "/" + id,
@@ -652,6 +679,9 @@
                         dataType: "json",
                         success: function(data) {
                             barang_set(key, data);
+                            $('#btn-submit').prop('disabled', false);
+                            $('#btn-submit-save').show();
+                            $('#btn-submit-loading').hide();
                         },
                     });
                     barang_item.push(id);
@@ -737,6 +767,9 @@
         }
 
         function harga_get(id) {
+            $('#btn-submit').prop('disabled', true);
+            $('#btn-submit-save').hide();
+            $('#btn-submit-loading').show();
             $.ajax({
                 url: "{{ url('harga-get') }}" + '/' + id,
                 type: "POST",
@@ -755,6 +788,9 @@
                         $('#barang-harga-' + id).val("");
                     }
                     get_total(id);
+                    $('#btn-submit').prop('disabled', false);
+                    $('#btn-submit-save').show();
+                    $('#btn-submit-loading').hide();
                 },
             });
         }
@@ -821,6 +857,15 @@
         if (grand_total) {
             $('#span-grand-total').text(rupiah("" + grand_total, "Rp"));
             $('#grand-total').val(grand_total);
+        }
+    </script>
+    <script>
+        function btn_submit() {
+            $('#btn-submit').prop('disabled', true);
+            $('#btn-submit-save').hide();
+            $('#btn-submit-loading').hide();
+            $('#btn-submit-process').show();
+            $('#form-submit').submit();
         }
     </script>
 @endsection

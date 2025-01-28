@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <title>Pengeluaran Barang</title>
     <style>
         .b {
@@ -169,40 +170,21 @@
 </head>
 
 <body style="margin: 0; padding: 0;">
-    {{-- <div id="logo-container">
-        <img src="{{ asset('storage/uploads/user/logo.png') }}" alt="Riva Jaya" width="100" height="50">
-    </div> --}}
-    <br>
     <table cellpadding="2" cellspacing="0">
         <tr>
             <td class="info-catatan2" style="font-size: 15px;">Riva Jaya Abadi</td>
             <td class="info-catatan2" style="font-size: 15px; margin-left: 40px; display: block;">Nama Supplier</td>
             <td style="text-align: left; font-size: 15px;">
-                <span class="content2">
-                    @if ($pengeluaran->supplier)
-                        {{ $pengeluaran->supplier->nama_supp }}
-                    @else
-                        tidak ada
-                    @endif
-                </span>
+                <span class="content2">{{ $pengeluaran->supplier->nama_supp ?? '-' }}</span>
                 <br>
             </td>
         </tr>
         <tr>
-            <td class="info-text info-left" style="font-size: 15px;">Jl. Pojosumarto 2
-                {{-- <br>
-                SLAWI TEGAL <br>
-                Telp/ Fax 02836195326 02836195187 --}}
-            </td>
-            </td>
+            <td class="info-text info-left" style="font-size: 15px;">Jl. Pojosumarto 2</td>
             <td class="info-catatan2" style="font-size: 15px; margin-left: 40px; display: block;">Alamat</td>
             <td style="text-align: left; font-size: 15px;">
                 <span class="content2">
-                    @if ($pengeluaran->supplier)
-                        {{ $pengeluaran->supplier->alamat }}
-                    @else
-                        tidak ada
-                    @endif
+                    {{ $pengeluaran->supplier->alamat ?? '-' }}
                 </span>
                 <br>
             </td>
@@ -213,17 +195,9 @@
             <td class="info-catatan2" style="font-size: 15px; margin-left: 40px; display: block;">Telp / Hp</td>
             <td style="text-align: left; font-size: 15px;">
                 <span class="content2">
-                    @if ($pengeluaran->supplier)
-                        {{ $pengeluaran->supplier->telp }}
-                    @else
-                        tidak ada
-                    @endif
+                    {{ $pengeluaran->supplier->telp ?? '-' }}
                     /
-                    @if ($pengeluaran->supplier)
-                        {{ $pengeluaran->supplier->hp }}
-                    @else
-                        tidak ada
-                    @endif
+                    {{ $pengeluaran->supplier->hp ?? '-' }}
                 </span>
                 <br>
             </td>
@@ -234,14 +208,7 @@
             <td class="info-catatan2" style="font-size: 15px; margin-left: 40px; display: block;">ID Supplier</td>
 
             <td style="text-align: left; font-size: 15px;">
-                <span class="content2">
-                    @if ($pengeluaran->supplier)
-                        {{ $pengeluaran->supplier->kode_supplier }}
-                    @else
-                        tidak ada
-                    @endif
-
-                </span>
+                <span class="content2">{{ $pengeluaran->supplier->kode_supplier ?? '-' }}</span>
                 <br>
             </td>
         </tr>
@@ -252,21 +219,24 @@
         <span style="font-weight: bold; font-size: 20px;">PENGELUARAN BARANG</span>
         <br>
     </div>
-    <table style="width: 100%;
-                    border-top: 1px solid black; margin-bottom:5px">
+    <table style="width: 100%; border-top: 1px solid black; margin-bottom:5px">
         <tr>
             <td>
-                <span class="info-item" style="font-size: 15px; padding-left: 5px;">No. Faktur:
-                    {{ $pengeluaran->kode_pengeluaran }}</span>
+                <span class="info-item" style="font-size: 15px; padding-left: 5px;">
+                    No. Faktur:
+                    {{ $pengeluaran->kode_pengeluaran }}
+                </span>
                 <br>
             </td>
             <td style="text-align: right; padding-right: 45px;">
-                <span class="info-item" style="font-size: 15px;">Tanggal:{{ $pengeluaran->tanggal }}</span>
+                <span class="info-item" style="font-size: 15px;">
+                    Tanggal:
+                    {{ $pengeluaran->tanggal }}
+                </span>
                 <br>
             </td>
         </tr>
     </table>
-    {{-- <hr style="border-top: 0.5px solid black; margin: 3px 0;"> --}}
     <table style="width: 100%; border-top: 1px solid black;" cellpadding="2" cellspacing="0">
         <tr>
             <td class="td" style="text-align: center; font-size: 15px;">No.</td>
@@ -278,15 +248,10 @@
         <tr style="border-bottom: 1px solid black;">
             <td colspan="8" style="padding: 0px;"></td>
         </tr>
-        @php
-            $totalQuantity = 0;
-            $totalHarga = 0;
-        @endphp
         @foreach ($details as $item)
             <tr>
-                <td class="td" style="text-align: center; font-size: 15px;">{{ $loop->iteration }}
-                </td>
-                <td class="info-text info-left" style="font-size: 15px; ">
+                <td class="td" style="text-align: center; font-size: 15px;">{{ $loop->iteration }}</td>
+                <td class="info-text info-left" style="font-size: 15px;">
                     {{ $item->nama_barang }}
                 </td>
                 <td class="td" style="font-size: 15px;">
@@ -310,10 +275,6 @@
                     @harga($item->total)
                 </td>
             </tr>
-            @php
-                $totalQuantity += 1;
-                $totalHarga += $item->total;
-            @endphp
         @endforeach
         <tr style="border-bottom: 1px solid black;">
             <td colspan="5" style="padding: 0px;"></td>
@@ -338,33 +299,21 @@
                             <td class="info-catatan2" style="font-size: 15px;">Nama Bank</td>
                             <td class="info-item" style="font-size: 15px;">:</td>
                             <td class="info-text info-left" style="font-size: 15px;">
-                                @if ($pengeluaran->supplier)
-                                    {{ $pengeluaran->supplier->nama_bank }}
-                                @else
-                                    tidak ada
-                                @endif
+                                {{ $pengeluaran->supplier->nama_bank ?? '-' }}
                             </td>
                         </tr>
                         <tr>
                             <td class="info-catatan2" style="font-size: 15px;">No. Rekening</td>
                             <td class="info-item" style="font-size: 15px;">:</td>
                             <td class="info-text info-left" style="font-size: 15px;">
-                                @if ($pengeluaran->supplier)
-                                    {{ $pengeluaran->supplier->norek }}
-                                @else
-                                    tidak ada
-                                @endif
+                                {{ $pengeluaran->supplier->norek ?? '-' }}
                             </td>
                         </tr>
                         <tr>
                             <td class="info-catatan2" style="font-size: 15px;">Atas Nama</td>
                             <td class="info-item" style="font-size: 15px;">:</td>
                             <td class="info-text info-left" style="font-size: 15px;">
-                                @if ($pengeluaran->supplier)
-                                    {{ $pengeluaran->supplier->atas_nama }}
-                                @else
-                                    tidak ada
-                                @endif
+                                {{ $pengeluaran->supplier->atas_nama ?? '-' }}
                             </td>
                         </tr>
                     </table>
@@ -392,11 +341,7 @@
                 <table style="margin: 0 auto;">
                     <tr style="text-align: center;">
                         <td class="label">
-                            @if ($pengeluaran->user)
-                                {{ $pengeluaran->user->nama }}
-                            @else
-                                user tidak ada
-                            @endif
+                            {{ $pengeluaran->user->nama ?? '-' }}
                         </td>
                     </tr>
                     <tr>
