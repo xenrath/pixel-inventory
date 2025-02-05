@@ -180,7 +180,7 @@
             </td>
         </tr>
         <tr>
-            <td class="info-text info-left" style="font-size: 15px;">Jl. Pojosumarto 2</td>
+            <td class="info-text info-left" style="font-size: 15px;">Jl.werkudoro kelurahan Slerok</td>
             <td class="info-catatan2" style="font-size: 15px; margin-left: 40px; display: block;">Alamat</td>
             <td style="text-align: left; font-size: 15px;">
                 <span class="content2">
@@ -190,7 +190,7 @@
             </td>
         </tr>
         <tr>
-            <td class="info-text info-left" style="font-size: 15px;">Talang, Tegal
+            <td class="info-text info-left" style="font-size: 15px;">Kota Tegal
             </td>
             <td class="info-catatan2" style="font-size: 15px; margin-left: 40px; display: block;">Telp / Hp</td>
             <td style="text-align: left; font-size: 15px;">

@@ -189,10 +189,10 @@
             </td>
         </tr>
         <tr>
-            <td class="info-text info-left" style="font-size: 15px;">Jl. Pojosumarto 2
-                {{-- <br>
-                SLAWI TEGAL <br>
-                Telp/ Fax 02836195326 02836195187 --}}
+            <td class="info-text info-left" style="font-size: 15px;">Jl.werkudoro kelurahan Slerok
+                <br>
+                Kota Tegal <br>
+                {{-- Telp/ Fax 02836195326 02836195187 --}}
             </td>
             </td>
             <td class="info-catatan2" style="font-size: 15px; margin-left: 40px; display: block;">Alamat</td>
