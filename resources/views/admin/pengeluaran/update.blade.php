@@ -29,7 +29,8 @@
                     @endforeach
                 </div>
             @endif
-            <form action="{{ url('admin/pengeluaran/' . $pengeluaran->id) }}" method="POST" id="form-submit" autocomplete="off">
+            <form action="{{ url('admin/pengeluaran/' . $pengeluaran->id) }}" method="POST" id="form-submit"
+                autocomplete="off">
                 @csrf
                 @method('PUT')
                 <div class="row">
@@ -754,17 +755,28 @@
         function barang_delete(id) {
             $('#barang-list-' + id).remove();
             barang_item = barang_item.filter(i => i !== id);
+
             if (barang_item.length > 0) {
-                var urutan = document.querySelectorAll('#urutan');
-                for (let i = 0; i < urutan.length; i++) {
-                    urutan[i].innerText = i + 1;
-                }
+                var rows = $('#barang-tbody tr');
+                rows.each(function(index, row) {
+                    $(row).find('#urutan').text(index + 1);
+
+                    $(row).find('input, select').each(function() {
+                        var name = $(this).attr('name');
+                        if (name) {
+                            var newName = name.replace(/barangs\[\d+\]/, 'barangs[' + index + ']');
+                            $(this).attr('name', newName);
+                        }
+                    });
+                });
             } else {
                 $('#barang-kosong').show();
                 $('#barang-alert').hide();
             }
+
             set_grand_total();
         }
+
 
         function harga_get(id) {
             $('#btn-submit').prop('disabled', true);
